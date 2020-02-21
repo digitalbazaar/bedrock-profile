@@ -29,7 +29,7 @@
     "cors": "^2.8.4",
     "crypto-ld": "^3.5.2",
     "did-method-key": "^0.4.0",
-    "edv-client": "^2.1.0",
+    "edv-client": "digitalbazaar/edv-client#create-capability",
     "express-async-handler": "^1.1.4",
     "jsonld-signatures": "^5.0.0",
     "ocapld": "^1.6.1",
