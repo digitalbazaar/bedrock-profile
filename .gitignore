@@ -1,0 +1,10 @@
+*.log
+*.sw[nop]
+*~
+.project
+.settings
+.vscode
+TAGS
+coverage
+node_modules
+reports
