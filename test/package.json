@@ -9,13 +9,14 @@
   "dependencies": {
     "bedrock": "^3.1.0",
     "bedrock-account": "2.1.3",
-    "bedrock-edv-storage": "digitalbazaar/bedrock-edv-storage#create-edv",
+    "bedrock-did-context": "^1.0.0",
+    "bedrock-edv-storage": "digitalbazaar/bedrock-edv-storage#revocation",
     "bedrock-express": "^3.1.0",
     "bedrock-https-agent": "^1.0.1",
     "bedrock-identity": "^7.0.1",
     "bedrock-jsonld-document-loader": "^1.0.1",
     "bedrock-kms": "^1.3.0",
-    "bedrock-kms-http": "digitalbazaar/bedrock-kms-http#revocation",
+    "bedrock-kms-http": "^1.2.1",
     "bedrock-mongodb": "^6.0.2",
     "bedrock-package-manager": "^1.0.1",
     "bedrock-passport": "^5.0.2",
@@ -26,7 +27,7 @@
     "bedrock-ssm-mongodb": "^2.0.1",
     "bedrock-test": "^5.1.0",
     "bedrock-validation": "^4.2.0",
-    "bedrock-zcap-storage": "digitalbazaar/bedrock-zcap-storage#master",
+    "bedrock-zcap-storage": "^2.0.0",
     "sinon": "^9.0.0",
     "uuid-random": "^1.3.0"
   }
