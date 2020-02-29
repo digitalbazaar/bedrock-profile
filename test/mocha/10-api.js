@@ -214,10 +214,9 @@ describe('bedrock-profile', () => {
         let delegatedZcaps;
         try {
           ({profileAgent} = await profileAgents.create({accountId}));
-          const {id: profileAgentId} = profileAgent;
           const capabilities = mockData.zcaps;
           delegatedZcaps = await profileAgents.delegateCapabilities(
-            {profileAgentId, capabilities, controller});
+            {profileAgent, capabilities, controller});
         } catch(e) {
           error = e;
         }
