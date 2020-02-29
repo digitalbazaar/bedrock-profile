@@ -1,6 +1,7 @@
 /*!
  * Copyright (c) 2020 Digital Bazaar, Inc. All rights reserved.
  */
+'use strict';
 
 const brAccount = require('bedrock-account');
 const brPassport = require('bedrock-passport');
@@ -40,7 +41,9 @@ exports.removeCollections = async (
     'account',
     'edvConfig',
     'edvDoc',
-    'edvDocChunk'
+    'edvDocChunk',
+    'profile-profileAgent',
+    'profile-profileAgentCapabilitySet'
   ]) => {
   await promisify(database.openCollections)(collectionNames);
   for(const collectionName of collectionNames) {

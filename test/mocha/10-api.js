@@ -302,6 +302,18 @@ describe('bedrock-profile', () => {
         should.exist(fetchedProfiles);
         fetchedProfiles.should.be.an('array');
         fetchedProfiles.length.should.equal(3);
+
+        fetchedProfiles = fetchedProfiles.sort((a, b) => {
+          const nameA = a.name.toLowerCase();
+          const nameB = b.name.toLowerCase();
+          if(nameA < nameB) {
+            return -1;
+          }
+          if(nameA > nameB) {
+            return 1;
+          }
+          return 0;
+        });
         fetchedProfiles[0].type.should.equal('Profile');
         fetchedProfiles[0].name.should.equal(settings.name + '0');
         fetchedProfiles[0].color.should.equal(settings.color);
