@@ -63,7 +63,7 @@ const zcap0 = {
   }
 };
 
-const zcaps1 = {
+const zcap1 = {
   '@context': 'https://w3id.org/security/v2',
   id: 'urn:zcap:z1ACgNxti98PXBjtw7ogfsN45',
   controller: 'did:key:z6Mkkt1BWYLPAAXwYBwyVHAZkL94tgT8QbQv2SUxeW1U3DaG',
@@ -93,7 +93,7 @@ const zcaps1 = {
   }
 };
 
-const zcaps2 = {
+const zcap2 = {
   '@context': 'https://w3id.org/security/v2',
   id: 'urn:zcap:z19u4rwByrmyKFr1XC9AYNYcs',
   controller: 'did:key:z6Mkkt1BWYLPAAXwYBwyVHAZkL94tgT8QbQv2SUxeW1U3DaG',
@@ -123,4 +123,4 @@ const zcaps2 = {
   }
 };
 
-zcaps.push(...[zcap0, zcaps1, zcaps2]);
+zcaps.push(zcap0, zcap1, zcap2);

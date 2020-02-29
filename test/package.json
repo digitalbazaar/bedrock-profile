@@ -28,7 +28,6 @@
     "bedrock-test": "^5.1.0",
     "bedrock-validation": "^4.2.0",
     "bedrock-zcap-storage": "^2.0.0",
-    "sinon": "^9.0.0",
-    "uuid-random": "^1.3.0"
+    "sinon": "^9.0.0"
   }
 }
