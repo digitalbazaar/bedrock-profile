@@ -3,8 +3,7 @@
  */
 'use strict';
 
-const {profileAgents, profiles} = require('bedrock-profile');
-const capabilitySets = require('bedrock-profile/lib/capabilitySets');
+const {capabilitySets, profileAgents, profiles} = require('bedrock-profile');
 const helpers = require('./helpers');
 const {util: {uuid}} = require('bedrock');
 const mockData = require('./mock.data');
