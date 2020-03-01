@@ -232,7 +232,11 @@ describe('bedrock-profile', () => {
     describe('Create Profile', () => {
       it('successfully create a profile', async () => {
         const accountId = uuid();
-        const settings = {name: 'Example Profile', color: '#ff0000'};
+        const settings = {
+          name: 'Example Profile',
+          color: '#ff0000',
+          type: 'Profile'
+        };
         let error;
         let profile;
         try {
@@ -250,7 +254,11 @@ describe('bedrock-profile', () => {
     describe('Get Profile', () => {
       it('successfully get a profile', async () => {
         const accountId = uuid();
-        const settings = {name: 'Example Profile', color: '#ff0000'};
+        const settings = {
+          name: 'Example Profile',
+          color: '#ff0000',
+          type: 'Profile'
+        };
         let error;
         let profile;
         let fetchedProfile;
@@ -272,7 +280,11 @@ describe('bedrock-profile', () => {
     describe('Get All Profiles', () => {
       it('successfully get all profiles by "accountId"', async () => {
         const accountId = uuid();
-        const settings = {name: 'Example Profile', color: '#ff0000'};
+        const settings = {
+          name: 'Example Profile',
+          color: '#ff0000',
+          type: 'Profile'
+        };
         let error;
         let profile0;
         let profile1;
