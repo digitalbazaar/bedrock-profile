@@ -232,108 +232,17 @@ describe('bedrock-profile', () => {
     describe('Create Profile', () => {
       it('successfully create a profile', async () => {
         const accountId = uuid();
-        const settings = {
-          name: 'Example Profile',
-          color: '#ff0000',
-          type: 'Profile'
-        };
         let error;
         let profile;
         try {
-          profile = await profiles.create({accountId, settings});
+          profile = await profiles.create({accountId});
         } catch(e) {
           error = e;
         }
         assertNoError(error);
         should.exist(profile);
         profile.id.should.be.a('string');
-        profile.name.should.equal(settings.name);
-        profile.color.should.equal(profile.color);
       });
     }); // end create a profile agent
-    describe('Get Profile', () => {
-      it('successfully get a profile', async () => {
-        const accountId = uuid();
-        const settings = {
-          name: 'Example Profile',
-          color: '#ff0000',
-          type: 'Profile'
-        };
-        let error;
-        let profile;
-        let fetchedProfile;
-        try {
-          profile = await profiles.create({accountId, settings});
-          const {id: profileId} = profile;
-          fetchedProfile = await profiles.get({profileId, accountId});
-        } catch(e) {
-          error = e;
-        }
-        assertNoError(error);
-        should.exist(profile);
-        should.exist(fetchedProfile);
-        fetchedProfile.name.should.equal(settings.name);
-        fetchedProfile.color.should.equal(settings.color);
-        profile.id.should.equal(fetchedProfile.id);
-      });
-    }); // end get a profile
-    describe('Get All Profiles', () => {
-      it('successfully get all profiles by "accountId"', async () => {
-        const accountId = uuid();
-        const settings = {
-          name: 'Example Profile',
-          color: '#ff0000',
-          type: 'Profile'
-        };
-        let error;
-        let profile0;
-        let profile1;
-        let profile2;
-        let fetchedProfiles;
-        try {
-          const create3Profiles = [0, 1, 2].map(async i => {
-            return profiles.create({
-              accountId,
-              settings: {
-                ...settings,
-                name: settings.name + i
-              }
-            });
-          });
-          [profile0, profile1, profile2] = await Promise.all(create3Profiles);
-          fetchedProfiles = await profiles.getAll({accountId});
-        } catch(e) {
-          error = e;
-        }
-        assertNoError(error);
-        should.exist(profile0);
-        should.exist(profile1);
-        should.exist(profile2);
-        should.exist(fetchedProfiles);
-        fetchedProfiles.should.be.an('array');
-        fetchedProfiles.length.should.equal(3);
-
-        fetchedProfiles = fetchedProfiles.sort((a, b) => {
-          const nameA = a.name.toLowerCase();
-          const nameB = b.name.toLowerCase();
-          if(nameA < nameB) {
-            return -1;
-          }
-          if(nameA > nameB) {
-            return 1;
-          }
-          return 0;
-        });
-        fetchedProfiles[0].type.should.equal('Profile');
-        fetchedProfiles[0].name.should.equal(settings.name + '0');
-        fetchedProfiles[0].color.should.equal(settings.color);
-        fetchedProfiles[1].type.should.equal('Profile');
-        fetchedProfiles[1].name.should.equal(settings.name + '1');
-        fetchedProfiles[1].color.should.equal(settings.color);
-        fetchedProfiles[2].type.should.equal('Profile');
-        fetchedProfiles[2].name.should.equal(settings.name + '2');
-        fetchedProfiles[2].color.should.equal(settings.color);
-      });
-    }); // end get a profile
   }); // end profiles API
 }); // end bedrock-profile
