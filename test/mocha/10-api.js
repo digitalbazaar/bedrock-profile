@@ -127,6 +127,30 @@ describe('bedrock-profile', () => {
           fetchedProfileAgent.capabilityInvocationKey);
       });
     }); // end get a profile agent
+    describe('Remove Profile Agent', () => {
+      it('successfully remove a profile agent by "id"', async () => {
+        const accountId = uuid();
+        let id;
+        let error;
+        let profileAgent;
+        let fetchedProfileAgent;
+        try {
+          ({profileAgent} = await profileAgents.create({accountId}));
+          ({id} = profileAgent);
+          await profileAgents.remove({id});
+        } catch(e) {
+          error = e;
+        }
+        try {
+          ({profileAgent: fetchedProfileAgent} = await profileAgents.get({id}));
+        } catch(e) {
+          should.exist(e);
+        }
+        assertNoError(error);
+        should.exist(profileAgent);
+        should.not.exist(fetchedProfileAgent);
+      });
+    }); // end remove a profile agent
     describe('Get All Profile Agents', () => {
       it('successfully gets all profile agents by "accountId"', async () => {
         const accountId = uuid();
