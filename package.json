@@ -31,7 +31,7 @@
     "edv-client": "^2.3.0",
     "express-async-handler": "^1.1.4",
     "jsonld-signatures": "^5.0.0",
-    "ocapld": "^1.6.1",
+    "ocapld": "digitalbazaar/ocapld.js#master",
     "webkms-client": "^2.0.1"
   },
   "peerDependencies": {
