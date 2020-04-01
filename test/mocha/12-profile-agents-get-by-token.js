@@ -19,12 +19,12 @@ describe('profileAgents getByToken API', () => {
     passportStub.restore();
   });
   it('successfully gets a profile agent by token', async () => {
-    const accountId = uuid();
+    const profileId = uuid();
     const token = uuid();
     let error;
     let profileAgent;
     try {
-      ({profileAgent} = await profileAgents.create({accountId, token}));
+      ({profileAgent} = await profileAgents.create({profileId, token}));
     } catch(e) {
       error = e;
     }
@@ -39,7 +39,7 @@ describe('profileAgents getByToken API', () => {
     }
     assertNoError(error);
     should.exist(profileAgent);
-    profileAgent.account.should.equal(accountId);
+    profileAgent.profile.should.equal(profileId);
     profileAgent.sequence.should.equal(0);
     profileAgent.token.should.equal(token);
   });

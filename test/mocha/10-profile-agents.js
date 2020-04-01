@@ -21,10 +21,11 @@ describe('profileAgents API', () => {
   describe('Create Profile Agent', () => {
     it('successfully create a profile agent', async () => {
       const accountId = uuid();
+      const profileId = uuid();
       let error;
       let profileAgent;
       try {
-        ({profileAgent} = await profileAgents.create({accountId}));
+        ({profileAgent} = await profileAgents.create({accountId, profileId}));
       } catch(e) {
         error = e;
       }
@@ -38,11 +39,12 @@ describe('profileAgents API', () => {
   describe('Get Profile Agent', () => {
     it('successfully get a profile agent by "id"', async () => {
       const accountId = uuid();
+      const profileId = uuid();
       let error;
       let profileAgent;
       let fetchedProfileAgent;
       try {
-        ({profileAgent} = await profileAgents.create({accountId}));
+        ({profileAgent} = await profileAgents.create({accountId, profileId}));
         const {id} = profileAgent;
         ({profileAgent: fetchedProfileAgent} = await profileAgents.get({id}));
       } catch(e) {
@@ -64,12 +66,12 @@ describe('profileAgents API', () => {
       let profileAgent;
       let fetchedProfileAgent;
       try {
-        ({profileAgent} = await profileAgents.create({accountId}));
+        ({profileAgent} = await profileAgents.create({profileId}));
         await profileAgents.update({
           profileAgent: {
             ...profileAgent,
             sequence: profileAgent.sequence + 1,
-            profile: profileId
+            account: accountId
           }
         });
         ({profileAgent: fetchedProfileAgent} =
@@ -92,12 +94,13 @@ describe('profileAgents API', () => {
   describe('Remove Profile Agent', () => {
     it('successfully remove a profile agent by "id"', async () => {
       const accountId = uuid();
+      const profileId = uuid();
       let id;
       let error;
       let profileAgent;
       let fetchedProfileAgent;
       try {
-        ({profileAgent} = await profileAgents.create({accountId}));
+        ({profileAgent} = await profileAgents.create({accountId, profileId}));
         ({id} = profileAgent);
         await profileAgents.remove({id});
       } catch(e) {
@@ -116,6 +119,7 @@ describe('profileAgents API', () => {
   describe('Get All Profile Agents', () => {
     it('successfully gets all profile agents by "accountId"', async () => {
       const accountId = uuid();
+      const profileId = uuid();
       let error;
       let profileAgent0;
       let profileAgent1;
@@ -123,7 +127,7 @@ describe('profileAgents API', () => {
       let fetchedProfileAgents;
       try {
         const create3ProfileAgents = [0, 1, 2].map(async () => {
-          return profileAgents.create({accountId});
+          return profileAgents.create({accountId, profileId});
         });
         [
           {profileAgent: profileAgent0},
@@ -162,13 +166,12 @@ describe('profileAgents API', () => {
       let profileAgent;
       let updatedProfileAgent;
       try {
-        ({profileAgent} = await profileAgents.create({accountId}));
+        ({profileAgent} = await profileAgents.create({accountId, profileId}));
         const {id} = profileAgent;
         await profileAgents.update({
           profileAgent: {
             ...profileAgent,
             sequence: profileAgent.sequence + 1,
-            profile: profileId,
             account: newAccountId
           }
         });
@@ -193,12 +196,13 @@ describe('profileAgents API', () => {
   describe('Delegate zCaps from a Profile Agent', () => {
     it('successfully delegate capabilites from a profile agent', async () => {
       const accountId = uuid();
+      const profileId = uuid();
       const controller = `did:example:${uuid()}`;
       let error;
       let profileAgent;
       let delegatedZcaps;
       try {
-        ({profileAgent} = await profileAgents.create({accountId}));
+        ({profileAgent} = await profileAgents.create({accountId, profileId}));
         const capabilities = mockData.zcaps;
         delegatedZcaps = await profileAgents.delegateCapabilities(
           {profileAgent, capabilities, controller});
