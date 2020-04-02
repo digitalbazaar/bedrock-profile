@@ -32,8 +32,9 @@ describe('profileAgents getByToken API', () => {
 
     error = null;
     profileAgent = null;
+    let secrets;
     try {
-      ({profileAgent} = await profileAgents.getByToken({token}));
+      ({profileAgent, secrets} = await profileAgents.getByToken({token}));
     } catch(e) {
       error = e;
     }
@@ -41,6 +42,7 @@ describe('profileAgents getByToken API', () => {
     should.exist(profileAgent);
     profileAgent.profile.should.equal(profileId);
     profileAgent.sequence.should.equal(0);
-    profileAgent.token.should.equal(token);
+    should.exist(secrets);
+    secrets.token.should.equal(token);
   });
 }); // end profileAgents getByToken API
