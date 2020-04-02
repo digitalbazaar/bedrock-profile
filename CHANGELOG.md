@@ -1,5 +1,15 @@
 # bedrock-profile ChangeLog
 
+## 3.0.0 - 2020-04-02
+
+### Changed
+- **BREAKING** - Change data model for profile agents.
+- **BREAKING** - Use ocapld@2.
+
+### Added
+- Add support for application tokens.
+- Add `includeSecrets` param to multiple APIs.
+
 ## 2.0.0 - 2020-03-12
 
 ### Changed
