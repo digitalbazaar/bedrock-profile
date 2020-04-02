@@ -20,8 +20,7 @@ accounts[email].account = createAccount(email);
 accounts[email].meta = {};
 accounts[email].meta.sysResourceRole = [{
   sysRole: 'bedrock-test.regular',
-  // FIXME: had to enable admin rights to create keyStore
-  // generateResource: 'id'
+  generateResource: 'id'
 }];
 
 function createAccount(email) {
