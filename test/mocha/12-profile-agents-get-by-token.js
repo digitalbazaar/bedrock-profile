@@ -34,7 +34,8 @@ describe('profileAgents getByToken API', () => {
     profileAgent = null;
     let secrets;
     try {
-      ({profileAgent, secrets} = await profileAgents.getByToken({token}));
+      ({profileAgent, secrets} = await profileAgents.getByToken(
+        {token, includeSecrets: true}));
     } catch(e) {
       error = e;
     }
