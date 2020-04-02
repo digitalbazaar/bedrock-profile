@@ -50,11 +50,12 @@ describe('profiles API', () => {
       a.profileAgent.should.have.property('profile');
       a.profileAgent.should.have.property('controller');
       a.profileAgent.controller.should.have.property('id');
-      a.profileAgent.controller.should.have.property('seed');
       a.profileAgent.controller.should.have.property('keystore');
       a.profileAgent.should.have.property('keystore');
       a.profileAgent.should.have.property('capabilityInvocationKey');
       a.profileAgent.should.have.property('zcaps');
+      a.should.have.property('secrets');
+      a.secrets.should.have.property('seed');
     });
   }); // end create a profile agent
 }); // end profiles API
