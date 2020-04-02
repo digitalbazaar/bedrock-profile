@@ -201,11 +201,13 @@ describe('profileAgents API', () => {
       let error;
       let profileAgent;
       let delegatedZcaps;
+      let secrets;
       try {
-        ({profileAgent} = await profileAgents.create({accountId, profileId}));
+        ({profileAgent, secrets} = await profileAgents.create(
+          {accountId, profileId}));
         const capabilities = mockData.zcaps;
         delegatedZcaps = await profileAgents.delegateCapabilities(
-          {profileAgent, capabilities, controller});
+          {profileAgent, capabilities, controller, secrets});
       } catch(e) {
         error = e;
       }
