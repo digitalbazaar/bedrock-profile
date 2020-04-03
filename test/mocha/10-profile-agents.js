@@ -56,7 +56,7 @@ describe('profileAgents API', () => {
       profileAgent.id.should.equal(fetchedProfileAgent.id);
       profileAgent.sequence.should.equal(fetchedProfileAgent.sequence);
       profileAgent.keystore.should.equal(fetchedProfileAgent.keystore);
-      profileAgent.capabilityInvocationKey.should.equal(
+      profileAgent.capabilityInvocationKey.should.eql(
         fetchedProfileAgent.capabilityInvocationKey);
     });
     it('successfully get a profile agent by "profileId"', async () => {
@@ -87,7 +87,7 @@ describe('profileAgents API', () => {
       fetchedProfileAgent.sequence.should.equal(1);
       fetchedProfileAgent.profile.should.equal(profileId);
       profileAgent.keystore.should.equal(fetchedProfileAgent.keystore);
-      profileAgent.capabilityInvocationKey.should.equal(
+      profileAgent.capabilityInvocationKey.should.eql(
         fetchedProfileAgent.capabilityInvocationKey);
     });
   }); // end get a profile agent
@@ -153,7 +153,7 @@ describe('profileAgents API', () => {
       fetchedProfileAgent0.profileAgent.id.should.equal(profileAgent0.id);
       fetchedProfileAgent0.profileAgent.keystore.should.equal(
         profileAgent0.keystore);
-      fetchedProfileAgent0.profileAgent.capabilityInvocationKey.should.equal(
+      fetchedProfileAgent0.profileAgent.capabilityInvocationKey.should.eql(
         profileAgent0.capabilityInvocationKey);
     });
   }); // end get all profile agents
@@ -186,7 +186,7 @@ describe('profileAgents API', () => {
       profileAgent.sequence.should.equal(0);
       updatedProfileAgent.sequence.should.equal(1);
       profileAgent.keystore.should.equal(updatedProfileAgent.keystore);
-      profileAgent.capabilityInvocationKey.should.equal(
+      profileAgent.capabilityInvocationKey.should.eql(
         updatedProfileAgent.capabilityInvocationKey);
       updatedProfileAgent.profile.should.equal(profileId);
       profileAgent.account.should.equal(accountId);
