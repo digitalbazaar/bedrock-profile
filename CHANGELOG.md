@@ -1,5 +1,13 @@
 # bedrock-profile ChangeLog
 
+## 4.0.0 - 2020-04-03
+
+### Changed
+- **BREAKING**: Change data model for capability invocation key storage.
+
+### Added
+- Add `getSigner` API.
+
 ## 3.0.0 - 2020-04-02
 
 ### Changed
