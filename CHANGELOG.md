@@ -1,5 +1,10 @@
 # bedrock-profile ChangeLog
 
+## 4.1.0 - 2020-04-16
+
+### Added
+- Added support for VeresOne type DIDs for profiles.
+
 ## 4.0.0 - 2020-04-03
 
 ### Changed
