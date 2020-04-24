@@ -30,7 +30,7 @@
     "cors": "^2.8.5",
     "crypto-ld": "^3.7.0",
     "did-method-key": "^0.6.1",
-    "did-veres-one": "^12.1.0",
+    "did-veres-one": "veres-one/did-veres-one#support-v1",
     "edv-client": "^2.7.0",
     "express-async-handler": "^1.1.4",
     "jsonld-signatures": "^5.0.1",
