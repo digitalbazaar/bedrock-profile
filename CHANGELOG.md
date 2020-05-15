@@ -1,5 +1,10 @@
 # bedrock-profile ChangeLog
 
+## 4.2.0 - 2020-05-15
+
+### Changed
+- Update dependencies to use a release.
+
 ## 4.1.0 - 2020-04-16
 
 ### Added
