@@ -1,5 +1,11 @@
 # bedrock-profile ChangeLog
 
+## 5.0.0 -
+
+### Changed
+- **BREAKING**: Upgraded bedrock-mongodb to ^7.0.0.
+- Swapped out old mongo API for mongo driver 3.5 api.
+
 ## 4.2.0 - 2020-05-15
 
 ### Changed
