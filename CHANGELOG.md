@@ -1,6 +1,6 @@
 # bedrock-profile ChangeLog
 
-## 5.0.0 -
+## 5.0.0 - 2020-06-09
 
 ### Changed
 - **BREAKING**: Upgraded bedrock-mongodb to ^7.0.0.
