@@ -1,5 +1,11 @@
 # bedrock-profile ChangeLog
 
+## 6.0.0 - 2020-06-23
+
+### Changed
+- **BREAKING**: Upgrade from edv-client@2 to edv-client@4. This is a breaking
+  change here because edv-client@3 changed the way EDV documents are serialized.
+
 ## 5.0.0 - 2020-06-09
 
 ### Changed
