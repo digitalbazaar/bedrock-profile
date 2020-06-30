@@ -1,5 +1,14 @@
 # bedrock-profile ChangeLog
 
+## 6.1.0 - 2020-06-30
+
+### Changed
+- Update test deps.
+- Update CI workflow.
+
+## Fixed
+- Remove unused bedrock-account peer dep.
+
 ## 6.0.0 - 2020-06-23
 
 ### Changed
