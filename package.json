@@ -40,9 +40,9 @@
   "peerDependencies": {
     "bedrock": "^3.1.1",
     "bedrock-did-context": "^1.0.0",
-    "bedrock-edv-storage": "^4.1.0",
+    "bedrock-edv-storage": "^4.1.1",
     "bedrock-express": "^3.2.0",
-    "bedrock-https-agent": "^1.0.1",
+    "bedrock-https-agent": "^1.1.0",
     "bedrock-kms": "^3.0.1",
     "bedrock-kms-http": "^2.3.0",
     "bedrock-passport": "^6.0.0",
@@ -56,7 +56,7 @@
     "lib": "./lib"
   },
   "devDependencies": {
-    "eslint": "^7.3.1",
+    "eslint": "^7.4.0",
     "eslint-config-digitalbazaar": "^2.5.0"
   }
 }
