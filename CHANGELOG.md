@@ -1,5 +1,13 @@
 # bedrock-profile ChangeLog
 
+## 6.2.0 2020-07-07
+
+### Changed
+- Update peer deps, test deps and CI workflow.
+
+### Fixed
+- Fix usage of the MongoDB projection API.
+
 ## 6.1.0 - 2020-06-30
 
 ### Changed
