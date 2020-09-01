@@ -13,10 +13,12 @@ describe('profiles API', () => {
   // mock session authentication for delegations endpoint
   let passportStub;
   let profileAgentCollection;
+  let kmsKeystoreCollection;
   before(async () => {
     await helpers.prepareDatabase(mockData);
     passportStub = await helpers.stubPassport();
     profileAgentCollection = database.collections['profile-profileAgent'];
+    kmsKeystoreCollection = database.collections['kmsKeystore'];
   });
   after(() => {
     passportStub.restore();
@@ -43,23 +45,41 @@ describe('profiles API', () => {
       const profileCapabilityInvocationKey =
         a.profileAgent.zcaps.profileCapabilityInvocationKey;
       a.should.have.property('meta');
-      a.meta.should.have.property('created');
-      a.meta.should.have.property('updated');
+      a.meta.should.have.keys(['created', 'updated']);
       a.should.have.property('profileAgent');
-      a.profileAgent.should.have.property('id');
-      a.profileAgent.should.have.property('sequence');
-      a.profileAgent.should.have.property('account');
-      a.profileAgent.should.have.property('profile');
-      a.profileAgent.should.have.property('controller');
-      a.profileAgent.controller.should.have.property('id');
-      a.profileAgent.controller.should.have.property('keystore');
-      a.profileAgent.should.have.property('keystore');
-      a.profileAgent.should.have.property('capabilityInvocationKey');
-      a.profileAgent.should.have.property('zcaps');
+      a.profileAgent.should.have.keys([
+        'id', 'sequence', 'account', 'profile', 'controller', 'keystore',
+        'capabilityInvocationKey', 'zcaps'
+      ]);
+      a.profileAgent.controller.should.have.keys(['id', 'keystore']);
       profileCapabilityInvocationKey.should.have.property('expires');
       profileCapabilityInvocationKey.expires.should.be.a('string');
       a.should.have.property('secrets');
       a.secrets.should.have.property('seed');
     });
-  }); // end create a profile agent
+    it('keystore should be controlled by the profile', async () => {
+      const accountId = uuid();
+      const didMethod = 'key';
+      let error;
+      let profile;
+      try {
+        profile = await profiles.create({accountId, didMethod});
+      } catch(e) {
+        error = e;
+      }
+      assertNoError(error);
+      should.exist(profile);
+      profile.id.should.be.a('string');
+      const agents = await kmsKeystoreCollection.find({
+        'config.controller': profile.id,
+      }).toArray();
+      agents.should.have.length(1);
+      const [a] = agents;
+      a.should.have.keys(['_id', 'id', 'controller', 'meta', 'config']);
+      a.config.should.have.keys([
+        'id', 'sequence', 'controller', 'invoker', 'delegator', 'referenceId'
+      ]);
+      a.config.controller.should.equal(profile.id);
+    });
+  });
 }); // end profiles API
