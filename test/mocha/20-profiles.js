@@ -97,7 +97,7 @@ describe('profiles API', () => {
       }
       should.exist(error);
       should.not.exist(profile);
-      error.message.should.equal('"didMethod" should be either "key" or "v1".');
+      error.message.should.equal(`Unsupported DID method "${didMethod}".`);
     });
     it('should throw error if type of didMethod is not string', async () => {
       const accountId = uuid();
