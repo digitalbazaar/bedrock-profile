@@ -23,8 +23,8 @@
   },
   "homepage": "https://github.com/digitalbazaar/bedrock-profile",
   "dependencies": {
+    "@digitalbazaar/http-client": "^1.0.0",
     "assert-plus": "^1.0.0",
-    "axios": "^0.19.2",
     "base64url-universal": "^1.1.0",
     "bs58": "^4.0.1",
     "cors": "^2.8.5",
