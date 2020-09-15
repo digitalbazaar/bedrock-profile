@@ -57,6 +57,7 @@ describe('profiles API', () => {
       a.profileAgent.should.have.property('capabilityInvocationKey');
       a.profileAgent.should.have.property('zcaps');
       profileCapabilityInvocationKey.should.have.property('expires');
+      profileCapabilityInvocationKey.expires.should.be.a('string');
       a.should.have.property('secrets');
       a.secrets.should.have.property('seed');
     });
