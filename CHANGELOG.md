@@ -1,6 +1,11 @@
 # bedrock-profile ChangeLog
 
-## 6.2.0 2020-07-07
+## 6.3.0 - 2020-09-16
+
+### Added
+- Add `expires` date to capabilities created by the `delegateCapability` API.
+
+## 6.2.0 - 2020-07-07
 
 ### Changed
 - Update peer deps, test deps and CI workflow.
