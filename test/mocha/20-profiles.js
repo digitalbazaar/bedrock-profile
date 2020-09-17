@@ -42,8 +42,6 @@ describe('profiles API', () => {
       }).toArray();
       agents.should.have.length(1);
       const [a] = agents;
-      const profileCapabilityInvocationKey =
-        a.profileAgent.zcaps.profileCapabilityInvocationKey;
       a.should.have.property('meta');
       a.meta.should.have.keys(['created', 'updated']);
       a.should.have.property('profileAgent');
@@ -52,8 +50,6 @@ describe('profiles API', () => {
         'capabilityInvocationKey', 'zcaps'
       ]);
       a.profileAgent.controller.should.have.keys(['id', 'keystore']);
-      profileCapabilityInvocationKey.should.have.property('expires');
-      profileCapabilityInvocationKey.expires.should.be.a('string');
       a.should.have.property('secrets');
       a.secrets.should.have.property('seed');
     });
