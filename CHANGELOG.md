@@ -1,5 +1,10 @@
 # bedrock-profile ChangeLog
 
+## 6.3.1 - 2020-09-25
+
+### Fixed
+- Fix zcap to not throw error when expires has passed expiration date.
+
 ## 6.3.0 - 2020-09-16
 
 ### Added
