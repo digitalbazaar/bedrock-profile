@@ -1,5 +1,15 @@
 # bedrock-profile ChangeLog
 
+### 7.0.0 - 2020-09-25
+
+### Added
+- **BREAKING**: New required params `privateKmsBaseUrl` and `publicKmsBaseUrl`
+  to the `profileAgents.create` and `profile.create` APIs. The keystore for the
+  profile agents zCap key is created in the private KMS because it is accessed
+  by a `capabilityAgent` that is generated from a secret that is stored in the
+  database. If the database is stolen, the attacker cannot use the secret
+  to hit the private KMS. The attacker must also break into the network.
+
 ## 6.3.1 - 2020-09-25
 
 ### Fixed
