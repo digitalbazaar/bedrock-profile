@@ -39,18 +39,9 @@
   },
   "peerDependencies": {
     "bedrock": "^3.1.1",
-    "bedrock-did-context": "^1.0.0",
     "bedrock-edv-storage": "^4.1.1",
-    "bedrock-express": "^3.2.0",
     "bedrock-https-agent": "^1.1.0",
-    "bedrock-kms": "^3.0.1",
-    "bedrock-kms-http": "^2.3.0",
-    "bedrock-passport": "^6.0.0",
-    "bedrock-permission": "^3.0.0",
-    "bedrock-mongodb": "^7.1.0",
-    "bedrock-server": "^2.6.0",
-    "bedrock-validation": "^4.4.0",
-    "bedrock-veres-one-context": "^10.0.1"
+    "bedrock-mongodb": "^7.1.0"
   },
   "directories": {
     "lib": "./lib"

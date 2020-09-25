@@ -5,8 +5,11 @@
 
 const {profileAgents} = require('bedrock-profile');
 const helpers = require('./helpers');
-const {util: {uuid}} = require('bedrock');
+const {config, util: {uuid}} = require('bedrock');
 const mockData = require('./mock.data');
+
+const privateKmsBaseUrl = `${config.server.baseUri}/kms`;
+const publicKmsBaseUrl = `${config.server.baseUri}/kms`;
 
 describe('profileAgents API', () => {
   // mock session authentication for delegations endpoint
@@ -25,7 +28,9 @@ describe('profileAgents API', () => {
       let error;
       let profileAgent;
       try {
-        ({profileAgent} = await profileAgents.create({accountId, profileId}));
+        ({profileAgent} = await profileAgents.create({
+          accountId, privateKmsBaseUrl, profileId, publicKmsBaseUrl
+        }));
       } catch(e) {
         error = e;
       }
@@ -44,7 +49,9 @@ describe('profileAgents API', () => {
       let profileAgent;
       let fetchedProfileAgent;
       try {
-        ({profileAgent} = await profileAgents.create({accountId, profileId}));
+        ({profileAgent} = await profileAgents.create({
+          accountId, privateKmsBaseUrl, profileId, publicKmsBaseUrl
+        }));
         const {id} = profileAgent;
         ({profileAgent: fetchedProfileAgent} = await profileAgents.get({id}));
       } catch(e) {
@@ -66,7 +73,9 @@ describe('profileAgents API', () => {
       let profileAgent;
       let fetchedProfileAgent;
       try {
-        ({profileAgent} = await profileAgents.create({profileId}));
+        ({profileAgent} = await profileAgents.create({
+          privateKmsBaseUrl, profileId, publicKmsBaseUrl
+        }));
         await profileAgents.update({
           profileAgent: {
             ...profileAgent,
@@ -100,7 +109,9 @@ describe('profileAgents API', () => {
       let profileAgent;
       let fetchedProfileAgent;
       try {
-        ({profileAgent} = await profileAgents.create({accountId, profileId}));
+        ({profileAgent} = await profileAgents.create({
+          accountId, privateKmsBaseUrl, profileId, publicKmsBaseUrl
+        }));
         ({id} = profileAgent);
         await profileAgents.remove({id});
       } catch(e) {
@@ -127,7 +138,9 @@ describe('profileAgents API', () => {
       let fetchedProfileAgents;
       try {
         const create3ProfileAgents = [0, 1, 2].map(async () => {
-          return profileAgents.create({accountId, profileId});
+          return profileAgents.create({
+            accountId, privateKmsBaseUrl, profileId, publicKmsBaseUrl
+          });
         });
         [
           {profileAgent: profileAgent0},
@@ -166,7 +179,9 @@ describe('profileAgents API', () => {
       let profileAgent;
       let updatedProfileAgent;
       try {
-        ({profileAgent} = await profileAgents.create({accountId, profileId}));
+        ({profileAgent} = await profileAgents.create({
+          accountId, privateKmsBaseUrl, profileId, publicKmsBaseUrl
+        }));
         const {id} = profileAgent;
         await profileAgents.update({
           profileAgent: {
@@ -203,8 +218,9 @@ describe('profileAgents API', () => {
       let delegatedZcaps;
       let secrets;
       try {
-        ({profileAgent, secrets} = await profileAgents.create(
-          {accountId, profileId}));
+        ({profileAgent, secrets} = await profileAgents.create({
+          accountId, privateKmsBaseUrl, profileId, publicKmsBaseUrl
+        }));
         const capabilities = mockData.zcaps;
         delegatedZcaps = await profileAgents.delegateCapabilities(
           {profileAgent, capabilities, controller, secrets});

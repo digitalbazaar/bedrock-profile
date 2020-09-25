@@ -7,7 +7,10 @@ const database = require('bedrock-mongodb');
 const {profiles} = require('bedrock-profile');
 const helpers = require('./helpers');
 const mockData = require('./mock.data');
-const {util: {uuid}} = require('bedrock');
+const {config, util: {uuid}} = require('bedrock');
+
+const privateKmsBaseUrl = `${config.server.baseUri}/kms`;
+const publicKmsBaseUrl = `${config.server.baseUri}/kms`;
 
 describe('profiles API', () => {
   // mock session authentication for delegations endpoint
@@ -30,7 +33,9 @@ describe('profiles API', () => {
       let error;
       let profile;
       try {
-        profile = await profiles.create({accountId});
+        profile = await profiles.create({
+          accountId, privateKmsBaseUrl, publicKmsBaseUrl
+        });
       } catch(e) {
         error = e;
       }
@@ -59,7 +64,9 @@ describe('profiles API', () => {
       let error;
       let profile;
       try {
-        profile = await profiles.create({accountId, didMethod});
+        profile = await profiles.create({
+          accountId, didMethod, privateKmsBaseUrl, publicKmsBaseUrl
+        });
       } catch(e) {
         error = e;
       }
