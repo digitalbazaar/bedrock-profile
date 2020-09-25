@@ -15,7 +15,7 @@
     "bedrock-did-context": "^1.0.0",
     "bedrock-edv-storage": "^4.1.1",
     "bedrock-express": "^3.2.0",
-    "bedrock-https-agent": "^1.1.0",
+    "bedrock-https-agent": "^2.0.0",
     "bedrock-jsonld-document-loader": "^1.0.1",
     "bedrock-kms": "^3.0.1",
     "bedrock-kms-http": "^2.3.0",
