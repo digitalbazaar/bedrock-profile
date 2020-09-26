@@ -91,7 +91,9 @@ describe('profiles API', () => {
       let error;
       let profile;
       try {
-        profile = await profiles.create({accountId, didMethod});
+        profile = await profiles.create({
+          accountId, didMethod, privateKmsBaseUrl, publicKmsBaseUrl
+        });
       } catch(e) {
         error = e;
       }
@@ -101,12 +103,14 @@ describe('profiles API', () => {
     });
     it('should throw error if type of didMethod is not string', async () => {
       const accountId = uuid();
-      const didMethods = [{}, false, undefined];
-      for(const didMethod of didMethods) {
+      const badTypes = [{}, false, undefined];
+      for(const didMethod of badTypes) {
         let error;
         let profile;
         try {
-          profile = await profiles.create({accountId, didMethod});
+          profile = await profiles.create({
+            accountId, didMethod, privateKmsBaseUrl, publicKmsBaseUrl
+          });
         } catch(e) {
           error = e;
         }
@@ -138,7 +142,9 @@ describe('profiles API', () => {
       let error;
       let profile;
       try {
-        profile = await profiles.create({accountId, didMethod, didOptions});
+        profile = await profiles.create({
+          accountId, didMethod, privateKmsBaseUrl, publicKmsBaseUrl, didOptions
+        });
       } catch(e) {
         error = e;
       }
