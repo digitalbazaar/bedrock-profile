@@ -1,5 +1,11 @@
 # bedrock-profile ChangeLog
 
+### 7.1.0 - 2020-09-28
+
+### Changed
+- Use edv-client@6.
+- Use did-method-key@0.7.0.
+
 ### 7.0.0 - 2020-09-25
 
 ### Added
