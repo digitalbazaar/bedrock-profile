@@ -1,6 +1,6 @@
 {
   "name": "bedrock-profile",
-  "version": "7.1.0",
+  "version": "7.1.1-0",
   "description": "Profiles for Bedrock Applications",
   "main": "./lib",
   "scripts": {
