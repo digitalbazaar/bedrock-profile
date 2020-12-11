@@ -30,11 +30,12 @@ describe('profiles API', () => {
   describe('Create Profile', () => {
     it('successfully create a profile', async () => {
       const accountId = uuid();
+      const didMethod = 'v1';
       let error;
       let profile;
       try {
         profile = await profiles.create({
-          accountId, privateKmsBaseUrl, publicKmsBaseUrl
+          accountId, privateKmsBaseUrl, publicKmsBaseUrl, didMethod
         });
       } catch(e) {
         error = e;
@@ -83,6 +84,73 @@ describe('profiles API', () => {
         'id', 'sequence', 'controller', 'invoker', 'delegator', 'referenceId'
       ]);
       a.config.controller.should.equal(profile.id);
+    });
+    it('should throw error if didMethod is not `key` or `v1`', async () => {
+      const accountId = uuid();
+      const didMethod = 'some-other-method';
+      let error;
+      let profile;
+      try {
+        profile = await profiles.create({
+          accountId, didMethod, privateKmsBaseUrl, publicKmsBaseUrl
+        });
+      } catch(e) {
+        error = e;
+      }
+      should.exist(error);
+      should.not.exist(profile);
+      error.message.should.equal(`Unsupported DID method "${didMethod}".`);
+    });
+    it('should throw error if type of didMethod is not string', async () => {
+      const accountId = uuid();
+      const badTypes = [{}, false, undefined];
+      for(const didMethod of badTypes) {
+        let error;
+        let profile;
+        try {
+          profile = await profiles.create({
+            accountId, didMethod, privateKmsBaseUrl, publicKmsBaseUrl
+          });
+        } catch(e) {
+          error = e;
+        }
+        should.exist(error);
+        should.not.exist(profile);
+        error.message.should.equal('didMethod (string) is required');
+      }
+    });
+    it('should throw error if type of accountId is not string', async () => {
+      const accountIds = [{}, false, undefined];
+      const didMethod = 'key';
+      for(const accountId of accountIds) {
+        let error;
+        let profile;
+        try {
+          profile = await profiles.create({accountId, didMethod});
+        } catch(e) {
+          error = e;
+        }
+        should.exist(error);
+        should.not.exist(profile);
+        error.message.should.equal('accountId (string) is required');
+      }
+    });
+    it('should throw error if type of didOptions is not object', async () => {
+      const accountId = uuid();
+      const didMethod = 'key';
+      const didOptions = 'string';
+      let error;
+      let profile;
+      try {
+        profile = await profiles.create({
+          accountId, didMethod, privateKmsBaseUrl, publicKmsBaseUrl, didOptions
+        });
+      } catch(e) {
+        error = e;
+      }
+      should.exist(error);
+      should.not.exist(profile);
+      error.message.should.equal('didOptions (object) is required');
     });
   });
 }); // end profiles API

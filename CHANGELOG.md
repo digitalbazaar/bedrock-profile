@@ -1,5 +1,10 @@
 # bedrock-profile ChangeLog
 
+### 8.0.0 - 2020-11-TBD
+
+### Added
+- **BREAKING**: `didMethod` is now a required param when creating profile.
+
 ### 7.1.0 - 2020-09-28
 
 ### Changed
