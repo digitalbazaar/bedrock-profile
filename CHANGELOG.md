@@ -1,5 +1,13 @@
 # bedrock-profile ChangeLog
 
+### 9.0.0 - TBD
+
+### Changed
+- **BREAKING**: Update to latest KMS keystore config data model. The data model
+  no longer includes `invoker` or `delegator`.
+- Use `KeystoreAgent` to update keystore configs vs using the `bedrock-kms` API
+  directly.
+
 ### 8.0.0 - 2020-12-11
 
 ### Added
