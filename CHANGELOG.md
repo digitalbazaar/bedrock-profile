@@ -3,6 +3,7 @@
 ### 9.0.0 - TBD
 
 ### Changed
+- **BREAKING**: Drop support for Node.js < 14.
 - **BREAKING**: Update to latest KMS keystore config data model. The data model
   no longer includes `invoker` or `delegator`.
 - Use `KeystoreAgent` to update keystore configs vs using the `bedrock-kms` API
