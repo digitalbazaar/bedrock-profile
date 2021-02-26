@@ -6,6 +6,9 @@ module.exports = {
     'digitalbazaar',
     'digitalbazaar/jsdoc',
   ],
+  parserOptions: {
+    ecmaVersion: 2020,
+  },
   root: true,
   ignorePatterns: ['node_modules/']
 };

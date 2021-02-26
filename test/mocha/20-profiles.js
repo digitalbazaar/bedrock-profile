@@ -80,8 +80,9 @@ describe('profiles API', () => {
       agents.should.have.length(1);
       const [a] = agents;
       a.should.have.keys(['_id', 'id', 'controller', 'meta', 'config']);
+      // FIXME: keeping referenceId?
       a.config.should.have.keys([
-        'id', 'sequence', 'controller', 'invoker', 'delegator', 'referenceId'
+        'id', 'sequence', 'controller', //, 'referenceId'
       ]);
       a.config.controller.should.equal(profile.id);
     });
