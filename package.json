@@ -30,6 +30,8 @@
     "did-veres-one": "^12.1.1",
     "edv-client": "^6.0.1",
     "jsonld-signatures": "^5.1.0",
+    "@digitalbazaar/ed25519-signature-2018": "github:digitalbazaar/@digitalbazaar/ed25519-signature-2018#initial",
+    "@digitalbazaar/ed25519-signature-2020": "github:digitalbazaar/@digitalbazaar/ed25519-signature-2020#initial",
     "ocapld": "^2.0.0",
     "webkms-client": "^3.0.0"
   },
@@ -37,7 +39,7 @@
     "bedrock": "^4.1.1",
     "bedrock-edv-storage": "^4.1.1",
     "bedrock-https-agent": "^2.0.0",
-    "bedrock-mongodb": "^8.0.0"
+    "bedrock-mongodb": "^8.2.0"
   },
   "directories": {
     "lib": "./lib"
