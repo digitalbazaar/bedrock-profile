@@ -35,7 +35,7 @@
     "express-async-handler": "^1.1.4",
     "jsonld-signatures": "^5.1.0",
     "ocapld": "^2.0.0",
-    "webkms-client": "digitalbazaar/webkms-client#update-keystore"
+    "webkms-client": "^2.5.0"
   },
   "peerDependencies": {
     "bedrock": "^3.1.1",
