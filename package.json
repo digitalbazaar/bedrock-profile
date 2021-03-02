@@ -34,7 +34,7 @@
     "webkms-client": "^2.5.0"
   },
   "peerDependencies": {
-    "bedrock": "^3.1.1",
+    "bedrock": "^4.1.1",
     "bedrock-edv-storage": "^4.1.1",
     "bedrock-https-agent": "^2.0.0",
     "bedrock-mongodb": "^8.0.0"
