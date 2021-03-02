@@ -1,6 +1,6 @@
 # bedrock-profile ChangeLog
 
-### 9.0.0 - TBD
+### 9.0.0 - 2021-03-02
 
 ### Changed
 - **BREAKING**: Drop support for Node.js < 14.
@@ -8,6 +8,8 @@
   no longer includes `invoker` or `delegator`.
 - Use `KeystoreAgent` to update keystore configs vs using the `bedrock-kms` API
   directly.
+- **BREAKING**: Use `webkms-client@3`. Implements changes in the
+  http-signature-zcap headers used to interact with the KMS system.
 
 ### 8.0.0 - 2020-12-11
 
