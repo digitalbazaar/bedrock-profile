@@ -8,8 +8,7 @@ const helpers = require('./helpers');
 const {config, util: {uuid}} = require('bedrock');
 const mockData = require('./mock.data');
 
-const privateKmsBaseUrl = `${config.server.baseUri}/kms`;
-const publicKmsBaseUrl = `${config.server.baseUri}/kms`;
+const kmsBaseUrl = `${config.server.baseUri}/kms`;
 
 describe('profileAgents getByToken API', () => {
   // mock session authentication for delegations endpoint
@@ -28,7 +27,7 @@ describe('profileAgents getByToken API', () => {
     let profileAgent;
     try {
       ({profileAgent} = await profileAgents.create({
-        privateKmsBaseUrl, profileId, publicKmsBaseUrl, token
+        kmsBaseUrl, profileId, token
       }));
     } catch(e) {
       error = e;
