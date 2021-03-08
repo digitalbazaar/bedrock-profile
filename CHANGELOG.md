@@ -1,5 +1,11 @@
 # bedrock-profile ChangeLog
 
+## 11.0.0 - TBD
+
+### Changed
+- **BREAKING**: Refactor use of KMS system. Remove KMS related parameters from
+  some public APIs. The KMS is now configured via the bedrock config.
+
 ## 10.1.0 - 2021-06-02
 
 ### Changed
@@ -42,18 +48,18 @@
 - **BREAKING**: Use `webkms-client@3`. Implements changes in the
   http-signature-zcap headers used to interact with the KMS system.
 
-## 8.0.0 - 2020-12-11
+### 8.0.0 - 2020-12-11
 
 ### Added
 - **BREAKING**: `didMethod` is now a required param when creating profile.
 
-## 7.1.0 - 2020-09-28
+### 7.1.0 - 2020-09-28
 
 ### Changed
 - Use edv-client@6.
 - Use did-method-key@0.7.0.
 
-## 7.0.0 - 2020-09-25
+### 7.0.0 - 2020-09-25
 
 ### Added
 - **BREAKING**: New required params `privateKmsBaseUrl` and `publicKmsBaseUrl`
