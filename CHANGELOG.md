@@ -7,7 +7,7 @@
   Node.js 12 was removed in error as it is still LTS and there is no technical
   requirement preventing its use.
 
-### 9.0.0 - 2021-03-02
+## 9.0.0 - 2021-03-02
 
 ### Changed
 - **BREAKING**: Drop support for Node.js < 14.
@@ -18,18 +18,18 @@
 - **BREAKING**: Use `webkms-client@3`. Implements changes in the
   http-signature-zcap headers used to interact with the KMS system.
 
-### 8.0.0 - 2020-12-11
+## 8.0.0 - 2020-12-11
 
 ### Added
 - **BREAKING**: `didMethod` is now a required param when creating profile.
 
-### 7.1.0 - 2020-09-28
+## 7.1.0 - 2020-09-28
 
 ### Changed
 - Use edv-client@6.
 - Use did-method-key@0.7.0.
 
-### 7.0.0 - 2020-09-25
+## 7.0.0 - 2020-09-25
 
 ### Added
 - **BREAKING**: New required params `privateKmsBaseUrl` and `publicKmsBaseUrl`
