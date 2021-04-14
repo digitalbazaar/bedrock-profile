@@ -1,6 +1,6 @@
 # bedrock-profile ChangeLog
 
-## 9.0.1 - TBD
+## 9.0.1 - 2021-04-14
 
 ### Fixed
 - Include use of Node.js 12 in CI test matrix and `engines` requirement.
