@@ -1,5 +1,12 @@
 # bedrock-profile ChangeLog
 
+## 9.0.1 - TBD
+
+### Fixed
+- Include use of Node.js 12 in CI test matrix and `engines` requirement.
+  Node.js 12 was removed in error as it is still LTS and there is no technical
+  requirement preventing its use.
+
 ### 9.0.0 - 2021-03-02
 
 ### Changed
