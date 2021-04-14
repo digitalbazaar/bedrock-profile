@@ -21,7 +21,7 @@ describe('profiles API', () => {
     await helpers.prepareDatabase(mockData);
     passportStub = await helpers.stubPassport();
     profileAgentCollection = database.collections['profile-profileAgent'];
-    kmsKeystoreCollection = database.collections['kmsKeystore'];
+    kmsKeystoreCollection = database.collections.kmsKeystore;
   });
   after(() => {
     passportStub.restore();
