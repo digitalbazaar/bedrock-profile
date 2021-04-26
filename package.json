@@ -31,8 +31,6 @@
     "crypto-ld": "^3.7.0",
     "did-method-key": "^0.7.0",
     "did-veres-one": "^12.1.1",
-    "ed25519-signature-2018-context": "github:digitalbazaar/@digitalbazaar/ed25519-signature-2018-context#initial",
-    "ed25519-signature-2020-context": "github:digitalbazaar/@digitalbazaar/ed25519-signature-2020-context#initial",
     "edv-client": "^6.0.1",
     "jsonld-signatures": "^5.1.0",
     "ocapld": "^2.0.0",
