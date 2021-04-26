@@ -81,13 +81,10 @@ describe('profiles API', () => {
       const [a] = agents;
       a.should.have.keys(['_id', 'id', 'controller', 'meta', 'config']);
       a.config.should.have.keys([
-        'id', 'sequence', 'controller'
-
-        // FIXME: removed in connection with another fixme denoting that the
-        // referenceId has been removed to avoid a duplicate error.
-        //,'referenceId'
+        'id', 'sequence', 'controller', 'referenceId'
       ]);
       a.config.controller.should.equal(profile.id);
+      a.config.referenceId.should.equal('primary');
     });
     it('should throw error if didMethod is not `key` or `v1`', async () => {
       const accountId = uuid();
