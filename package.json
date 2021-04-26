@@ -25,6 +25,7 @@
   "dependencies": {
     "@digitalbazaar/ed25519-signature-2018": "^2.0.1",
     "@digitalbazaar/ed25519-signature-2020": "^2.1.0",
+    "@digitalbazaar/zcapld": "^4.0.0",
     "@transmute/jsonld-document-loader": "^0.2.0",
     "assert-plus": "^1.0.0",
     "base64url-universal": "^1.1.0",
@@ -33,7 +34,6 @@
     "did-veres-one": "^12.1.1",
     "edv-client": "^6.0.1",
     "jsonld-signatures": "^9.0.2",
-    "ocapld": "^2.0.0",
     "webkms-client": "^3.0.0"
   },
   "peerDependencies": {
