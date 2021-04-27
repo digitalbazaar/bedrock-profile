@@ -6,6 +6,7 @@
 'use strict';
 
 const {util: {uuid}} = require('bedrock');
+const {constants: {ZCAP_CONTEXT_URL}} = require('@digitalbazaar/zcapld');
 
 const data = {};
 module.exports = data;
@@ -32,7 +33,7 @@ function createAccount(email) {
 }
 
 const zcap0 = {
-  '@context': 'https://w3id.org/security/v2',
+  '@context': ZCAP_CONTEXT_URL,
   id: 'urn:zcap:z19vWhR8EsNbWqvazp5bg6BTu',
   controller: 'did:key:z6Mkkt1BWYLPAAXwYBwyVHAZkL94tgT8QbQv2SUxeW1U3DaG',
   // eslint-disable-next-line max-len
@@ -43,7 +44,7 @@ const zcap0 = {
     id: 'https://bedrock.localhost:18443/kms/keystores/z1AAWWM7Zd4YyyV3NfaCqFuzQ/keys/z19wxodgv1UhrToQMvSxGhQG6',
     type: 'Ed25519VerificationKey2020',
     // eslint-disable-next-line max-len
-    verificationMethod: 'did:key:z6MkkrtV7wnBpXKBtiZjxaSghCo8ttb5kZUJTk8bEwTTTYvg#z6MkkrtV7wnBpXKBtiZjxaSghCo8ttb5kZUJTk8bEwTTTYvg'
+    publicAlias: 'did:key:z6MkkrtV7wnBpXKBtiZjxaSghCo8ttb5kZUJTk8bEwTTTYvg#z6MkkrtV7wnBpXKBtiZjxaSghCo8ttb5kZUJTk8bEwTTTYvg'
   },
   // eslint-disable-next-line max-len
   parentCapability: 'https://bedrock.localhost:18443/kms/keystores/z1AAWWM7Zd4YyyV3NfaCqFuzQ/keys/z19wxodgv1UhrToQMvSxGhQG6',
@@ -57,13 +58,13 @@ const zcap0 = {
       // eslint-disable-next-line max-len
       'https://bedrock.localhost:18443/kms/keystores/z1AAWWM7Zd4YyyV3NfaCqFuzQ/keys/z19wxodgv1UhrToQMvSxGhQG6'
     ],
-    // eslint-disable-next-line max-len
-    jws: 'eyJhbGciOiJFZERTQSIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..bWt6_Q65omg8rE44a_1dzWFGcFQbUrVqZ_hnAqIKlWSQ1HpTSV6OyhAQfBlVhPCsrVplqC8oVEJmp4UWqy6gCw'
+    // a valid signature is not required for the test
+    proofValue: 'zMOCK_PROOF'
   }
 };
 
 const zcap1 = {
-  '@context': 'https://w3id.org/security/v2',
+  '@context': ZCAP_CONTEXT_URL,
   id: 'urn:zcap:z1ACgNxti98PXBjtw7ogfsN45',
   controller: 'did:key:z6Mkkt1BWYLPAAXwYBwyVHAZkL94tgT8QbQv2SUxeW1U3DaG',
   referenceId: 'bedrock.localhost:users',
@@ -87,13 +88,13 @@ const zcap1 = {
       // eslint-disable-next-line max-len
       'https://bedrock.localhost:18443/edvs/z1A9uTYSmCU3DYQr7jhruhCuK/zcaps/documents'
     ],
-    // eslint-disable-next-line max-len
-    jws: 'eyJhbGciOiJFZERTQSIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..jXUHaPhgTLFafpi5d7ya-vAnYfgZQrRYYNxCtkH5PRTIb31EWYt9oFKEbxo2Fxn8lB0HTPC67phQUkd-J0DhDA'
+    // a valid signature is not required for the test
+    proofValue: 'zMOCK_PROOF'
   }
 };
 
 const zcap2 = {
-  '@context': 'https://w3id.org/security/v2',
+  '@context': ZCAP_CONTEXT_URL,
   id: 'urn:zcap:z19u4rwByrmyKFr1XC9AYNYcs',
   controller: 'did:key:z6Mkkt1BWYLPAAXwYBwyVHAZkL94tgT8QbQv2SUxeW1U3DaG',
   referenceId: 'bedrock.localhost:settings',
@@ -117,8 +118,8 @@ const zcap2 = {
       // eslint-disable-next-line max-len
       'https://bedrock.localhost:18443/edvs/z19jTB2drTyi4JHrARunxze8E/zcaps/documents'
     ],
-    // eslint-disable-next-line max-len
-    jws: 'eyJhbGciOiJFZERTQSIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..4wl0uIr1meF5c_gXlQysfK6xhAlB5mQ7ZclxxursKTwEYiWDUTXbk0H9lElPJDpbN5vC64yh_pR5zeycm8-4Bw'
+    // a valid signature is not required for the test
+    proofValue: 'zMOCK_PROOF'
   }
 };
 
