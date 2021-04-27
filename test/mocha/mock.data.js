@@ -41,14 +41,14 @@ const zcap0 = {
   invocationTarget: {
     // eslint-disable-next-line max-len
     id: 'https://bedrock.localhost:18443/kms/keystores/z1AAWWM7Zd4YyyV3NfaCqFuzQ/keys/z19wxodgv1UhrToQMvSxGhQG6',
-    type: 'Ed25519VerificationKey2018',
+    type: 'Ed25519VerificationKey2020',
     // eslint-disable-next-line max-len
     verificationMethod: 'did:key:z6MkkrtV7wnBpXKBtiZjxaSghCo8ttb5kZUJTk8bEwTTTYvg#z6MkkrtV7wnBpXKBtiZjxaSghCo8ttb5kZUJTk8bEwTTTYvg'
   },
   // eslint-disable-next-line max-len
   parentCapability: 'https://bedrock.localhost:18443/kms/keystores/z1AAWWM7Zd4YyyV3NfaCqFuzQ/keys/z19wxodgv1UhrToQMvSxGhQG6',
   proof: {
-    type: 'Ed25519Signature2018',
+    type: 'Ed25519Signature2020',
     created: '2020-02-27T21:22:48Z',
     // eslint-disable-next-line max-len
     verificationMethod: 'did:key:z6MkkrtV7wnBpXKBtiZjxaSghCo8ttb5kZUJTk8bEwTTTYvg#z6MkkrtV7wnBpXKBtiZjxaSghCo8ttb5kZUJTk8bEwTTTYvg',
@@ -78,7 +78,7 @@ const zcap1 = {
   // eslint-disable-next-line max-len
   parentCapability: 'https://bedrock.localhost:18443/edvs/z1A9uTYSmCU3DYQr7jhruhCuK/zcaps/documents',
   proof: {
-    type: 'Ed25519Signature2018',
+    type: 'Ed25519Signature2020',
     created: '2020-02-27T21:22:48Z',
     // eslint-disable-next-line max-len
     verificationMethod: 'did:key:z6MkkrtV7wnBpXKBtiZjxaSghCo8ttb5kZUJTk8bEwTTTYvg#z6MkkrtV7wnBpXKBtiZjxaSghCo8ttb5kZUJTk8bEwTTTYvg',
@@ -108,7 +108,7 @@ const zcap2 = {
   // eslint-disable-next-line max-len
   parentCapability: 'https://bedrock.localhost:18443/edvs/z19jTB2drTyi4JHrARunxze8E/zcaps/documents',
   proof: {
-    type: 'Ed25519Signature2018',
+    type: 'Ed25519Signature2020',
     created: '2020-02-27T21:22:48Z',
     // eslint-disable-next-line max-len
     verificationMethod: 'did:key:z6MkkrtV7wnBpXKBtiZjxaSghCo8ttb5kZUJTk8bEwTTTYvg#z6MkkrtV7wnBpXKBtiZjxaSghCo8ttb5kZUJTk8bEwTTTYvg',
