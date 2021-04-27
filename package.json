@@ -33,13 +33,13 @@
     "base64url-universal": "^1.1.0",
     "crypto-ld": "^5.1.0",
     "did-veres-one": "^12.1.1",
-    "edv-client": "^6.0.1",
+    "edv-client": "digitalbazaar/edv-client#support-ed25519-signature-2020",
     "jsonld-signatures": "^9.0.2"
   },
   "peerDependencies": {
     "bedrock": "^4.1.1",
     "bedrock-did-io": "^1.0.0",
-    "bedrock-edv-storage": "^4.1.1",
+    "bedrock-edv-storage": "digitalbazaar/bedrock-edv-storage#update-to-use-ed25519-2020",
     "bedrock-https-agent": "^2.0.0",
     "bedrock-jsonld-document-loader": "^1.0.1",
     "bedrock-mongodb": "^8.2.0"
