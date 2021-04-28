@@ -1,5 +1,20 @@
 # bedrock-profile ChangeLog
 
+## 10.0.0 - 2021-04-TBD
+
+### Changed
+- **BREAKING**: Supports `ed25519-2020` signature suite and verification keys.
+- Update deps.
+  - **BREAKING**: Uses [@digitalbazaar/did-method-key@1.0](https://github.com/digitalbazaar/did-method-key-js/blob/master/CHANGELOG.md).
+    - `did-method-key` has been renamed to `@digitalbazaar/did-method-key` and uses `crypto-ld@5.0` based key suites.
+  - **BREAKING**: Renamed `ocapld` to [@digitalbazaar/zcapld@4.0](https://github.com/digitalbazaar/zcapld/blob/main/CHANGELOG.md).
+    - fetchInSecurityContext API uses the new zcap-context.
+  - **BREAKING**: Uses [@digitalbazaar/webkms-client@6.0](https://github.com/digitalbazaar/webkms-client/blob/main/CHANGELOG.md).
+    - Uses new `webkms-context@1.0`, `aes-key-wrapping-2019-context@1.0.3` and `sha256-hmac-key-2019-context@1.0.3` libs.
+  - Uses [crypto-ld@5.1.0](https://github.com/digitalbazaar/crypto-ld/blob/master/CHANGELOG.md).
+  - Uses [edv-client@9.0.0](https://github.com/digitalbazaar/edv-client/blob/master/CHANGELOG.md).
+- Update test deps and peerDeps.
+
 ## 9.0.1 - 2021-04-14
 
 ### Fixed
