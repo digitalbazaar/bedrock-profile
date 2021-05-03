@@ -43,6 +43,7 @@ describe('profiles API', () => {
       assertNoError(error);
       should.exist(profile);
       profile.id.should.be.a('string');
+      profile.id.startsWith('did:v1:').should.equal(true);
       const agents = await profileAgentCollection.find({
         'profileAgent.profile': profile.id,
       }).toArray();
