@@ -34,7 +34,7 @@
     "base64url-universal": "^1.1.0",
     "crypto-ld": "^5.1.0",
     "did-veres-one": "veres-one/did-veres-one#v13.x",
-    "edv-client": "digitalbazaar/edv-client#support-ed25519-signature-2020",
+    "edv-client": "^9.0.0",
     "jsonld-signatures": "^9.0.2"
   },
   "peerDependencies": {
