@@ -81,11 +81,8 @@ describe('profiles API', () => {
       agents.should.have.length(1);
       const [a] = agents;
       a.should.have.keys(['_id', 'id', 'controller', 'meta', 'config']);
-      a.config.should.have.keys([
-        'id', 'sequence', 'controller', 'referenceId'
-      ]);
+      a.config.should.have.keys(['id', 'sequence', 'controller']);
       a.config.controller.should.equal(profile.id);
-      a.config.referenceId.should.equal('primary');
     });
     it('should throw error if didMethod is not `key` or `v1`', async () => {
       const accountId = uuid();
