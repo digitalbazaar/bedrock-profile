@@ -4,6 +4,7 @@
 
 ### Changed
 - **BREAKING**: Supports `ed25519-2020` signature suite and verification keys.
+- **BREAKING**: Remove `referenceId: 'primary'`. ReferenceId will no longer be set.
 - Update deps.
   - **BREAKING**: Uses [@digitalbazaar/did-method-key@1.0](https://github.com/digitalbazaar/did-method-key-js/blob/master/CHANGELOG.md).
     - `did-method-key` has been renamed to `@digitalbazaar/did-method-key` and uses `crypto-ld@5.0` based key suites.
