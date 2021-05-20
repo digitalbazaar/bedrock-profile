@@ -14,7 +14,7 @@
     "bedrock": "^4.1.1",
     "bedrock-account": "^5.0.0",
     "bedrock-did-context": "^2.0.0",
-    "bedrock-did-io": "digitalbazaar/bedrock-did-io#update-veres-one",
+    "bedrock-did-io": "^2.0.0",
     "bedrock-edv-storage": "digitalbazaar/bedrock-edv-storage#update-to-use-ed25519-2020",
     "bedrock-express": "^4.0.0",
     "bedrock-https-agent": "^2.0.0",
