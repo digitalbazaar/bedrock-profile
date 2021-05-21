@@ -12,6 +12,7 @@
     - fetchInSecurityContext API uses the new zcap-context.
   - **BREAKING**: Uses [@digitalbazaar/webkms-client@6.0](https://github.com/digitalbazaar/webkms-client/blob/main/CHANGELOG.md).
     - Uses new `webkms-context@1.0`, `aes-key-wrapping-2019-context@1.0.3` and `sha256-hmac-key-2019-context@1.0.3` libs.
+  - **BREAKING**: Uses [did-veres-one@14.0.0-beta.0](https://github.com/veres-one/did-veres-one/blob/v14.x/CHANGELOG.md).
   - Uses [crypto-ld@6.0.0](https://github.com/digitalbazaar/crypto-ld/blob/master/CHANGELOG.md).
   - Uses [edv-client@9.0.0](https://github.com/digitalbazaar/edv-client/blob/master/CHANGELOG.md).
 - Update test deps and peerDeps.
