@@ -1,17 +1,19 @@
 # bedrock-profile ChangeLog
 
-## 10.0.0 - 2021-04-TBD
+## 10.0.0 - 2021-05-21
 
 ### Changed
 - **BREAKING**: Supports `ed25519-2020` signature suite and verification keys.
-- **BREAKING**: Remove `referenceId: 'primary'`. ReferenceId will no longer be set.
+- **BREAKING**: Remove `referenceId: 'primary'`. `referenceId` is no longer set
+  on any keyStores.
 - Update deps.
   - **BREAKING**: Uses [@digitalbazaar/did-method-key@1.0](https://github.com/digitalbazaar/did-method-key-js/blob/master/CHANGELOG.md).
     - `did-method-key` has been renamed to `@digitalbazaar/did-method-key` and uses `crypto-ld@5.0` based key suites.
   - **BREAKING**: Renamed `ocapld` to [@digitalbazaar/zcapld@4.0](https://github.com/digitalbazaar/zcapld/blob/main/CHANGELOG.md).
     - fetchInSecurityContext API uses the new zcap-context.
   - **BREAKING**: Uses [@digitalbazaar/webkms-client@6.0](https://github.com/digitalbazaar/webkms-client/blob/main/CHANGELOG.md).
-    - Uses new `webkms-context@1.0`, `aes-key-wrapping-2019-context@1.0.3` and `sha256-hmac-key-2019-context@1.0.3` libs.
+    - Uses new `webkms-context@1.0`, `aes-key-wrapping-2019-context@1.0.3`
+      and `sha256-hmac-key-2019-context@1.0.3` libs.
   - **BREAKING**: Uses [did-veres-one@14.0.0-beta.0](https://github.com/veres-one/did-veres-one/blob/v14.x/CHANGELOG.md).
   - Uses [crypto-ld@6.0.0](https://github.com/digitalbazaar/crypto-ld/blob/master/CHANGELOG.md).
   - Uses [edv-client@9.0.0](https://github.com/digitalbazaar/edv-client/blob/master/CHANGELOG.md).
