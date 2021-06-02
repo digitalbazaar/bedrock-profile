@@ -1,6 +1,6 @@
 # bedrock-profile ChangeLog
 
-## 10.1.0 - 2021-TBD
+## 10.1.0 - 2021-06-02
 
 ### Changed
 - Use did-veres-one@14.0.0-beta.1.
