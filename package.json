@@ -49,7 +49,7 @@
     "lib": "./lib"
   },
   "devDependencies": {
-    "eslint": "^7.24.0",
+    "eslint": "^7.30.0",
     "eslint-config-digitalbazaar": "^2.8.0",
     "eslint-plugin-jsdoc": "^32.3.0"
   },
