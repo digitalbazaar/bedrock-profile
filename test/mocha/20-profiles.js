@@ -25,7 +25,7 @@ describe('profiles API', () => {
   });
 
   describe('Create Profile', () => {
-    it('successfully create a profile', async () => {
+    it.only('successfully create a profile', async () => {
       const accountId = uuid();
       const didMethod = 'v1';
       let error;
