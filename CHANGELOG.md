@@ -1,5 +1,11 @@
 # bedrock-profile ChangeLog
 
+
+## 10.2.0 - TBD
+
+## Changed
+- Use did-method-key@2.0.0
+
 ## 10.1.0 - 2021-06-02
 
 ### Changed
