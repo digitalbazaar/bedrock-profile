@@ -25,6 +25,11 @@ describe('profileAgents API', () => {
       let error;
       let profileAgent;
       try {
+        // FIXME: this needs to be changed so that the `profileAgents`
+        // internal implementation will pull a DID from the bedrock-profile
+        // config that will be used for the `controller` of internal keystores
+        // created for capability agents of profile agents
+        const {meterCapability} = await helpers.createMeter({capabilityAgent});
         ({profileAgent} = await profileAgents.create({accountId, profileId}));
       } catch(e) {
         error = e;
