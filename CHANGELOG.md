@@ -5,6 +5,8 @@
 ### Changed
 - **BREAKING**: Refactor use of KMS system. Remove KMS related parameters from
   some public APIs. The KMS is now configured via the bedrock config.
+- **BREAKING**: A `kmsMeterCapability` must now be passed when creating
+  profile agents or profiles.
 
 ## 10.0.4 - 2021-08-19
 

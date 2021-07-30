@@ -3,12 +3,34 @@
  */
 'use strict';
 
+const bedrock = require('bedrock');
 const brAccount = require('bedrock-account');
 const brPassport = require('bedrock-passport');
 const database = require('bedrock-mongodb');
-const {promisify} = require('util');
+const {httpClient} = require('@digitalbazaar/http-client');
+const {httpsAgent} = require('bedrock-https-agent');
 const sinon = require('sinon');
 const mockData = require('./mock.data');
+
+exports.createMeter = async ({capabilityAgent} = {}) => {
+  // create a meter
+  const meterService = `${bedrock.config.server.baseUri}/meters`;
+  let meter = {
+    controller: capabilityAgent.id,
+    product: {
+      // mock ID for webkms service product
+      id: 'urn:uuid:80a82316-e8c2-11eb-9570-10bf48838a41'
+    }
+  };
+  const response = await httpClient.post(meterService, {
+    agent: httpsAgent, json: meter
+  });
+  ({data: {meter}} = response);
+
+  // return usage capability
+  const {usageCapability: meterCapability} = meter;
+  return {meterCapability};
+};
 
 exports.stubPassport = async ({email = 'alpha@example.com'} = {}) => {
   const actors = await exports.getActors(mockData);
@@ -45,7 +67,7 @@ exports.removeCollections = async (
     'profile-profileAgent',
     'profile-profileAgentCapabilitySet'
   ]) => {
-  await promisify(database.openCollections)(collectionNames);
+  await database.openCollections(collectionNames);
   for(const collectionName of collectionNames) {
     await database.collections[collectionName].deleteMany({});
   }
