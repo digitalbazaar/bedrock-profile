@@ -13,7 +13,7 @@ const {util: {uuid}} = require('bedrock');
 describe('profiles API', () => {
   // top-level application capability agent for creating meters
   let capabilityAgent;
-  let kmsMeterCapability;
+  let keystoreOptions;
   // mock session authentication for delegations endpoint
   let passportStub;
   let profileAgentCollection;
@@ -22,7 +22,7 @@ describe('profiles API', () => {
     await helpers.prepareDatabase(mockData);
     passportStub = await helpers.stubPassport();
     profileAgentCollection = database.collections['profile-profileAgent'];
-    kmsKeystoreCollection = database.collections.kmsKeystore;
+    kmsKeystoreCollection = database.collections['kms-keystore'];
 
     // top-level applications must create meters to associate with the
     // creation of profile agents; the tests here reuse the same meter but
@@ -31,7 +31,16 @@ describe('profiles API', () => {
     const handle = 'app';
     capabilityAgent = await CapabilityAgent.fromSecret({secret, handle});
     const {meterCapability} = await helpers.createMeter({capabilityAgent});
-    kmsMeterCapability = meterCapability;
+    keystoreOptions = {
+      profileAgent: {
+        meterCapability,
+        meterCapabilityInvocationSigner: capabilityAgent.getSigner()
+      },
+      profile: {
+        meterCapability,
+        meterCapabilityInvocationSigner: capabilityAgent.getSigner()
+      }
+    };
   });
   after(() => {
     passportStub.restore();
@@ -45,9 +54,7 @@ describe('profiles API', () => {
       let profile;
       try {
         profile = await profiles.create({
-          accountId, didMethod,
-          profileAgentKmsMeterCapability: kmsMeterCapability,
-          profileKmsMeterCapability: kmsMeterCapability
+          accountId, didMethod, keystoreOptions
         });
       } catch(e) {
         error = e;
@@ -79,9 +86,7 @@ describe('profiles API', () => {
       let profile;
       try {
         profile = await profiles.create({
-          accountId, didMethod,
-          profileAgentKmsMeterCapability: kmsMeterCapability,
-          profileKmsMeterCapability: kmsMeterCapability
+          accountId, didMethod, keystoreOptions
         });
       } catch(e) {
         error = e;
@@ -94,8 +99,9 @@ describe('profiles API', () => {
       }).toArray();
       agents.should.have.length(1);
       const [a] = agents;
-      a.should.have.keys(['_id', 'id', 'controller', 'meta', 'config']);
-      a.config.should.have.keys(['id', 'sequence', 'controller']);
+      a.should.have.keys(['_id', 'meta', 'config']);
+      a.config.should.have.keys(
+        ['id', 'sequence', 'controller', 'meterId', 'kmsModule']);
       a.config.controller.should.equal(profile.id);
     });
     it('should throw error if didMethod is not `key` or `v1`', async () => {
@@ -105,9 +111,7 @@ describe('profiles API', () => {
       let profile;
       try {
         profile = await profiles.create({
-          accountId, didMethod,
-          profileAgentKmsMeterCapability: kmsMeterCapability,
-          profileKmsMeterCapability: kmsMeterCapability
+          accountId, didMethod, keystoreOptions
         });
       } catch(e) {
         error = e;
@@ -124,9 +128,7 @@ describe('profiles API', () => {
         let profile;
         try {
           profile = await profiles.create({
-            accountId, didMethod,
-            profileAgentKmsMeterCapability: kmsMeterCapability,
-            profileKmsMeterCapability: kmsMeterCapability
+            accountId, didMethod, keystoreOptions
           });
         } catch(e) {
           error = e;
@@ -144,9 +146,7 @@ describe('profiles API', () => {
         let profile;
         try {
           profile = await profiles.create({
-            accountId, didMethod,
-            profileAgentKmsMeterCapability: kmsMeterCapability,
-            profileKmsMeterCapability: kmsMeterCapability
+            accountId, didMethod, keystoreOptions
           });
         } catch(e) {
           error = e;
@@ -164,9 +164,7 @@ describe('profiles API', () => {
       let profile;
       try {
         profile = await profiles.create({
-          accountId, didMethod, didOptions,
-          profileAgentKmsMeterCapability: kmsMeterCapability,
-          profileKmsMeterCapability: kmsMeterCapability
+          accountId, didMethod, keystoreOptions, didOptions
         });
       } catch(e) {
         error = e;

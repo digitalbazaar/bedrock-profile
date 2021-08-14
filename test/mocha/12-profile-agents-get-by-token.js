@@ -12,7 +12,7 @@ const mockData = require('./mock.data');
 describe('profileAgents getByToken API', () => {
   // top-level application capability agent for creating meters
   let capabilityAgent;
-  let kmsMeterCapability;
+  let keystoreOptions;
   // mock session authentication for delegations endpoint
   let passportStub;
   before(async () => {
@@ -26,7 +26,10 @@ describe('profileAgents getByToken API', () => {
     const handle = 'app';
     capabilityAgent = await CapabilityAgent.fromSecret({secret, handle});
     const {meterCapability} = await helpers.createMeter({capabilityAgent});
-    kmsMeterCapability = meterCapability;
+    keystoreOptions = {
+      meterCapability,
+      meterCapabilityInvocationSigner: capabilityAgent.getSigner()
+    };
   });
   after(() => {
     passportStub.restore();
@@ -37,8 +40,9 @@ describe('profileAgents getByToken API', () => {
     let error;
     let profileAgent;
     try {
-      ({profileAgent} = await profileAgents.create(
-        {profileId, token, kmsMeterCapability}));
+      ({profileAgent} = await profileAgents.create({
+        keystoreOptions, profileId, token
+      }));
     } catch(e) {
       error = e;
     }
