@@ -3,17 +3,30 @@
  */
 'use strict';
 
+const {CapabilityAgent} = require('@digitalbazaar/webkms-client');
 const {profileAgents} = require('bedrock-profile');
 const helpers = require('./helpers');
 const {util: {uuid}} = require('bedrock');
 const mockData = require('./mock.data');
 
 describe('profileAgents API', () => {
+  // top-level application capability agent for creating meters
+  let capabilityAgent;
+  let kmsMeterCapability;
   // mock session authentication for delegations endpoint
   let passportStub;
   before(async () => {
     await helpers.prepareDatabase(mockData);
     passportStub = await helpers.stubPassport();
+
+    // top-level applications must create meters to associate with the
+    // creation of profile agents; the tests here reuse the same meter but
+    // applications can create as many as needed
+    const secret = 'b07e6b31-d910-438e-9a5f-08d945a5f676';
+    const handle = 'app';
+    capabilityAgent = await CapabilityAgent.fromSecret({secret, handle});
+    const {meterCapability} = await helpers.createMeter({capabilityAgent});
+    kmsMeterCapability = meterCapability;
   });
   after(() => {
     passportStub.restore();
@@ -25,12 +38,8 @@ describe('profileAgents API', () => {
       let error;
       let profileAgent;
       try {
-        // FIXME: this needs to be changed so that the `profileAgents`
-        // internal implementation will pull a DID from the bedrock-profile
-        // config that will be used for the `controller` of internal keystores
-        // created for capability agents of profile agents
-        const {meterCapability} = await helpers.createMeter({capabilityAgent});
-        ({profileAgent} = await profileAgents.create({accountId, profileId}));
+        ({profileAgent} = await profileAgents.create(
+          {accountId, profileId, kmsMeterCapability}));
       } catch(e) {
         error = e;
       }
@@ -49,7 +58,8 @@ describe('profileAgents API', () => {
       let profileAgent;
       let fetchedProfileAgent;
       try {
-        ({profileAgent} = await profileAgents.create({accountId, profileId}));
+        ({profileAgent} = await profileAgents.create(
+          {accountId, profileId, kmsMeterCapability}));
         const {id} = profileAgent;
         ({profileAgent: fetchedProfileAgent} = await profileAgents.get({id}));
       } catch(e) {
@@ -71,7 +81,8 @@ describe('profileAgents API', () => {
       let profileAgent;
       let fetchedProfileAgent;
       try {
-        ({profileAgent} = await profileAgents.create({profileId}));
+        ({profileAgent} = await profileAgents.create(
+          {profileId, kmsMeterCapability}));
         await profileAgents.update({
           profileAgent: {
             ...profileAgent,
@@ -105,7 +116,8 @@ describe('profileAgents API', () => {
       let profileAgent;
       let fetchedProfileAgent;
       try {
-        ({profileAgent} = await profileAgents.create({accountId, profileId}));
+        ({profileAgent} = await profileAgents.create(
+          {accountId, profileId, kmsMeterCapability}));
         ({id} = profileAgent);
         await profileAgents.remove({id});
       } catch(e) {
@@ -132,7 +144,8 @@ describe('profileAgents API', () => {
       let fetchedProfileAgents;
       try {
         const create3ProfileAgents = [0, 1, 2].map(async () => {
-          return profileAgents.create({accountId, profileId});
+          return profileAgents.create(
+            {accountId, profileId, kmsMeterCapability});
         });
         [
           {profileAgent: profileAgent0},
@@ -171,7 +184,8 @@ describe('profileAgents API', () => {
       let profileAgent;
       let updatedProfileAgent;
       try {
-        ({profileAgent} = await profileAgents.create({accountId, profileId}));
+        ({profileAgent} = await profileAgents.create(
+          {accountId, profileId, kmsMeterCapability}));
         const {id} = profileAgent;
         await profileAgents.update({
           profileAgent: {
@@ -208,9 +222,8 @@ describe('profileAgents API', () => {
       let delegatedZcaps;
       let secrets;
       try {
-        ({profileAgent, secrets} = await profileAgents.create({
-          accountId, profileId
-        }));
+        ({profileAgent, secrets} = await profileAgents.create(
+          {accountId, profileId, kmsMeterCapability}));
         const capabilities = mockData.zcaps;
         delegatedZcaps = await profileAgents.delegateCapabilities(
           {profileAgent, capabilities, controller, secrets});

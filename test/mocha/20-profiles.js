@@ -3,6 +3,7 @@
  */
 'use strict';
 
+const {CapabilityAgent} = require('@digitalbazaar/webkms-client');
 const database = require('bedrock-mongodb');
 const {profiles} = require('bedrock-profile');
 const helpers = require('./helpers');
@@ -10,6 +11,9 @@ const mockData = require('./mock.data');
 const {util: {uuid}} = require('bedrock');
 
 describe('profiles API', () => {
+  // top-level application capability agent for creating meters
+  let capabilityAgent;
+  let kmsMeterCapability;
   // mock session authentication for delegations endpoint
   let passportStub;
   let profileAgentCollection;
@@ -19,19 +23,32 @@ describe('profiles API', () => {
     passportStub = await helpers.stubPassport();
     profileAgentCollection = database.collections['profile-profileAgent'];
     kmsKeystoreCollection = database.collections.kmsKeystore;
+
+    // top-level applications must create meters to associate with the
+    // creation of profile agents; the tests here reuse the same meter but
+    // applications can create as many as needed
+    const secret = 'b07e6b31-d910-438e-9a5f-08d945a5f676';
+    const handle = 'app';
+    capabilityAgent = await CapabilityAgent.fromSecret({secret, handle});
+    const {meterCapability} = await helpers.createMeter({capabilityAgent});
+    kmsMeterCapability = meterCapability;
   });
   after(() => {
     passportStub.restore();
   });
 
   describe('Create Profile', () => {
-    it.only('successfully create a profile', async () => {
+    it('successfully create a profile', async () => {
       const accountId = uuid();
       const didMethod = 'v1';
       let error;
       let profile;
       try {
-        profile = await profiles.create({accountId, didMethod});
+        profile = await profiles.create({
+          accountId, didMethod,
+          profileAgentKmsMeterCapability: kmsMeterCapability,
+          profileKmsMeterCapability: kmsMeterCapability
+        });
       } catch(e) {
         error = e;
       }
@@ -61,7 +78,11 @@ describe('profiles API', () => {
       let error;
       let profile;
       try {
-        profile = await profiles.create({accountId, didMethod});
+        profile = await profiles.create({
+          accountId, didMethod,
+          profileAgentKmsMeterCapability: kmsMeterCapability,
+          profileKmsMeterCapability: kmsMeterCapability
+        });
       } catch(e) {
         error = e;
       }
@@ -83,7 +104,11 @@ describe('profiles API', () => {
       let error;
       let profile;
       try {
-        profile = await profiles.create({accountId, didMethod});
+        profile = await profiles.create({
+          accountId, didMethod,
+          profileAgentKmsMeterCapability: kmsMeterCapability,
+          profileKmsMeterCapability: kmsMeterCapability
+        });
       } catch(e) {
         error = e;
       }
@@ -98,7 +123,11 @@ describe('profiles API', () => {
         let error;
         let profile;
         try {
-          profile = await profiles.create({accountId, didMethod});
+          profile = await profiles.create({
+            accountId, didMethod,
+            profileAgentKmsMeterCapability: kmsMeterCapability,
+            profileKmsMeterCapability: kmsMeterCapability
+          });
         } catch(e) {
           error = e;
         }
@@ -114,7 +143,11 @@ describe('profiles API', () => {
         let error;
         let profile;
         try {
-          profile = await profiles.create({accountId, didMethod});
+          profile = await profiles.create({
+            accountId, didMethod,
+            profileAgentKmsMeterCapability: kmsMeterCapability,
+            profileKmsMeterCapability: kmsMeterCapability
+          });
         } catch(e) {
           error = e;
         }
@@ -130,7 +163,11 @@ describe('profiles API', () => {
       let error;
       let profile;
       try {
-        profile = await profiles.create({accountId, didMethod, didOptions});
+        profile = await profiles.create({
+          accountId, didMethod, didOptions,
+          profileAgentKmsMeterCapability: kmsMeterCapability,
+          profileKmsMeterCapability: kmsMeterCapability
+        });
       } catch(e) {
         error = e;
       }
