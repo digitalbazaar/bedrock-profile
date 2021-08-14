@@ -5,8 +5,14 @@
 ### Changed
 - **BREAKING**: Refactor use of KMS system. Remove KMS related parameters from
   some public APIs. The KMS is now configured via the bedrock config.
-- **BREAKING**: A `kmsMeterCapability` must now be passed when creating
-  profile agents or profiles.
+- **BREAKING**: `keystoreOptions` must now be passed when creating
+  profile agents or profiles. These options must specify the `meterCapability`
+  and `meterCapabilityInvocationSigner` used when creating the keystore and
+  may optionally provide the `kmsModule` to use (otherwise the configured
+  default will be used). These options are now required since this version of
+  the library now depends on a KMS system that requires a meter capability to
+  create a keystore and keystore creation must be invoked by the controller
+  of the associated meter.
 - **BREAKING**: Require `config.profile.kms.defaultKmsModule` to be overridden
   in deployments.
 
