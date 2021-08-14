@@ -7,6 +7,8 @@
   some public APIs. The KMS is now configured via the bedrock config.
 - **BREAKING**: A `kmsMeterCapability` must now be passed when creating
   profile agents or profiles.
+- **BREAKING**: Require `config.profile.kms.defaultKmsModule` to be overridden
+  in deployments.
 
 ## 10.0.4 - 2021-08-19
 
