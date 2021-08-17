@@ -19,13 +19,17 @@ require('bedrock-server');
 require('bedrock-ssm-mongodb');
 require('bedrock-test');
 
+const mockData = require('./mocha/mock.data');
+
 bedrock.events.on('bedrock.init', async () => {
   /* Handlers need to be added before `bedrock.start` is called. These are
   no-op handlers to enable meter usage without restriction */
   handlers.setCreateHandler({
     handler({meter} = {}) {
       // use configured meter usage reporter as service ID for tests
-      meter.serviceId = bedrock.config['meter-usage-reporter'].client.id;
+      const clientName = mockData.productIdMap.get(meter.product.id);
+      meter.serviceId = bedrock.config['meter-usage-reporter']
+        .clients[clientName].id;
       return {meter};
     }
   });
