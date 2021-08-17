@@ -12,14 +12,14 @@ const {httpsAgent} = require('bedrock-https-agent');
 const sinon = require('sinon');
 const mockData = require('./mock.data');
 
-exports.createMeter = async ({capabilityAgent} = {}) => {
+exports.createMeter = async ({capabilityAgent, type = 'webkms'} = {}) => {
   // create a meter
   const meterService = `${bedrock.config.server.baseUri}/meters`;
+  const productId = mockData.productIdMap.get(type);
   let meter = {
     controller: capabilityAgent.id,
     product: {
-      // mock ID for webkms service product
-      id: 'urn:uuid:80a82316-e8c2-11eb-9570-10bf48838a41'
+      id: productId
     }
   };
   const response = await httpClient.post(meterService, {
