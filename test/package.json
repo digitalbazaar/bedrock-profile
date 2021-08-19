@@ -11,11 +11,11 @@
     "coverage-report": "nyc report"
   },
   "dependencies": {
-    "@digitalbazaar/zcapld": "^4.0.0",
+    "@digitalbazaar/zcapld": "^5.1.2",
     "bedrock": "^4.1.1",
     "bedrock-account": "^5.0.0",
     "bedrock-did-context": "^2.0.0",
-    "bedrock-did-io": "^3.0.0",
+    "bedrock-did-io": "^4.0.0",
     "bedrock-edv-storage": "^9.0.0",
     "bedrock-express": "^4.0.0",
     "bedrock-https-agent": "^2.0.0",

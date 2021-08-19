@@ -1,5 +1,10 @@
 # bedrock-profile ChangeLog
 
+## 10.0.4 - 2021-08-xx
+
+## Fixed
+- Update deps to use fixed ed25519* packages.
+
 ## 10.0.3 - 2021-08-19
 
 ## Fixed
