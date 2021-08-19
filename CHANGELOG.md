@@ -1,12 +1,11 @@
 # bedrock-profile ChangeLog
 
+## 10.0.2 - 2021-08-19
 
-## 10.2.0 - TBD
+## Fixed
+- Use did-method-key@2.0.0 with fixes broken ed25519* dependencies.
 
-## Changed
-- Use did-method-key@2.0.0
-
-## 10.1.0 - 2021-06-02
+## 10.0.1 - 2021-06-02
 
 ### Changed
 - Use did-veres-one@14.0.0-beta.1.
