@@ -1,6 +1,6 @@
 # bedrock-profile ChangeLog
 
-## 10.0.3 - 2021-08-xx
+## 10.0.3 - 2021-08-19
 
 ## Fixed
 - Use bedrock-did-io@4.
