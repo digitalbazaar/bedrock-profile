@@ -1,6 +1,6 @@
 # bedrock-profile ChangeLog
 
-## 11.0.0 - TBD
+## 11.0.0 - 2021-08-24
 
 ### Changed
 - **BREAKING**: Refactor use of KMS system. Remove KMS related parameters from
