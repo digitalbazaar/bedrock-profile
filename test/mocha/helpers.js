@@ -28,8 +28,8 @@ exports.createMeter = async ({capabilityAgent, type = 'webkms'} = {}) => {
   ({data: {meter}} = response);
 
   // return usage capability
-  const {usageCapability: meterCapability} = meter;
-  return {meterCapability};
+  const {id} = meter;
+  return {id: `${meterService}/${id}`};
 };
 
 exports.stubPassport = async ({email = 'alpha@example.com'} = {}) => {

@@ -1,5 +1,16 @@
 # bedrock-profile ChangeLog
 
+## 12.0.0 - 2021-08-xx
+
+### Changed
+- **BREAKING**: A `meterId` parameter is now required in `keystoreOptions`
+  instead of a `meterCapability`. This version of the module must be used
+  in conjunction with a KMS service that accepts `meterId` in keystore
+  configs instead of `meterCapability`. This simplifies the keystore creation
+  process whereby the KMS service is the root controller for the meter's
+  usage endpoint instead of requiring the KMS service to have a delegated
+  meter usage zcap to report usage.
+
 ## 11.0.0 - 2021-08-24
 
 ### Changed
