@@ -1,6 +1,6 @@
 # bedrock-profile ChangeLog
 
-## 12.0.0 - 2021-08-xx
+## 12.0.0 - 2021-08-31
 
 ### Changed
 - **BREAKING**: A `meterId` parameter is now required in `keystoreOptions`
