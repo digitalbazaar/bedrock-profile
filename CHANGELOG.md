@@ -1,5 +1,11 @@
 # bedrock-profile ChangeLog
 
+## 12.0.1 - 2021-09-xx
+
+### Changed
+- Update test dependency to `bedrock-meter-http@3` which requires tests to
+  add a zCap invocation via http-sigs to create meters.
+
 ## 12.0.0 - 2021-08-31
 
 ### Changed
