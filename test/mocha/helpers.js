@@ -5,10 +5,12 @@
 
 const bedrock = require('bedrock');
 const brAccount = require('bedrock-account');
+const {getAppIdentity} = require('bedrock-app-identity');
 const brPassport = require('bedrock-passport');
 const database = require('bedrock-mongodb');
-const {httpClient} = require('@digitalbazaar/http-client');
+const {httpClient, DEFAULT_HEADERS} = require('@digitalbazaar/http-client');
 const {httpsAgent} = require('bedrock-https-agent');
+const {signCapabilityInvocation} = require('http-signature-zcap-invoke');
 const sinon = require('sinon');
 const mockData = require('./mock.data');
 
@@ -22,8 +24,17 @@ exports.createMeter = async ({capabilityAgent, type = 'webkms'} = {}) => {
       id: productId
     }
   };
+
+  const capability = `urn:zcap:root:${encodeURIComponent(meterService)}`;
+  const {keys} = getAppIdentity();
+  const invocationSigner = keys.capabilityInvocationKey.signer();
+  const headers = await signCapabilityInvocation({
+    url: meterService, method: 'post', headers: DEFAULT_HEADERS, capability,
+    json: meter, invocationSigner, capabilityAction: 'write'
+  });
+
   const response = await httpClient.post(meterService, {
-    agent: httpsAgent, json: meter
+    agent: httpsAgent, json: meter, headers
   });
   ({data: {meter}} = response);
 

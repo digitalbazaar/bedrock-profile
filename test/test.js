@@ -3,6 +3,7 @@
  */
 const bedrock = require('bedrock');
 require('bedrock-account');
+require('bedrock-app-identity');
 require('bedrock-express');
 require('bedrock-edv-storage');
 require('bedrock-https-agent');
