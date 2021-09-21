@@ -1,6 +1,6 @@
 # bedrock-profile ChangeLog
 
-## 12.0.1 - 2021-09-xx
+## 12.0.1 - 2021-09-21
 
 ### Changed
 - Update test dependency to `bedrock-meter-http@3` which requires tests to
