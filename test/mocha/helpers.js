@@ -8,15 +8,24 @@ const brAccount = require('bedrock-account');
 const {getAppIdentity} = require('bedrock-app-identity');
 const brPassport = require('bedrock-passport');
 const database = require('bedrock-mongodb');
-const {httpClient, DEFAULT_HEADERS} = require('@digitalbazaar/http-client');
-const {httpsAgent} = require('bedrock-https-agent');
-const {signCapabilityInvocation} = require('http-signature-zcap-invoke');
+const {Ed25519Signature2020} = require('@digitalbazaar/ed25519-signature-2020');
+const {agent} = require('bedrock-https-agent');
 const sinon = require('sinon');
+const {ZcapClient} = require('@digitalbazaar/ezcap');
 const mockData = require('./mock.data');
 
-exports.createMeter = async ({capabilityAgent, type = 'webkms'} = {}) => {
-  // create a meter
-  const meterService = `${bedrock.config.server.baseUri}/meters`;
+exports.createMeter = async ({capabilityAgent, type}) => {
+  if(!(type && capabilityAgent)) {
+    throw new Error(`"capabilityAgent" and "type" must be provided.`);
+  }
+  const {keys} = getAppIdentity();
+  const invocationSigner = keys.capabilityInvocationKey.signer();
+  const zcapClient = new ZcapClient({
+    agent,
+    invocationSigner,
+    SuiteClass: Ed25519Signature2020
+  });
+
   const productId = mockData.productIdMap.get(type);
   let meter = {
     controller: capabilityAgent.id,
@@ -25,18 +34,9 @@ exports.createMeter = async ({capabilityAgent, type = 'webkms'} = {}) => {
     }
   };
 
-  const capability = `urn:zcap:root:${encodeURIComponent(meterService)}`;
-  const {keys} = getAppIdentity();
-  const invocationSigner = keys.capabilityInvocationKey.signer();
-  const headers = await signCapabilityInvocation({
-    url: meterService, method: 'post', headers: DEFAULT_HEADERS, capability,
-    json: meter, invocationSigner, capabilityAction: 'write'
-  });
-
-  const response = await httpClient.post(meterService, {
-    agent: httpsAgent, json: meter, headers
-  });
-  ({data: {meter}} = response);
+  // create a meter
+  const meterService = `${bedrock.config.server.baseUri}/meters`;
+  ({data: {meter}} = await zcapClient.write({url: meterService, json: meter}));
 
   // return usage capability
   const {id} = meter;
