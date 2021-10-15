@@ -13,6 +13,7 @@ const {util: {uuid}} = require('bedrock');
 describe('profiles API', () => {
   // top-level application capability agent for creating meters
   let capabilityAgent;
+  let edvOptions;
   let keystoreOptions;
   // mock session authentication for delegations endpoint
   let passportStub;
@@ -30,14 +31,29 @@ describe('profiles API', () => {
     const secret = 'b07e6b31-d910-438e-9a5f-08d945a5f676';
     const handle = 'app';
     capabilityAgent = await CapabilityAgent.fromSecret({secret, handle});
-    const {id: meterId} = await helpers.createMeter({capabilityAgent});
+  });
+  beforeEach(async () => {
+    const {id: kmsMeterId} = await helpers.createMeter({
+      capabilityAgent,
+      type: 'webkms'
+    });
+    const {id: edvMeterId} = await helpers.createMeter({
+      capabilityAgent,
+      type: 'edv'
+    });
     keystoreOptions = {
       profileAgent: {
-        meterId,
+        meterId: kmsMeterId,
         meterCapabilityInvocationSigner: capabilityAgent.getSigner()
       },
       profile: {
-        meterId,
+        meterId: kmsMeterId,
+        meterCapabilityInvocationSigner: capabilityAgent.getSigner()
+      }
+    };
+    edvOptions = {
+      profile: {
+        meterId: edvMeterId,
         meterCapabilityInvocationSigner: capabilityAgent.getSigner()
       }
     };
@@ -54,7 +70,7 @@ describe('profiles API', () => {
       let profile;
       try {
         profile = await profiles.create({
-          accountId, didMethod, keystoreOptions
+          accountId, didMethod, edvOptions, keystoreOptions
         });
       } catch(e) {
         error = e;
@@ -86,7 +102,7 @@ describe('profiles API', () => {
       let profile;
       try {
         profile = await profiles.create({
-          accountId, didMethod, keystoreOptions
+          accountId, didMethod, edvOptions, keystoreOptions
         });
       } catch(e) {
         error = e;
@@ -111,7 +127,7 @@ describe('profiles API', () => {
       let profile;
       try {
         profile = await profiles.create({
-          accountId, didMethod, keystoreOptions
+          accountId, didMethod, edvOptions, keystoreOptions
         });
       } catch(e) {
         error = e;
@@ -128,7 +144,7 @@ describe('profiles API', () => {
         let profile;
         try {
           profile = await profiles.create({
-            accountId, didMethod, keystoreOptions
+            accountId, didMethod, edvOptions, keystoreOptions
           });
         } catch(e) {
           error = e;
@@ -146,7 +162,7 @@ describe('profiles API', () => {
         let profile;
         try {
           profile = await profiles.create({
-            accountId, didMethod, keystoreOptions
+            accountId, didMethod, edvOptions, keystoreOptions
           });
         } catch(e) {
           error = e;
@@ -164,7 +180,7 @@ describe('profiles API', () => {
       let profile;
       try {
         profile = await profiles.create({
-          accountId, didMethod, keystoreOptions, didOptions
+          accountId, didMethod, edvOptions, keystoreOptions, didOptions
         });
       } catch(e) {
         error = e;

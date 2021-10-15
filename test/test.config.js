@@ -9,6 +9,9 @@ const path = require('path');
 config.mocha.tests.push(path.join(__dirname, 'mocha'));
 const {permissions, roles} = config.permission;
 
+// Express
+config.express.useSession = true;
+
 // MongoDB
 config.mongodb.name = 'bedrock_profile_test';
 config.mongodb.dropCollections = {};
@@ -29,17 +32,10 @@ roles['bedrock-test.regular'] = {
   sysPermission: [
     permissions.ACCOUNT_ACCESS.id,
     permissions.ACCOUNT_UPDATE.id,
-    permissions.ACCOUNT_INSERT.id,
-    permissions.EDV_CONFIG_ACCESS.id,
-    permissions.EDV_CONFIG_UPDATE.id,
-    permissions.EDV_CONFIG_REMOVE.id
+    permissions.ACCOUNT_INSERT.id
   ]
 };
 
-// KMS HTTPS API
-// optionally require an authenticated session
-// this option may be set to false when operating behind an authenticated proxy
-config['kms-http'].requireAuthentication = false;
-
+// Profile
 config.profile.kms.baseUrl = `${config.server.baseUri}/kms`;
 config.profile.kms.ipAllowList = ['127.0.0.1/32'];

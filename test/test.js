@@ -28,9 +28,9 @@ bedrock.events.on('bedrock.init', async () => {
   handlers.setCreateHandler({
     handler({meter} = {}) {
       // use configured meter usage reporter as service ID for tests
-      const clientName = mockData.productIdMap.get(meter.product.id);
-      meter.serviceId = bedrock.config['meter-usage-reporter']
-        .clients[clientName].id;
+      const serviceType = mockData.productIdMap.get(meter.product.id);
+      meter.serviceId = bedrock.config['app-identity'].seeds
+        .services[serviceType].id;
       return {meter};
     }
   });

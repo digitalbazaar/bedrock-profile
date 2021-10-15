@@ -25,7 +25,10 @@ describe('profileAgents API', () => {
     const secret = 'b07e6b31-d910-438e-9a5f-08d945a5f676';
     const handle = 'app';
     capabilityAgent = await CapabilityAgent.fromSecret({secret, handle});
-    const {id: meterId} = await helpers.createMeter({capabilityAgent});
+    const {id: meterId} = await helpers.createMeter({
+      capabilityAgent,
+      type: 'webkms'
+    });
     keystoreOptions = {
       meterId,
       meterCapabilityInvocationSigner: capabilityAgent.getSigner()
