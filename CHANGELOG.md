@@ -1,5 +1,11 @@
 # bedrock-profile ChangeLog
 
+## 13.0.0 - 2021-TBD
+
+### Changed
+- **BREAKING**: Update `getKeystore()` to take `capability` and
+  `invocationSigner` params in addition to `id`.
+
 ## 12.0.1 - 2021-09-21
 
 ### Changed
