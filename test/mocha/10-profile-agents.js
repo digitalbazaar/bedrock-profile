@@ -225,6 +225,7 @@ describe('profileAgents API', () => {
     });
   }); // end get a profile agent
   describe('Delegate zCaps from a Profile Agent', () => {
+    // eslint-disable-next-line max-len
     it('successfully delegate capabilites from a profile agent', async () => {
       const accountId = uuid();
       const profileId = uuid();
@@ -248,7 +249,7 @@ describe('profileAgents API', () => {
       profileAgent.account.should.equal(accountId);
       profileAgent.sequence.should.equal(0);
       delegatedZcaps.length.should.equal(3);
-      delegatedZcaps[0].proof.capabilityChain.length.should.equal(2);
+      delegatedZcaps[0].proof.capabilityChain.length.should.equal(1);
     });
   }); // end create a profile agent
 }); // end profileAgents API

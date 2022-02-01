@@ -6,7 +6,7 @@
 'use strict';
 
 const {util: {uuid}} = require('bedrock');
-const {constants: {ZCAP_CONTEXT_URL}} = require('@digitalbazaar/zcapld');
+const {constants: {ZCAP_CONTEXT_URL}} = require('@digitalbazaar/zcap');
 
 const data = {};
 module.exports = data;
@@ -44,18 +44,13 @@ function createAccount(email) {
 
 const zcap0 = {
   '@context': ZCAP_CONTEXT_URL,
+  expires: '2100-01-01T00:00:00.000Z',
   id: 'urn:zcap:z19vWhR8EsNbWqvazp5bg6BTu',
   controller: 'did:key:z6Mkkt1BWYLPAAXwYBwyVHAZkL94tgT8QbQv2SUxeW1U3DaG',
   // eslint-disable-next-line max-len
   referenceId: 'did:key:z6MkkrtV7wnBpXKBtiZjxaSghCo8ttb5kZUJTk8bEwTTTYvg#z6MkkrtV7wnBpXKBtiZjxaSghCo8ttb5kZUJTk8bEwTTTYvg-key-capabilityInvocation',
   allowedAction: 'sign',
-  invocationTarget: {
-    // eslint-disable-next-line max-len
-    id: 'https://bedrock.localhost:18443/kms/keystores/z1AAWWM7Zd4YyyV3NfaCqFuzQ/keys/z19wxodgv1UhrToQMvSxGhQG6',
-    type: 'Ed25519VerificationKey2020',
-    // eslint-disable-next-line max-len
-    publicAlias: 'did:key:z6MkkrtV7wnBpXKBtiZjxaSghCo8ttb5kZUJTk8bEwTTTYvg#z6MkkrtV7wnBpXKBtiZjxaSghCo8ttb5kZUJTk8bEwTTTYvg'
-  },
+  invocationTarget: 'https://bedrock.localhost:18443/kms/keystores/z1AAWWM7Zd4YyyV3NfaCqFuzQ/keys/z19wxodgv1UhrToQMvSxGhQG6',
   // eslint-disable-next-line max-len
   parentCapability: 'https://bedrock.localhost:18443/kms/keystores/z1AAWWM7Zd4YyyV3NfaCqFuzQ/keys/z19wxodgv1UhrToQMvSxGhQG6',
   proof: {
@@ -64,10 +59,6 @@ const zcap0 = {
     // eslint-disable-next-line max-len
     verificationMethod: 'did:key:z6MkkrtV7wnBpXKBtiZjxaSghCo8ttb5kZUJTk8bEwTTTYvg#z6MkkrtV7wnBpXKBtiZjxaSghCo8ttb5kZUJTk8bEwTTTYvg',
     proofPurpose: 'capabilityDelegation',
-    capabilityChain: [
-      // eslint-disable-next-line max-len
-      'https://bedrock.localhost:18443/kms/keystores/z1AAWWM7Zd4YyyV3NfaCqFuzQ/keys/z19wxodgv1UhrToQMvSxGhQG6'
-    ],
     // a valid signature is not required for the test
     proofValue: 'zMOCK_PROOF'
   }
@@ -75,6 +66,7 @@ const zcap0 = {
 
 const zcap1 = {
   '@context': ZCAP_CONTEXT_URL,
+  expires: '2100-01-01T00:00:00.000Z',
   id: 'urn:zcap:z1ACgNxti98PXBjtw7ogfsN45',
   controller: 'did:key:z6Mkkt1BWYLPAAXwYBwyVHAZkL94tgT8QbQv2SUxeW1U3DaG',
   referenceId: 'bedrock.localhost:users',
@@ -82,10 +74,7 @@ const zcap1 = {
     'read',
     'write'
   ],
-  invocationTarget: {
-    id: 'https://bedrock.localhost:18443/edvs/z1A9uTYSmCU3DYQr7jhruhCuK',
-    type: 'urn:edv:documents'
-  },
+  invocationTarget: 'https://bedrock.localhost:18443/edvs/z1A9uTYSmCU3DYQr7jhruhCuK',
   // eslint-disable-next-line max-len
   parentCapability: 'https://bedrock.localhost:18443/edvs/z1A9uTYSmCU3DYQr7jhruhCuK/zcaps/documents',
   proof: {
@@ -94,10 +83,6 @@ const zcap1 = {
     // eslint-disable-next-line max-len
     verificationMethod: 'did:key:z6MkkrtV7wnBpXKBtiZjxaSghCo8ttb5kZUJTk8bEwTTTYvg#z6MkkrtV7wnBpXKBtiZjxaSghCo8ttb5kZUJTk8bEwTTTYvg',
     proofPurpose: 'capabilityDelegation',
-    capabilityChain: [
-      // eslint-disable-next-line max-len
-      'https://bedrock.localhost:18443/edvs/z1A9uTYSmCU3DYQr7jhruhCuK/zcaps/documents'
-    ],
     // a valid signature is not required for the test
     proofValue: 'zMOCK_PROOF'
   }
@@ -105,6 +90,7 @@ const zcap1 = {
 
 const zcap2 = {
   '@context': ZCAP_CONTEXT_URL,
+  expires: '2100-01-01T00:00:00.000Z',
   id: 'urn:zcap:z19u4rwByrmyKFr1XC9AYNYcs',
   controller: 'did:key:z6Mkkt1BWYLPAAXwYBwyVHAZkL94tgT8QbQv2SUxeW1U3DaG',
   referenceId: 'bedrock.localhost:settings',
@@ -112,10 +98,7 @@ const zcap2 = {
     'read',
     'write'
   ],
-  invocationTarget: {
-    id: 'https://bedrock.localhost:18443/edvs/z19jTB2drTyi4JHrARunxze8E',
-    type: 'urn:edv:documents'
-  },
+  invocationTarget: 'https://bedrock.localhost:18443/edvs/z19jTB2drTyi4JHrARunxze8E',
   // eslint-disable-next-line max-len
   parentCapability: 'https://bedrock.localhost:18443/edvs/z19jTB2drTyi4JHrARunxze8E/zcaps/documents',
   proof: {
@@ -124,10 +107,6 @@ const zcap2 = {
     // eslint-disable-next-line max-len
     verificationMethod: 'did:key:z6MkkrtV7wnBpXKBtiZjxaSghCo8ttb5kZUJTk8bEwTTTYvg#z6MkkrtV7wnBpXKBtiZjxaSghCo8ttb5kZUJTk8bEwTTTYvg',
     proofPurpose: 'capabilityDelegation',
-    capabilityChain: [
-      // eslint-disable-next-line max-len
-      'https://bedrock.localhost:18443/edvs/z19jTB2drTyi4JHrARunxze8E/zcaps/documents'
-    ],
     // a valid signature is not required for the test
     proofValue: 'zMOCK_PROOF'
   }
