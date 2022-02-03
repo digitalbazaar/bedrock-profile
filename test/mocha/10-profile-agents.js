@@ -249,7 +249,7 @@ describe('profileAgents API', () => {
       profileAgent.account.should.equal(accountId);
       profileAgent.sequence.should.equal(0);
       delegatedZcaps.length.should.equal(3);
-      delegatedZcaps[0].proof.capabilityChain.length.should.equal(1);
+      delegatedZcaps[0].proof.capabilityChain.length.should.equal(2);
     });
   }); // end create a profile agent
 }); // end profileAgents API
