@@ -33,14 +33,20 @@ describe('profiles API', () => {
     capabilityAgent = await CapabilityAgent.fromSecret({secret, handle});
   });
   beforeEach(async () => {
-    const {id: kmsMeterId} = await helpers.createMeter({
-      capabilityAgent,
-      type: 'webkms'
-    });
     const {id: edvMeterId} = await helpers.createMeter({
       capabilityAgent,
       type: 'edv'
     });
+    const {id: kmsMeterId} = await helpers.createMeter({
+      capabilityAgent,
+      type: 'webkms'
+    });
+    edvOptions = {
+      profile: {
+        meterId: edvMeterId,
+        meterCapabilityInvocationSigner: capabilityAgent.getSigner()
+      }
+    };
     keystoreOptions = {
       profileAgent: {
         meterId: kmsMeterId,
@@ -48,12 +54,6 @@ describe('profiles API', () => {
       },
       profile: {
         meterId: kmsMeterId,
-        meterCapabilityInvocationSigner: capabilityAgent.getSigner()
-      }
-    };
-    edvOptions = {
-      profile: {
-        meterId: edvMeterId,
         meterCapabilityInvocationSigner: capabilityAgent.getSigner()
       }
     };
@@ -94,6 +94,21 @@ describe('profiles API', () => {
       a.profileAgent.controller.should.have.keys(['id', 'keystore']);
       a.should.have.property('secrets');
       a.secrets.should.have.property('seed');
+
+      profile.meters.should.be.an('array');
+      const {meters} = profile;
+      meters.should.have.length(2);
+      const {meter: edvMeter} = meters.find(m => m.meter.serviceType === 'edv');
+      edvMeter.id.should.equal(edvOptions.profile.meterId);
+      edvMeter.profile.should.equal(profile.id);
+      edvMeter.serviceType.should.equal('edv');
+      edvMeter.referenceId.should.equal('profile:core:edv');
+      const {meter: kmsMeter} = meters.find(
+        m => m.meter.serviceType === 'webkms');
+      kmsMeter.id.should.equal(keystoreOptions.profile.meterId);
+      kmsMeter.profile.should.equal(profile.id);
+      kmsMeter.serviceType.should.equal('webkms');
+      kmsMeter.referenceId.should.equal('profile:core:webkms');
     });
     it('keystore should be controlled by the profile', async () => {
       const accountId = uuid();
