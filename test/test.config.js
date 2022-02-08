@@ -21,9 +21,6 @@ config.mongodb.dropCollections.collections = [];
 // HTTPS Agent
 config['https-agent'].rejectUnauthorized = false;
 
-// KMS
-config.kms.allowedHost = config.server.host;
-
 // Account
 roles['bedrock-test.regular'] = {
   id: 'bedrock-test.regular',
