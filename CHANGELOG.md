@@ -1,5 +1,17 @@
 # bedrock-profile ChangeLog
 
+## 13.0.0 - 2022-xx-xx
+
+### Added
+- **BREAKING**: New required param `edvOptions` to the `profile.create` API.
+  The edvOptions must contain a `meterCapabilityInvocationSigner` and a
+  `meterId` to ensure the meter's controller can be updated to be the profile.
+
+### Changed
+- **BREAKING**: The `profileAgentCapabilityInvocationKey` zcap has removed
+  `invoker` in favor of `controller`.
+- **BREAKING**: The `referenceId` property has been removed on all zcaps.
+
 ## 12.0.1 - 2021-09-21
 
 ### Changed
