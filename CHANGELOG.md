@@ -1,6 +1,6 @@
 # bedrock-profile ChangeLog
 
-## 13.0.1 - 2022-02-xx
+## 13.0.1 - 2022-02-10
 
 ### Fixed
 - Fix `getAgents` and `getSigner` to use proper keystore.
