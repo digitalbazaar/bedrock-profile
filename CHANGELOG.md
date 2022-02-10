@@ -1,6 +1,6 @@
 # bedrock-profile ChangeLog
 
-## 13.0.0 - 2022-xx-xx
+## 13.0.0 - 2022-02-10
 
 ### Added
 - **BREAKING**: New required param `edvOptions` to the `profile.create` API.
