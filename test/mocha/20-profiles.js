@@ -91,7 +91,7 @@ describe('profiles API', () => {
         'id', 'sequence', 'account', 'profile', 'controller', 'keystore',
         'capabilityInvocationKey', 'zcaps'
       ]);
-      a.profileAgent.controller.should.have.keys(['id', 'keystore']);
+      a.profileAgent.controller.should.be.a('string');
       a.should.have.property('secrets');
       a.secrets.should.have.property('seed');
 
