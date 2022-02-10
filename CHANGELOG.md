@@ -11,6 +11,13 @@
 - **BREAKING**: The `profileAgentCapabilityInvocationKey` zcap has removed
   `invoker` in favor of `controller`.
 - **BREAKING**: The `referenceId` property has been removed on all zcaps.
+- **BREAKING**: The capability agent that controls a profile agent no longer
+  has its own keystore. The profile agent's keystore is now IP restricted
+  and its controller is the capability agent. This eliminates an extra
+  indirection and requires enforces stronger security on the profile agent.
+  Any zcaps the profile agent has must be either invoked by system that
+  has IP access to the profile agent's keystore -- or the zcaps must be
+  delegated to another entity so that they can be invoked elsewhere.
 
 ## 12.0.1 - 2021-09-21
 
