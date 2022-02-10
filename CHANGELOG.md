@@ -1,5 +1,10 @@
 # bedrock-profile ChangeLog
 
+## 13.1.0 - 2022-02-xx
+
+### Changed
+- Use `bedrock-did-io@6`.
+
 ## 13.0.1 - 2022-02-10
 
 ### Fixed
