@@ -1,5 +1,11 @@
 # bedrock-profile ChangeLog
 
+## 13.2.0 - 2022-02-xx
+
+### Added
+- Add ability to specify an account when removing a profile agent. If the
+  account does not match the profile agent, then it will not be removed.
+
 ## 13.1.0 - 2022-02-10
 
 ### Changed

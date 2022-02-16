@@ -142,6 +142,62 @@ describe('profileAgents API', () => {
       should.exist(profileAgent);
       should.not.exist(fetchedProfileAgent);
     });
+    it('successfully remove a profile agent by "id" and ' +
+      '"account"', async () => {
+      const accountId = uuid();
+      const profileId = uuid();
+      let id;
+      let error;
+      let profileAgent;
+      let fetchedProfileAgent;
+      try {
+        ({profileAgent} = await profileAgents.create({
+          keystoreOptions, accountId, profileId
+        }));
+        ({id} = profileAgent);
+        await profileAgents.remove({id, account: accountId});
+      } catch(e) {
+        error = e;
+      }
+      try {
+        ({profileAgent: fetchedProfileAgent} = await profileAgents.get({id}));
+      } catch(e) {
+        should.exist(e);
+      }
+      assertNoError(error);
+      should.exist(profileAgent);
+      should.not.exist(fetchedProfileAgent);
+    });
+    it('fails to remove a profile agent when "account" does not ' +
+      'match', async () => {
+      const accountId = uuid();
+      const profileId = uuid();
+      let id;
+      let error;
+      let profileAgent;
+      let fetchedProfileAgent;
+      try {
+        ({profileAgent} = await profileAgents.create({
+          keystoreOptions, accountId, profileId
+        }));
+        ({id} = profileAgent);
+        await profileAgents.remove({id, account: 'incorrect account'});
+      } catch(e) {
+        error = e;
+      }
+      should.exist(error);
+      error.name.should.equal('NotFoundError');
+      error = undefined;
+
+      try {
+        ({profileAgent: fetchedProfileAgent} = await profileAgents.get({id}));
+      } catch(e) {
+        error = e;
+      }
+      assertNoError(error);
+      should.exist(profileAgent);
+      should.exist(fetchedProfileAgent);
+    });
   }); // end remove a profile agent
   describe('Get All Profile Agents', () => {
     it('successfully gets all profile agents by "accountId"', async () => {
