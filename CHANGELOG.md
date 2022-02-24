@@ -1,6 +1,6 @@
 # bedrock-profile ChangeLog
 
-## 14.0.0 - 2022-02-xx
+## 14.0.0 - 2022-02-23
 
 ### Changed
 - **BREAKING**: Use `@digitalbazaar/edv-client@12`. This new version computes
