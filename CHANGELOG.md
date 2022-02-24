@@ -1,5 +1,12 @@
 # bedrock-profile ChangeLog
 
+## 14.0.0 - 2022-02-xx
+
+### Changed
+- **BREAKING**: Use `@digitalbazaar/edv-client@12`. This new version computes
+  encrypted indexes differently (more privacy preserving) and is incompatible
+  with the previous version.
+
 ## 13.2.0 - 2022-02-16
 
 ### Added
