@@ -1,5 +1,12 @@
 # bedrock-profile ChangeLog
 
+## 15.0.0 - 2022-03-xx
+
+### Changed
+- **BREAKING**: Use `@digitalbazaar/webkms-client@10` and
+  `@digitalbazaar/edv-client@13`.
+- **BREAKING**: Require `bedrock-edv-storage@12` as a peer dependency.
+
 ## 14.0.0 - 2022-02-23
 
 ### Changed
