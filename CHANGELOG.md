@@ -1,5 +1,10 @@
 # bedrock-profile ChangeLog
 
+## 15.0.1 - 2022-03-xx
+
+### Fixed
+- Remove unnecessary `bedrock-edv-storage` peer dependency.
+
 ## 15.0.0 - 2022-03-01
 
 ### Changed

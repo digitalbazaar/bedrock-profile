@@ -40,7 +40,6 @@
   "peerDependencies": {
     "bedrock": "^4.4.3",
     "bedrock-did-io": "^6.0.2",
-    "bedrock-edv-storage": "^12.0.0",
     "bedrock-https-agent": "^2.2.0",
     "bedrock-jsonld-document-loader": "^1.2.1",
     "bedrock-mongodb": "^8.4.1"
