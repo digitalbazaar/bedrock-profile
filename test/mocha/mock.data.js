@@ -1,9 +1,8 @@
 /* eslint-disable max-len */
 /*!
- * Copyright (c) 2020-2021 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2020-2022 Digital Bazaar, Inc. All rights reserved.
  */
 /* jshint node: true */
-
 'use strict';
 
 const {util: {uuid}} = require('bedrock');
@@ -25,15 +24,10 @@ data.productIdMap = new Map([
 const accounts = data.accounts = {};
 const zcaps = data.zcaps = [];
 
-// regular permissions
 const email = 'alpha@example.com';
 accounts[email] = {};
 accounts[email].account = createAccount(email);
 accounts[email].meta = {};
-accounts[email].meta.sysResourceRole = [{
-  sysRole: 'bedrock-test.regular',
-  generateResource: 'id'
-}];
 
 function createAccount(email) {
   const newAccount = {

@@ -1,5 +1,5 @@
-/*
- * Copyright (c) 2020-2021 Digital Bazaar, Inc. All rights reserved.
+/*!
+ * Copyright (c) 2020-2022 Digital Bazaar, Inc. All rights reserved.
  */
 const bedrock = require('bedrock');
 require('bedrock-account');
@@ -14,7 +14,6 @@ require('bedrock-meter');
 require('bedrock-meter-usage-reporter');
 const {handlers} = require('bedrock-meter-http');
 require('bedrock-passport');
-require('bedrock-permission');
 require('bedrock-profile');
 require('bedrock-server');
 require('bedrock-ssm-mongodb');
