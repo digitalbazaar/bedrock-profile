@@ -1,6 +1,6 @@
 # bedrock-profile ChangeLog
 
-## 15.0.2 - 2022-03-xx
+## 15.0.2 - 2022-03-18
 
 ### Changed
 - Optimize profile creation by doing more steps in parallel.
