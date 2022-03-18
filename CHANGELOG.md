@@ -1,5 +1,15 @@
 # bedrock-profile ChangeLog
 
+## 15.0.2 - 2022-03-xx
+
+### Changed
+- Optimize profile creation by doing more steps in parallel.
+
+### Fixed
+- Fix root profile zcap invocation key zcap expires (to 1000y).
+- Fix profile creation order so that profile agent has zcap
+  stored prior to changing controller on profile keystore.
+
 ## 15.0.1 - 2022-03-01
 
 ### Fixed
