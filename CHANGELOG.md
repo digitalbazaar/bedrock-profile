@@ -8,6 +8,7 @@
   - `bedrock-https-agent@2.3`
   - `bedrock-jsonld-document-loader@1.3`
   - `bedrock-mongodb@8.5`.
+- Remove unused peer dep `bedrock-did-io`.
 - Update internals to use esm style and use `esm.js` to
   transpile to CommonJS.
 
