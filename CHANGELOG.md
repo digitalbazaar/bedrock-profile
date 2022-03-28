@@ -1,5 +1,16 @@
 # bedrock-profile ChangeLog
 
+## 15.1.0 - 2022-03-xx
+
+### Changed
+- Update peer deps:
+  - `bedrock@4.5`
+  - `bedrock-https-agent@2.3`
+  - `bedrock-jsonld-document-loader@1.3`
+  - `bedrock-mongodb@8.5`.
+- Update internals to use esm style and use `esm.js` to
+  transpile to CommonJS.
+
 ## 15.0.2 - 2022-03-18
 
 ### Changed
