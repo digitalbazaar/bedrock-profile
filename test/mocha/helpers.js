@@ -62,11 +62,7 @@ exports.prepareDatabase = async mockData => {
 exports.removeCollections = async (
   collectionNames = [
     'account',
-    'edvConfig',
-    'edvDoc',
-    'edvDocChunk',
-    'profile-profileAgent',
-    'profile-profileAgentCapabilitySet'
+    'profile-profileAgent'
   ]) => {
   await database.openCollections(collectionNames);
   for(const collectionName of collectionNames) {
