@@ -1,6 +1,6 @@
 {
   "name": "bedrock-profile",
-  "version": "15.1.0",
+  "version": "15.1.1-0",
   "description": "Profiles for Bedrock Applications",
   "main": "./lib",
   "scripts": {
