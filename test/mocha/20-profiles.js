@@ -4,6 +4,7 @@
 import * as bedrock from '@bedrock/core';
 import * as database from '@bedrock/mongodb';
 import * as helpers from './helpers.js';
+import {createRequire} from 'module';
 import {mockData} from './mock.data.js';
 import {profiles} from '@bedrock/profile';
 const require = createRequire(import.meta.url);

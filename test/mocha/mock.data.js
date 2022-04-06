@@ -46,12 +46,14 @@ const zcap0 = {
   controller: 'did:key:z6Mkkt1BWYLPAAXwYBwyVHAZkL94tgT8QbQv2SUxeW1U3DaG',
   // eslint-disable-next-line max-len
   referenceId: 'did:key:z6MkkrtV7wnBpXKBtiZjxaSghCo8ttb5kZUJTk8bEwTTTYvg#z6MkkrtV7wnBpXKBtiZjxaSghCo8ttb5kZUJTk8bEwTTTYvg-key-capabilityInvocation',
+  // eslint-disable-next-line max-len
   invocationTarget: 'https://bedrock.localhost:18443/kms/keystores/z1AAWWM7Zd4YyyV3NfaCqFuzQ/keys/z19wxodgv1UhrToQMvSxGhQG6',
   // eslint-disable-next-line max-len
   parentCapability: 'https://bedrock.localhost:18443/kms/keystores/z1AAWWM7Zd4YyyV3NfaCqFuzQ/keys/z19wxodgv1UhrToQMvSxGhQG6',
   proof: {
     type: 'Ed25519Signature2020',
     created: '2020-02-27T21:22:48Z',
+    // eslint-disable-next-line max-len
     capabilityChain: ['urn:zcap:root:https%3A%2F%2Fbedrock.localhost%3A18443%2Fkms%2Fkeystores%2Fz1AAWWM7Zd4YyyV3NfaCqFuzQ%2Fkeys%2Fz19wxodgv1UhrToQMvSxGhQG6'],
     // eslint-disable-next-line max-len
     verificationMethod: 'did:key:z6MkkrtV7wnBpXKBtiZjxaSghCo8ttb5kZUJTk8bEwTTTYvg#z6MkkrtV7wnBpXKBtiZjxaSghCo8ttb5kZUJTk8bEwTTTYvg',
@@ -70,12 +72,14 @@ const zcap1 = {
   id: 'urn:zcap:z1ACgNxti98PXBjtw7ogfsN45',
   controller: 'did:key:z6Mkkt1BWYLPAAXwYBwyVHAZkL94tgT8QbQv2SUxeW1U3DaG',
   referenceId: 'bedrock.localhost:users',
+  // eslint-disable-next-line max-len
   invocationTarget: 'https://bedrock.localhost:18443/edvs/z1A9uTYSmCU3DYQr7jhruhCuK',
   // eslint-disable-next-line max-len
   parentCapability: 'https://bedrock.localhost:18443/edvs/z1A9uTYSmCU3DYQr7jhruhCuK/zcaps/documents',
   proof: {
     type: 'Ed25519Signature2020',
     created: '2020-02-27T21:22:48Z',
+    // eslint-disable-next-line max-len
     capabilityChain: ['urn:zcap:root:https%3A%2F%2Fbedrock.localhost%3A18443%2Fedvs%2Fz1A9uTYSmCU3DYQr7jhruhCuK'],
     // eslint-disable-next-line max-len
     verificationMethod: 'did:key:z6MkkrtV7wnBpXKBtiZjxaSghCo8ttb5kZUJTk8bEwTTTYvg#z6MkkrtV7wnBpXKBtiZjxaSghCo8ttb5kZUJTk8bEwTTTYvg',
@@ -94,12 +98,14 @@ const zcap2 = {
   id: 'urn:zcap:z19u4rwByrmyKFr1XC9AYNYcs',
   controller: 'did:key:z6Mkkt1BWYLPAAXwYBwyVHAZkL94tgT8QbQv2SUxeW1U3DaG',
   referenceId: 'bedrock.localhost:settings',
+  // eslint-disable-next-line max-len
   invocationTarget: 'https://bedrock.localhost:18443/edvs/z19jTB2drTyi4JHrARunxze8E',
   // eslint-disable-next-line max-len
   parentCapability: 'https://bedrock.localhost:18443/edvs/z19jTB2drTyi4JHrARunxze8E/zcaps/documents',
   proof: {
     type: 'Ed25519Signature2020',
     created: '2020-02-27T21:22:48Z',
+    // eslint-disable-next-line max-len
     capabilityChain: ['urn:zcap:root:https%3A%2F%2Fbedrock.localhost%3A18443%2Fedvs%2Fz19jTB2drTyi4JHrARunxze8E'],
     // eslint-disable-next-line max-len
     verificationMethod: 'did:key:z6MkkrtV7wnBpXKBtiZjxaSghCo8ttb5kZUJTk8bEwTTTYvg#z6MkkrtV7wnBpXKBtiZjxaSghCo8ttb5kZUJTk8bEwTTTYvg',

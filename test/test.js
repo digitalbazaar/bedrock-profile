@@ -12,7 +12,6 @@ import '@bedrock/meter';
 import '@bedrock/meter-usage-reporter';
 import {handlers} from '@bedrock/meter-http';
 import '@bedrock/passport';
-import '@bedrock/'
 import '@bedrock/server';
 import '@bedrock/kms';
 import '@bedrock/kms-http';

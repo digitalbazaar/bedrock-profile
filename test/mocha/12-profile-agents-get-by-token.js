@@ -3,6 +3,7 @@
  */
 import * as bedrock from '@bedrock/core';
 import * as helpers from './helpers.js';
+import {createRequire} from 'module';
 import {mockData} from './mock.data.js';
 import {profileAgents} from '@bedrock/profile';
 const require = createRequire(import.meta.url);
