@@ -1,13 +1,14 @@
-/*
- * Copyright (c) 2020-2021 Digital Bazaar, Inc. All rights reserved.
+/*!
+ * Copyright (c) 2020-2022 Digital Bazaar, Inc. All rights reserved.
  */
-'use strict';
-
+import * as bedrock from '@bedrock/core';
+import * as helpers from './helpers.js';
+import {mockData} from './mock.data.js';
+import {profileAgents} from '@bedrock/profile';
+const require = createRequire(import.meta.url);
 const {CapabilityAgent} = require('@digitalbazaar/webkms-client');
-const {profileAgents} = require('bedrock-profile');
-const helpers = require('./helpers');
-const {util: {uuid}} = require('bedrock');
-const mockData = require('./mock.data');
+
+const {util: {uuid}} = bedrock;
 
 describe('profileAgents API', () => {
   // top-level application capability agent for creating meters
@@ -17,7 +18,7 @@ describe('profileAgents API', () => {
   let passportStub;
   before(async () => {
     await helpers.prepareDatabase(mockData);
-    passportStub = await helpers.stubPassport();
+    passportStub = helpers.stubPassport();
 
     // top-level applications must create meters to associate with the
     // creation of profile agents; the tests here reuse the same meter but
