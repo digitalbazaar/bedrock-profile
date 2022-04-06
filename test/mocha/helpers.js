@@ -3,13 +3,12 @@
  */
 import * as bedrock from '@bedrock/core';
 import * as brAccount from '@bedrock/account';
-import * as brPassport from '@bedrock/passport';
 import * as database from '@bedrock/mongodb';
 import {agent} from '@bedrock/https-agent';
 import {createRequire} from 'module';
 import {getAppIdentity} from '@bedrock/app-identity';
 import {mockData} from './mock.data.js';
-import sinon from 'sinon';
+import {passport, _deserializeUser} from '@bedrock/passport';
 const require = createRequire(import.meta.url);
 const {Ed25519Signature2020} = require('@digitalbazaar/ed25519-signature-2020');
 const {ZcapClient} = require('@digitalbazaar/ezcap');
@@ -44,14 +43,48 @@ export async function createMeter({capabilityAgent, type}) {
 }
 
 export function stubPassport({email = 'alpha@example.com'} = {}) {
-  const passportStub = sinon.stub(brPassport, 'optionallyAuthenticated');
-  passportStub.callsFake((req, res, next) => {
-    req.user = {
-      account: mockData.accounts[email].account
+  const original = passport.authenticate;
+  passport._original = original;
+
+  passport.authenticate = (strategyName, options, callback) => {
+    // if no email given, call original `passport.authenticate`
+    if(!email) {
+      return passport._original.call(
+        passport, strategyName, options, callback);
+    }
+
+    // eslint-disable-next-line no-unused-vars
+    return async function(req, res, next) {
+      req._sessionManager = passport._sm;
+      req.isAuthenticated = req.isAuthenticated || (() => !!req.user);
+      req.login = (user, callback) => {
+        req._sessionManager.logIn(req, user, function(err) {
+          if(err) {
+            req.user = null;
+            return callback(err);
+          }
+          callback();
+        });
+      };
+      let user = false;
+      try {
+        const {accounts} = mockData;
+        const {account} = accounts[email] || {account: {id: 'does-not-exist'}};
+        user = await _deserializeUser({
+          accountId: account.id
+        });
+      } catch(e) {
+        return callback(e);
+      }
+      callback(null, user);
     };
-    next();
-  });
-  return passportStub;
+  };
+
+  return {
+    restore() {
+      passport.authenticate = passport._original;
+    }
+  };
 }
 
 export async function prepareDatabase(mockData) {
