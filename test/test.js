@@ -1,25 +1,23 @@
 /*!
  * Copyright (c) 2020-2022 Digital Bazaar, Inc. All rights reserved.
  */
-const bedrock = require('bedrock');
-require('bedrock-account');
-require('bedrock-app-identity');
-require('bedrock-express');
-require('bedrock-edv-storage');
-require('bedrock-https-agent');
-require('bedrock-jsonld-document-loader');
-require('bedrock-kms');
-require('bedrock-kms-http');
-require('bedrock-meter');
-require('bedrock-meter-usage-reporter');
-const {handlers} = require('bedrock-meter-http');
-require('bedrock-passport');
-require('bedrock-profile');
-require('bedrock-server');
-require('bedrock-ssm-mongodb');
-require('bedrock-test');
-
-const mockData = require('./mocha/mock.data');
+import * as bedrock from '@bedrock/core';
+import '@bedrock/ssm-mongodb';
+import '@bedrock/account';
+import '@bedrock/profile';
+import '@bedrock/app-identity';
+import '@bedrock/https-agent';
+import '@bedrock/jsonld-document-loader';
+import '@bedrock/meter';
+import '@bedrock/meter-usage-reporter';
+import {handlers} from '@bedrock/meter-http';
+import '@bedrock/passport';
+import '@bedrock/'
+import '@bedrock/server';
+import '@bedrock/kms';
+import '@bedrock/kms-http';
+import '@bedrock/edv-storage';
+import {mockData} from './mocha/mock.data.js';
 
 bedrock.events.on('bedrock.init', async () => {
   /* Handlers need to be added before `bedrock.start` is called. These are
@@ -38,4 +36,5 @@ bedrock.events.on('bedrock.init', async () => {
   handlers.setUseHandler({handler: ({meter} = {}) => ({meter})});
 });
 
+import '@bedrock/test';
 bedrock.start();

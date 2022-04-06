@@ -1,14 +1,15 @@
-/*
- * Copyright (c) 2020-2021 Digital Bazaar, Inc. All rights reserved.
+/*!
+ * Copyright (c) 2020-2022 Digital Bazaar, Inc. All rights reserved.
  */
-'use strict';
-
+import * as bedrock from '@bedrock/core';
+import * as database from '@bedrock/mongodb';
+import * as helpers from './helpers.js';
+import {mockData} from './mock.data.js';
+import {profiles} from '@bedrock/profile';
+const require = createRequire(import.meta.url);
 const {CapabilityAgent} = require('@digitalbazaar/webkms-client');
-const database = require('bedrock-mongodb');
-const {profiles} = require('bedrock-profile');
-const helpers = require('./helpers');
-const mockData = require('./mock.data');
-const {util: {uuid}} = require('bedrock');
+
+const {util: {uuid}} = bedrock;
 
 describe('profiles API', () => {
   // top-level application capability agent for creating meters
@@ -21,7 +22,7 @@ describe('profiles API', () => {
   let kmsKeystoreCollection;
   before(async () => {
     await helpers.prepareDatabase(mockData);
-    passportStub = await helpers.stubPassport();
+    passportStub = helpers.stubPassport();
     profileAgentCollection = database.collections['profile-profileAgent'];
     kmsKeystoreCollection = database.collections['kms-keystore'];
 
