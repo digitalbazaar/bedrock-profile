@@ -1,6 +1,6 @@
 # bedrock-profile ChangeLog
 
-## 16.0.0 - 2022-04-xx
+## 16.0.0 - 2022-04-06
 
 ### Changed
 - **BREAKING**: Rename package to `@bedrock/profile`.
