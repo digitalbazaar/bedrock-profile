@@ -46,7 +46,7 @@ describe('profileAgents getByToken API', () => {
     let profileAgent;
     try {
       ({profileAgent} = await profileAgents.create({
-        keystoreOptions, profileId, token
+        keystoreOptions, profileId, token, store: true
       }));
     } catch(e) {
       error = e;

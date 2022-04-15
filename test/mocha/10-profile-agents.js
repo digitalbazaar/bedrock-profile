@@ -47,7 +47,7 @@ describe('profileAgents API', () => {
       let profileAgent;
       try {
         ({profileAgent} = await profileAgents.create({
-          keystoreOptions, accountId, profileId
+          keystoreOptions, accountId, profileId, store: true
         }));
       } catch(e) {
         error = e;
@@ -68,7 +68,7 @@ describe('profileAgents API', () => {
       let fetchedProfileAgent;
       try {
         ({profileAgent} = await profileAgents.create({
-          keystoreOptions, accountId, profileId
+          keystoreOptions, accountId, profileId, store: true
         }));
         const {id} = profileAgent;
         ({profileAgent: fetchedProfileAgent} = await profileAgents.get({id}));
@@ -92,7 +92,7 @@ describe('profileAgents API', () => {
       let fetchedProfileAgent;
       try {
         ({profileAgent} = await profileAgents.create({
-          keystoreOptions, profileId
+          keystoreOptions, profileId, store: true
         }));
         await profileAgents.update({
           profileAgent: {
@@ -128,7 +128,7 @@ describe('profileAgents API', () => {
       let fetchedProfileAgent;
       try {
         ({profileAgent} = await profileAgents.create({
-          keystoreOptions, accountId, profileId
+          keystoreOptions, accountId, profileId, store: true
         }));
         ({id} = profileAgent);
         await profileAgents.remove({id});
@@ -154,7 +154,7 @@ describe('profileAgents API', () => {
       let fetchedProfileAgent;
       try {
         ({profileAgent} = await profileAgents.create({
-          keystoreOptions, accountId, profileId
+          keystoreOptions, accountId, profileId, store: true
         }));
         ({id} = profileAgent);
         await profileAgents.remove({id, account: accountId});
@@ -180,7 +180,7 @@ describe('profileAgents API', () => {
       let fetchedProfileAgent;
       try {
         ({profileAgent} = await profileAgents.create({
-          keystoreOptions, accountId, profileId
+          keystoreOptions, accountId, profileId, store: true
         }));
         ({id} = profileAgent);
         await profileAgents.remove({id, account: 'incorrect account'});
@@ -213,7 +213,7 @@ describe('profileAgents API', () => {
       try {
         const create3ProfileAgents = [0, 1, 2].map(async () => {
           return profileAgents.create({
-            keystoreOptions, accountId, profileId
+            keystoreOptions, accountId, profileId, store: true
           });
         });
         [
@@ -254,7 +254,7 @@ describe('profileAgents API', () => {
       let updatedProfileAgent;
       try {
         ({profileAgent} = await profileAgents.create({
-          keystoreOptions, accountId, profileId
+          keystoreOptions, accountId, profileId, store: true
         }));
         const {id} = profileAgent;
         await profileAgents.update({
@@ -294,7 +294,7 @@ describe('profileAgents API', () => {
       let secrets;
       try {
         ({profileAgent, secrets} = await profileAgents.create({
-          keystoreOptions, accountId, profileId
+          keystoreOptions, accountId, profileId, store: true
         }));
         const capabilities = mockData.zcaps;
         delegatedZcaps = await profileAgents.delegateCapabilities(

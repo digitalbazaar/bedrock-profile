@@ -1,5 +1,12 @@
 # bedrock-profile ChangeLog
 
+## 17.0.0 - 2022-04-xx
+
+### Changed
+- **BREAKING**: Require `store` boolean parameter to be set to `true` or
+  `false` in `profileAgents.create` to indicate whether the created
+  profile agent record should be stored in the database or just returned.
+
 ## 16.0.0 - 2022-04-06
 
 ### Changed
