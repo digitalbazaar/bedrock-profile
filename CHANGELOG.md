@@ -6,6 +6,8 @@
 - **BREAKING**: Require `store` boolean parameter to be set to `true` or
   `false` in `profileAgents.create` to indicate whether the created
   profile agent record should be stored in the database or just returned.
+- **BREAKING**: Require top-level applications to be the controllers
+  of meters used to create keystores and EDVs for profiles/profile agents.
 
 ## 16.0.0 - 2022-04-06
 

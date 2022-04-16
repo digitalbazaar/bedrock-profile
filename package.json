@@ -40,6 +40,7 @@
   },
   "peerDependencies": {
     "@bedrock/core": "^5.0.0",
+    "@bedrock/app-identity": "^2.0.0",
     "@bedrock/https-agent": "^3.0.0",
     "@bedrock/jsonld-document-loader": "^2.0.0",
     "@bedrock/mongodb": "^9.0.0"

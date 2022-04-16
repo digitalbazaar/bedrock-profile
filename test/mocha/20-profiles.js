@@ -4,17 +4,13 @@
 import * as bedrock from '@bedrock/core';
 import * as database from '@bedrock/mongodb';
 import * as helpers from './helpers.js';
-import {createRequire} from 'module';
+import {getAppIdentity} from '@bedrock/app-identity';
 import {mockData} from './mock.data.js';
 import {profiles} from '@bedrock/profile';
-const require = createRequire(import.meta.url);
-const {CapabilityAgent} = require('@digitalbazaar/webkms-client');
 
 const {util: {uuid}} = bedrock;
 
 describe('profiles API', () => {
-  // top-level application capability agent for creating meters
-  let capabilityAgent;
   let edvOptions;
   let keystoreOptions;
   // mock session authentication for delegations endpoint
@@ -26,37 +22,28 @@ describe('profiles API', () => {
     passportStub = helpers.stubPassport();
     profileAgentCollection = database.collections['profile-profileAgent'];
     kmsKeystoreCollection = database.collections['kms-keystore'];
-
-    // top-level applications must create meters to associate with the
-    // creation of profile agents; the tests here reuse the same meter but
-    // applications can create as many as needed
-    const secret = 'b07e6b31-d910-438e-9a5f-08d945a5f676';
-    const handle = 'app';
-    capabilityAgent = await CapabilityAgent.fromSecret({secret, handle});
   });
   beforeEach(async () => {
-    const {id: edvMeterId} = await helpers.createMeter({
-      capabilityAgent,
-      type: 'edv'
-    });
-    const {id: kmsMeterId} = await helpers.createMeter({
-      capabilityAgent,
-      type: 'webkms'
-    });
+    // top-level applications must create meters
+    const {keys} = getAppIdentity();
+    const invocationSigner = keys.capabilityInvocationKey.signer();
+
+    const {id: edvMeterId} = await helpers.createMeter({type: 'edv'});
+    const {id: kmsMeterId} = await helpers.createMeter({type: 'webkms'});
     edvOptions = {
       profile: {
         meterId: edvMeterId,
-        meterCapabilityInvocationSigner: capabilityAgent.getSigner()
+        meterCapabilityInvocationSigner: invocationSigner
       }
     };
     keystoreOptions = {
       profileAgent: {
         meterId: kmsMeterId,
-        meterCapabilityInvocationSigner: capabilityAgent.getSigner()
+        meterCapabilityInvocationSigner: invocationSigner
       },
       profile: {
         meterId: kmsMeterId,
-        meterCapabilityInvocationSigner: capabilityAgent.getSigner()
+        meterCapabilityInvocationSigner: invocationSigner
       }
     };
   });

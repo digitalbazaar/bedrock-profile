@@ -13,11 +13,11 @@ const require = createRequire(import.meta.url);
 const {Ed25519Signature2020} = require('@digitalbazaar/ed25519-signature-2020');
 const {ZcapClient} = require('@digitalbazaar/ezcap');
 
-export async function createMeter({capabilityAgent, type}) {
-  if(!(type && capabilityAgent)) {
-    throw new Error(`"capabilityAgent" and "type" must be provided.`);
+export async function createMeter({type}) {
+  if(!(type && typeof type === 'string')) {
+    throw new TypeError('`"type" must be a string.');
   }
-  const {keys} = getAppIdentity();
+  const {id: controller, keys} = getAppIdentity();
   const invocationSigner = keys.capabilityInvocationKey.signer();
   const zcapClient = new ZcapClient({
     agent,
@@ -27,7 +27,7 @@ export async function createMeter({capabilityAgent, type}) {
 
   const productId = mockData.productIdMap.get(type);
   let meter = {
-    controller: capabilityAgent.id,
+    controller,
     product: {
       id: productId
     }

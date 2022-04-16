@@ -3,17 +3,13 @@
  */
 import * as bedrock from '@bedrock/core';
 import * as helpers from './helpers.js';
-import {createRequire} from 'module';
+import {getAppIdentity} from '@bedrock/app-identity';
 import {mockData} from './mock.data.js';
 import {profileAgents} from '@bedrock/profile';
-const require = createRequire(import.meta.url);
-const {CapabilityAgent} = require('@digitalbazaar/webkms-client');
 
 const {util: {uuid}} = bedrock;
 
 describe('profileAgents getByToken API', () => {
-  // top-level application capability agent for creating meters
-  let capabilityAgent;
   let keystoreOptions;
   // mock session authentication for delegations endpoint
   let passportStub;
@@ -21,19 +17,13 @@ describe('profileAgents getByToken API', () => {
     await helpers.prepareDatabase(mockData);
     passportStub = helpers.stubPassport();
 
-    // top-level applications must create meters to associate with the
-    // creation of profile agents; the tests here reuse the same meter but
-    // applications can create as many as needed
-    const secret = 'b07e6b31-d910-438e-9a5f-08d945a5f676';
-    const handle = 'app';
-    capabilityAgent = await CapabilityAgent.fromSecret({secret, handle});
-    const {id: meterId} = await helpers.createMeter({
-      capabilityAgent,
-      type: 'webkms'
-    });
+    // top-level applications must create meters
+    const {keys} = getAppIdentity();
+    const invocationSigner = keys.capabilityInvocationKey.signer();
+    const {id: meterId} = await helpers.createMeter({type: 'webkms'});
     keystoreOptions = {
       meterId,
-      meterCapabilityInvocationSigner: capabilityAgent.getSigner()
+      meterCapabilityInvocationSigner: invocationSigner
     };
   });
   after(() => {
