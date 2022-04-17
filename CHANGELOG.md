@@ -8,6 +8,8 @@
   profile agent record should be stored in the database or just returned.
 - **BREAKING**: Require top-level applications to be the controllers
   of meters used to create keystores and EDVs for profiles/profile agents.
+- **BREAKING**: Require `baseUrl` for EDV server to be passed in `edvOptions`
+  when creating a profile.
 
 ## 16.0.0 - 2022-04-06
 

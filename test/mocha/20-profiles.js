@@ -32,6 +32,7 @@ describe('profiles API', () => {
     const {id: kmsMeterId} = await helpers.createMeter({type: 'webkms'});
     edvOptions = {
       profile: {
+        baseUrl: bedrock.config.server.baseUri,
         meterId: edvMeterId,
         meterCapabilityInvocationSigner: invocationSigner
       }
