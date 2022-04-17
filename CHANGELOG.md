@@ -10,6 +10,10 @@
   of meters used to create keystores and EDVs for profiles/profile agents.
 - **BREAKING**: Require `baseUrl` for EDV server to be passed in `edvOptions`
   when creating a profile.
+- **BREAKING**: Require `profileId` to be given when creating a profile
+  agent if it is to be stored immediately. This is to prevent root profile
+  agents for profiles from being created in a partial state whereby profile
+  provisioning cannot continue to completion at a later time.
 
 ## 16.0.0 - 2022-04-06
 

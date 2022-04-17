@@ -6,7 +6,7 @@ import * as database from '@bedrock/mongodb';
 import * as helpers from './helpers.js';
 import {getAppIdentity} from '@bedrock/app-identity';
 import {mockData} from './mock.data.js';
-import {profiles} from '@bedrock/profile';
+import {profiles, profileAgents} from '@bedrock/profile';
 
 const {util: {uuid}} = bedrock;
 
@@ -53,7 +53,7 @@ describe('profiles API', () => {
   });
 
   describe('Create Profile', () => {
-    it('successfully create a profile', async () => {
+    it('should create a profile', async () => {
       const accountId = uuid();
       const didMethod = 'v1';
       let error;
@@ -99,6 +99,114 @@ describe('profiles API', () => {
       kmsMeter.profile.should.equal(profile.id);
       kmsMeter.serviceType.should.equal('webkms');
       kmsMeter.referenceId.should.equal('profile:core:webkms');
+    });
+    it('should remove an irrecoverable profile', async () => {
+      const accountId = uuid();
+      const didMethod = 'v1';
+      let error;
+      let profile;
+      try {
+        profile = await profiles.create({
+          accountId, didMethod, edvOptions, keystoreOptions
+        });
+      } catch(e) {
+        error = e;
+      }
+      assertNoError(error);
+      should.exist(profile);
+
+      // profile agent should exist
+      let profileAgentId;
+      try {
+        const {profileAgent} = await profileAgents.getByProfile(
+          {profileId: profile.id, accountId});
+        should.exist(profileAgent);
+        should.exist(profileAgent.id);
+        profileAgentId = profileAgent.id;
+      } catch(e) {
+        error = e;
+      }
+      assertNoError(error);
+
+      // should get profile agent by ID
+      try {
+        await profileAgents.get({id: profileAgentId});
+      } catch(e) {
+        error = e;
+      }
+      assertNoError(error);
+
+      // now remove the profile ID from the profile agent to cause it to
+      // be in an irrecoverable partial state from an older version of this
+      // library
+      await profileAgentCollection.updateOne({
+        'profileAgent.id': profileAgentId
+      }, {
+        $unset: {'profileAgent.profile': true}
+      });
+
+      // now profile agent should be removed
+      try {
+        await profileAgents.get({id: profileAgentId});
+      } catch(e) {
+        error = e;
+      }
+      should.exist(error);
+      error.name.should.equal('NotFoundError');
+    });
+    it('should remove a partially created profile', async () => {
+      const accountId = uuid();
+      const didMethod = 'v1';
+      let error;
+      let profile;
+      try {
+        profile = await profiles.create({
+          accountId, didMethod, edvOptions, keystoreOptions
+        });
+      } catch(e) {
+        error = e;
+      }
+      assertNoError(error);
+      should.exist(profile);
+
+      // profile agent should exist
+      let profileAgentId;
+      try {
+        const {profileAgent} = await profileAgents.getByProfile(
+          {profileId: profile.id, accountId});
+        should.exist(profileAgent);
+        should.exist(profileAgent.id);
+        profileAgentId = profileAgent.id;
+      } catch(e) {
+        error = e;
+      }
+      assertNoError(error);
+
+      // should get profile agent by ID
+      try {
+        await profileAgents.get({id: profileAgentId});
+      } catch(e) {
+        error = e;
+      }
+      assertNoError(error);
+
+      // now remove the `userDocument` zcap from the profile agent to cause it
+      // to be in a partially created state that is no longer supported by
+      // this library
+      await profileAgentCollection.updateOne({
+        'profileAgent.id': profileAgentId
+      }, {
+        $unset: {'profileAgent.zcaps.userDocument': true}
+      });
+
+      // now profile agent should be removed
+      try {
+        await profileAgents.get({id: profileAgentId});
+      } catch(e) {
+        error = e;
+      }
+      should.exist(error);
+      error.name.should.equal('NotFoundError');
     });
     it('keystore should be controlled by the profile', async () => {
       const accountId = uuid();
