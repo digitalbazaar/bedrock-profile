@@ -125,6 +125,33 @@ describe('profiles API', () => {
         ['id', 'sequence', 'controller', 'meterId', 'kmsModule']);
       a.config.controller.should.equal(profile.id);
     });
+    it('should create additional profile EDVs', async () => {
+      const accountId = uuid();
+      const didMethod = 'key';
+      const newEdvOptions = {
+        profile: {
+          ...edvOptions.profile,
+          additionalEdvs: [
+            {referenceId: 'credentials'},
+            {referenceId: 'inbox'}
+          ]
+        }
+      };
+      let error;
+      let profile;
+      try {
+        profile = await profiles.create({
+          accountId, didMethod, edvOptions: newEdvOptions, keystoreOptions
+        });
+      } catch(e) {
+        error = e;
+      }
+      assertNoError(error);
+      should.exist(profile);
+      profile.id.should.be.a('string');
+      profile.edvs.should.be.an('object');
+      profile.edvs.should.include.keys(['user', 'credentials', 'inbox']);
+    });
     it('should throw error if didMethod is not `key` or `v1`', async () => {
       const accountId = uuid();
       const didMethod = 'some-other-method';
