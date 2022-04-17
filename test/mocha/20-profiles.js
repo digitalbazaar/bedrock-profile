@@ -115,15 +115,15 @@ describe('profiles API', () => {
       assertNoError(error);
       should.exist(profile);
       profile.id.should.be.a('string');
-      const agents = await kmsKeystoreCollection.find({
+      const keystores = await kmsKeystoreCollection.find({
         'config.controller': profile.id,
       }).toArray();
-      agents.should.have.length(1);
-      const [a] = agents;
-      a.should.have.keys(['_id', 'meta', 'config']);
-      a.config.should.have.keys(
+      keystores.should.have.length(1);
+      const [keystore] = keystores;
+      keystore.should.have.keys(['_id', 'meta', 'config']);
+      keystore.config.should.have.keys(
         ['id', 'sequence', 'controller', 'meterId', 'kmsModule']);
-      a.config.controller.should.equal(profile.id);
+      keystore.config.controller.should.equal(profile.id);
     });
     it('should create additional profile EDVs', async () => {
       const accountId = uuid();
