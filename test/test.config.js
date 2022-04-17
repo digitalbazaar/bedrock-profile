@@ -5,6 +5,7 @@ import {config} from '@bedrock/core';
 import {fileURLToPath} from 'url';
 import path from 'path';
 import '@bedrock/express';
+import '@bedrock/did-io';
 import '@bedrock/https-agent';
 import '@bedrock/mongodb';
 import '@bedrock/profile';
@@ -28,3 +29,5 @@ config['https-agent'].rejectUnauthorized = false;
 // Profile
 config.profile.kms.baseUrl = `${config.server.baseUri}/kms`;
 config.profile.kms.ipAllowList = ['127.0.0.1/32'];
+
+config['did-io'].methodOverrides.v1.disableFetch = true;
