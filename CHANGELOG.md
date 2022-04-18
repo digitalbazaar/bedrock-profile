@@ -1,6 +1,6 @@
 # bedrock-profile ChangeLog
 
-## 17.0.0 - 2022-04-xx
+## 17.0.0 - 2022-04-18
 
 ### Changed
 - **BREAKING**: Require `store` boolean parameter to be set to `true` or
