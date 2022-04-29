@@ -1,5 +1,15 @@
 # bedrock-profile ChangeLog
 
+## 18.0.0 - 2022-04-xx
+
+### Changed
+- **BREAKING**: Update peer deps:
+  - `@bedrock/core@6`
+  - `@bedrock/app-identity@3`
+  - `@bedrock/https-agent@4`
+  - `@bedrock/jsonld-document-loader@3`
+  - `@bedrock/mongodb@10`.
+
 ## 17.0.0 - 2022-04-18
 
 ### Changed
