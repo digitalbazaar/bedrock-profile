@@ -2,7 +2,7 @@
  * Copyright (c) 2020-2022 Digital Bazaar, Inc. All rights reserved.
  */
 import * as bedrock from '@bedrock/core';
-import {createRequire} from 'module';
+import {createRequire} from 'node:module';
 const require = createRequire(import.meta.url);
 const {constants: {ZCAP_CONTEXT_URL}} = require('@digitalbazaar/zcap');
 

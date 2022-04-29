@@ -5,7 +5,7 @@ import * as bedrock from '@bedrock/core';
 import * as brAccount from '@bedrock/account';
 import * as database from '@bedrock/mongodb';
 import {agent} from '@bedrock/https-agent';
-import {createRequire} from 'module';
+import {createRequire} from 'node:module';
 import {getAppIdentity} from '@bedrock/app-identity';
 import {mockData} from './mock.data.js';
 import {passport, _deserializeUser} from '@bedrock/passport';
