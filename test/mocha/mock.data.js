@@ -1,12 +1,10 @@
 /*!
  * Copyright (c) 2020-2022 Digital Bazaar, Inc. All rights reserved.
  */
-import * as bedrock from '@bedrock/core';
 import {createRequire} from 'node:module';
+import {v4 as uuid} from 'uuid';
 const require = createRequire(import.meta.url);
 const {constants: {ZCAP_CONTEXT_URL}} = require('@digitalbazaar/zcap');
-
-const {util: {uuid}} = bedrock;
 
 export const mockData = {};
 

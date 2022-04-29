@@ -1,13 +1,11 @@
 /*!
  * Copyright (c) 2020-2022 Digital Bazaar, Inc. All rights reserved.
  */
-import * as bedrock from '@bedrock/core';
 import * as helpers from './helpers.js';
 import {getAppIdentity} from '@bedrock/app-identity';
 import {mockData} from './mock.data.js';
 import {profileAgents} from '@bedrock/profile';
-
-const {util: {uuid}} = bedrock;
+import {v4 as uuid} from 'uuid';
 
 describe('profileAgents API', () => {
   let keystoreOptions;

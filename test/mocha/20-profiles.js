@@ -7,8 +7,7 @@ import * as helpers from './helpers.js';
 import {getAppIdentity} from '@bedrock/app-identity';
 import {mockData} from './mock.data.js';
 import {profiles, profileAgents} from '@bedrock/profile';
-
-const {util: {uuid}} = bedrock;
+import {v4 as uuid} from 'uuid';
 
 describe('profiles API', () => {
   let edvOptions;
