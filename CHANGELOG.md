@@ -1,5 +1,14 @@
 # bedrock-profile ChangeLog
 
+## 19.0.0 - 2022-05-xx
+
+### Changed
+- **BREAKING**: Use `@digitalbazaar/edv-client@14` with new blind
+  attribute version. This version is incompatible with previous
+  versions and a manual migration must be performed to update all
+  EDV documents to use the new blind attribute version -- or a new
+  deployment is required.
+
 ## 18.0.0 - 2022-04-29
 
 ### Changed
