@@ -4,6 +4,9 @@
   "type": "module",
   "description": "Profiles for Bedrock Applications",
   "main": "./lib/index.js",
+  "files": [
+    "lib/**/*.js"
+  ],
   "scripts": {
     "lint": "eslint ."
   },

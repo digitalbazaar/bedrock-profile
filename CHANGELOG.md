@@ -9,6 +9,7 @@
   - `@bedrock/app-identity@4`
 - Test on Node.js 18.x.
 - Lint module.
+- Use `package.json` `files` field.
 
 ## 19.0.0 - 2022-05-05
 
