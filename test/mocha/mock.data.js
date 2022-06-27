@@ -1,10 +1,10 @@
 /*!
  * Copyright (c) 2020-2022 Digital Bazaar, Inc. All rights reserved.
  */
-import {createRequire} from 'node:module';
 import {v4 as uuid} from 'uuid';
-const require = createRequire(import.meta.url);
-const {constants: {ZCAP_CONTEXT_URL}} = require('@digitalbazaar/zcap');
+import {constants as zcapConstants} from '@digitalbazaar/zcap';
+
+const {ZCAP_CONTEXT_URL} = zcapConstants;
 
 export const mockData = {};
 
