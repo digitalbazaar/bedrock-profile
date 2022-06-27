@@ -3,6 +3,7 @@
 ## 20.0.0 - 2022-xx-xx
 
 ### Changed
+- **BREAKING**: Require Node.js >=16.
 - Test on Node.js 18.x.
 
 ## 19.0.0 - 2022-05-05
