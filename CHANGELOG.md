@@ -4,6 +4,9 @@
 
 ### Changed
 - **BREAKING**: Require Node.js >=16.
+- Update dependencies.
+- **BREAKING**: Update peer dependencies.
+  - `@bedrock/app-identity@4`
 - Test on Node.js 18.x.
 - Lint module.
 
