@@ -4,11 +4,11 @@
 import * as bedrock from '@bedrock/core';
 import * as brAccount from '@bedrock/account';
 import * as database from '@bedrock/mongodb';
+import {_deserializeUser, passport} from '@bedrock/passport';
 import {agent} from '@bedrock/https-agent';
 import {createRequire} from 'node:module';
 import {getAppIdentity} from '@bedrock/app-identity';
 import {mockData} from './mock.data.js';
-import {passport, _deserializeUser} from '@bedrock/passport';
 const require = createRequire(import.meta.url);
 const {Ed25519Signature2020} = require('@digitalbazaar/ed25519-signature-2020');
 const {ZcapClient} = require('@digitalbazaar/ezcap');
