@@ -1,6 +1,6 @@
 # bedrock-profile ChangeLog
 
-## 20.0.0 - 2022-xx-xx
+## 20.0.0 - 2022-08-13
 
 ### Changed
 - **BREAKING**: Require Node.js >=16.
