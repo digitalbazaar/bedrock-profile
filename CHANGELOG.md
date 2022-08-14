@@ -1,5 +1,10 @@
 # bedrock-profile ChangeLog
 
+## 20.0.1 - 2022-08-xx
+
+### Changed
+- Use `@digitalbazaar/edv-client@15.0.1`.
+
 ## 20.0.0 - 2022-08-13
 
 ### Changed
