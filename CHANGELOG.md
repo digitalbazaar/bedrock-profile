@@ -1,6 +1,6 @@
 # bedrock-profile ChangeLog
 
-## 21.0.0 - 2022-11-dd
+## 21.0.0 - 2022-11-13
 
 ### Changed
 - **BREAKING**: Update `ezcap` and signature libraries to get better
