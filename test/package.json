@@ -24,8 +24,8 @@
     "@bedrock/kms": "^11.0.0",
     "@bedrock/kms-http": "^15.0.0",
     "@bedrock/ledger-context": "^23.0.0",
-    "@bedrock/meter": "^4.0.0",
-    "@bedrock/meter-http": "^9.0.1",
+    "@bedrock/meter": "^5.0.0",
+    "@bedrock/meter-http": "^10.0.0",
     "@bedrock/meter-usage-reporter": "^8.0.0",
     "@bedrock/mongodb": "^10.0.0",
     "@bedrock/package-manager": "^3.0.0",
@@ -38,12 +38,12 @@
     "@bedrock/validation": "^7.0.0",
     "@bedrock/veres-one-context": "^14.0.1",
     "@bedrock/zcap-storage": "^8.0.0",
-    "@digitalbazaar/ed25519-signature-2020": "^4.0.1",
-    "@digitalbazaar/ezcap": "^3.0.1",
-    "@digitalbazaar/zcap": "^8.0.0",
+    "@digitalbazaar/ed25519-signature-2020": "^5.0.0",
+    "@digitalbazaar/ezcap": "^4.0.0",
+    "@digitalbazaar/zcap": "^9.0.0",
     "c8": "^7.11.3",
     "cross-env": "^7.0.3",
-    "uuid": "^8.3.2"
+    "uuid": "^9.0.0"
   },
   "c8": {
     "excludeNodeModules": false,

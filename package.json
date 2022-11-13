@@ -27,12 +27,12 @@
   },
   "homepage": "https://github.com/digitalbazaar/bedrock-profile",
   "dependencies": {
-    "@digitalbazaar/ed25519-signature-2018": "^3.0.0",
-    "@digitalbazaar/ed25519-signature-2020": "^4.0.1",
+    "@digitalbazaar/ed25519-signature-2018": "^4.0.0",
+    "@digitalbazaar/ed25519-signature-2020": "^5.0.0",
     "@digitalbazaar/ed25519-verification-key-2018": "^4.0.0",
     "@digitalbazaar/ed25519-verification-key-2020": "^4.0.0",
     "@digitalbazaar/edv-client": "^15.0.1",
-    "@digitalbazaar/ezcap": "^3.0.1",
+    "@digitalbazaar/ezcap": "^4.0.0",
     "@digitalbazaar/http-client": "^3.2.0",
     "@digitalbazaar/lru-memoize": "^3.0.0",
     "@digitalbazaar/webkms-client": "^12.0.0",
@@ -54,7 +54,7 @@
     "eslint": "^8.18.0",
     "eslint-config-digitalbazaar": "^4.0.1",
     "eslint-plugin-jsdoc": "^39.3.3",
-    "eslint-plugin-unicorn": "^42.0.0",
+    "eslint-plugin-unicorn": "^44.0.2",
     "jsdoc-to-markdown": "^7.1.1"
   },
   "engines": {
