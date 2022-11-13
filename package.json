@@ -1,6 +1,6 @@
 {
   "name": "@bedrock/profile",
-  "version": "20.0.2-0",
+  "version": "21.0.0",
   "type": "module",
   "description": "Profiles for Bedrock Applications",
   "main": "./lib/index.js",
