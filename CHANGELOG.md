@@ -1,5 +1,11 @@
 # bedrock-profile ChangeLog
 
+## 21.0.0 - 2022-11-dd
+
+### Changed
+- **BREAKING**: Update `ezcap` and signature libraries to get better
+  safe mode protections.
+
 ## 20.0.1 - 2022-08-14
 
 ### Changed
