@@ -1,5 +1,11 @@
 # bedrock-profile ChangeLog
 
+## 22.0.0 - 2022-12-dd
+
+### Remove
+- **BREAKING**: Remove adding any passed `referenceId` into keystore
+  configs. This feature was unused and is no longer supported.
+
 ## 21.0.0 - 2022-11-13
 
 ### Changed
