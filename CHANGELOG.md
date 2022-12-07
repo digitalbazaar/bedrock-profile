@@ -1,6 +1,6 @@
 # bedrock-profile ChangeLog
 
-## 22.0.1 - 2022-12-dd
+## 22.0.1 - 2022-12-06
 
 ### Fixed
 - Ensure profile agent index on account is non-unique and that controller
