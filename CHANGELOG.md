@@ -1,5 +1,12 @@
 # bedrock-profile ChangeLog
 
+## 22.0.1 - 2022-12-dd
+
+### Fixed
+- Ensure profile agent index on account is non-unique and that controller
+  unique index is not present (as it is not needed and causes problems
+  with sharding).
+
 ## 22.0.0 - 2022-12-06
 
 ### Changed
