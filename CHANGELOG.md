@@ -6,6 +6,8 @@
 - **BREAKING**: Make profile agent secret tokens index non-unique. It
   is presumed that secret tokens will always be random and sufficiently
   large to make it infeasible for a conflict to occur.
+- **BREAKING**: Indexes on `profile-profileAgent` must be dropped or
+  updated if used with existing deployments.
 
 ### Fixed
 - Ensure profile agents are indexed by account.
