@@ -1,6 +1,6 @@
 # bedrock-profile ChangeLog
 
-## 22.0.0 - 2022-12-dd
+## 22.0.0 - 2022-12-06
 
 ### Changed
 - **BREAKING**: Make profile agent secret tokens index non-unique. It
