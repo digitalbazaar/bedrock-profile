@@ -2,7 +2,15 @@
 
 ## 22.0.0 - 2022-12-dd
 
-### Remove
+### Changed
+- **BREAKING**: Make profile agent secret tokens index non-unique. It
+  is presumed that secret tokens will always be random and sufficiently
+  large to make it infeasible for a conflict to occur.
+
+### Fixed
+- Ensure profile agents are indexed by account.
+
+### Removed
 - **BREAKING**: Remove adding any passed `referenceId` into keystore
   configs. This feature was unused and is no longer supported.
 
