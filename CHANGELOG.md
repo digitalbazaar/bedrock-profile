@@ -1,5 +1,11 @@
 # bedrock-profile ChangeLog
 
+## 23.0.0 -
+
+### Changed
+- **BREAKING**: Use `@bedrock/mongodb: ^11.0.0`.
+- **BREAKING**: Use newer node mongo driver 4 api.
+
 ## 22.0.1 - 2022-12-06
 
 ### Fixed
