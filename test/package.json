@@ -27,7 +27,7 @@
     "@bedrock/meter": "^5.0.0",
     "@bedrock/meter-http": "^10.0.0",
     "@bedrock/meter-usage-reporter": "^8.0.0",
-    "@bedrock/mongodb": "^10.0.0",
+    "@bedrock/mongodb": "github:digitalbazaar/bedrock-mongodb#mongo-driver-4-rc-fix-duplicate-error",
     "@bedrock/package-manager": "^3.0.0",
     "@bedrock/passport": "^10.1.0",
     "@bedrock/profile": "file:..",

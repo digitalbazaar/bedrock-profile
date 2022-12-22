@@ -45,7 +45,7 @@
     "@bedrock/core": "^6.0.1",
     "@bedrock/https-agent": "^4.0.0",
     "@bedrock/jsonld-document-loader": "^3.0.0",
-    "@bedrock/mongodb": "^10.0.0"
+    "@bedrock/mongodb": "^11.0.0"
   },
   "directories": {
     "lib": "./lib"
