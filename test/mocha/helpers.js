@@ -94,6 +94,7 @@ export async function prepareDatabase(mockData) {
 export async function removeCollections(
   collectionNames = [
     'account',
+    'account-email',
     'profile-profileAgent'
   ]) {
   await database.openCollections(collectionNames);

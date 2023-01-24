@@ -12,7 +12,7 @@
     "coverage-report": "c8 report"
   },
   "dependencies": {
-    "@bedrock/account": "^8.0.0",
+    "@bedrock/account": "^9.0.0",
     "@bedrock/app-identity": "^4.0.0",
     "@bedrock/core": "^6.0.1",
     "@bedrock/did-context": "^4.0.0",
@@ -29,7 +29,7 @@
     "@bedrock/meter-usage-reporter": "^8.0.0",
     "@bedrock/mongodb": "^10.0.0",
     "@bedrock/package-manager": "^3.0.0",
-    "@bedrock/passport": "^10.1.0",
+    "@bedrock/passport": "^11.0.0",
     "@bedrock/profile": "file:..",
     "@bedrock/security-context": "^7.0.0",
     "@bedrock/server": "^5.0.0",
