@@ -1,5 +1,18 @@
 # bedrock-profile ChangeLog
 
+## 22.1.0 - 2023-09-TBD
+
+### Added
+- Added a new `zcapRefreshThreshold` config option for refreshing zcaps in
+  profileAgent records.
+
+### Changed
+- `profileAgents.getAll()` will now update the profileAgent's zcaps if the time
+  remaining until their expiration date is equal to or less than the zcap
+  refresh threshold.
+- Moved `defaultZcapTtl` and `profileCapabilityInvocationKeyZcapTtl` into
+  config.
+
 ## 22.0.1 - 2022-12-06
 
 ### Fixed
