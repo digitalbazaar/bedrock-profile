@@ -2,7 +2,6 @@
  * Copyright (c) 2023 Digital Bazaar, Inc. All rights reserved.
  */
 import * as bedrock from '@bedrock/core';
-// import * as database from '@bedrock/mongodb';
 import * as helpers from './helpers.js';
 import {profileAgents, profiles} from '@bedrock/profile';
 import {getAppIdentity} from '@bedrock/app-identity';
