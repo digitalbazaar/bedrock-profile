@@ -48,7 +48,8 @@ describe('Refresh Profile Agent Zcaps', () => {
 
   describe('profileAgents.getAll() API', () => {
     it('should refresh profile agent zcaps when "profileAgents.getAll()" is ' +
-      'called if the zcaps expiration is approaching threshold', async () => {
+      'called if the time remaining until their expiration date is equal to ' +
+      'or less than the refresh threshold value.', async () => {
       const accountId = uuid();
       const didMethod = 'v1';
       let error;
@@ -86,6 +87,7 @@ describe('Refresh Profile Agent Zcaps', () => {
         'profileCapabilityInvocationKey', 'userDocument', 'user-edv-kak'
       ]);
       // intentionally update zcaps expiration to a date 15 days from now
+      // which is less than the refresh threshold value of 1 month
       const now = Date.now();
       // 15 days in milliseconds
       const expiresIn15Days = new Date(now + 15 * 24 * 60 * 60 * 1000);
