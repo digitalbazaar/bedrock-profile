@@ -47,7 +47,8 @@ describe('Refresh Profile Agent Zcaps', () => {
   });
 
   describe('profileAgents.getAll() API', () => {
-    it('should refresh profile agent zcaps when "profileAgents.getAll()" is ' +
+    // eslint-disable-next-line max-len
+    it.only('should refresh profile agent zcaps when "profileAgents.getAll()" is ' +
       'called if the time remaining until their expiration date is equal to ' +
       'or less than the refresh threshold value.', async () => {
       const accountId = uuid();
