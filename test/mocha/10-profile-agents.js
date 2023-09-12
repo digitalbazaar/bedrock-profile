@@ -271,7 +271,6 @@ describe('profileAgents API', () => {
     });
   }); // end get a profile agent
   describe('Delegate zCaps from a Profile Agent', () => {
-    // eslint-disable-next-line max-len
     it('successfully delegate capabilites from a profile agent', async () => {
       const accountId = uuid();
       const profileId = uuid();
