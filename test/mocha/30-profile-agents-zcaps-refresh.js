@@ -9,6 +9,7 @@ import {EdvClient} from '@digitalbazaar/edv-client';
 import {getAppIdentity} from '@bedrock/app-identity';
 import {httpsAgent} from '@bedrock/https-agent';
 import {keyResolver} from '@bedrock/profile/lib/keyResolver.js';
+import {klona} from 'klona';
 import {KmsClient} from '@digitalbazaar/webkms-client';
 import {mockData} from './mock.data.js';
 import {v4 as uuid} from 'uuid';
@@ -104,7 +105,7 @@ describe('Refresh Profile Agent Zcaps', () => {
       // 15 days in milliseconds
       const expiresIn15Days =
         new Date(now + 15 * 24 * 60 * 60 * 1000).toISOString();
-      const profileAgentRecord = agents[0];
+      const profileAgentRecord = klona(agents[0]);
       const kmsClient = new KmsClient({httpsAgent});
       const profileSigner = await getProfileSigner({
         kmsClient, profileAgentRecord
@@ -120,8 +121,7 @@ describe('Refresh Profile Agent Zcaps', () => {
       const profileAgentUserDoc = await getEdvDocument({
         docId, edvConfig, edvClient, kmsClient, profileSigner
       });
-      const updateProfileAgentUserDoc =
-        JSON.parse(JSON.stringify(profileAgentUserDoc));
+      const updateProfileAgentUserDoc = klona(profileAgentUserDoc);
       const {zcaps: profileAgentUserDocZcaps} =
         updateProfileAgentUserDoc.content;
       for(const profileAgentUserDocZcapName in profileAgentUserDocZcaps) {
@@ -134,7 +134,7 @@ describe('Refresh Profile Agent Zcaps', () => {
           profileAgentUserDocZcap.expires = expiresIn15Days;
         }
       }
-      const updateProfileAgent = JSON.parse(JSON.stringify(a.profileAgent));
+      const updateProfileAgent = klona(a.profileAgent);
       const {zcaps: profileAgentZcaps} = updateProfileAgent;
       for(const profileAgentZcapName in profileAgentZcaps) {
         if(
