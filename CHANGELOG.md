@@ -3,13 +3,12 @@
 ## 22.1.0 - 2023-09-TBD
 
 ### Added
-- Added a new `zcapRefreshThreshold` config option for refreshing zcaps in
-  profileAgent records.
+- Added a new `zcapRefreshThreshold` config option for refreshing zcaps.
 
 ### Changed
-- `profileAgents.getAll()` will now update the profileAgent's zcaps if the time
-  remaining until their expiration date is equal to or less than
-  `zcapRefreshThreshold` value.
+- `profileAgents.getAll()` will now update the profile agent and the
+  profile agent user document zcaps if the time remaining until their expiration
+  is equal to or less than `zcapRefreshThreshold` value.
 - Moved `defaultZcapTtl` and `profileCapabilityInvocationKeyZcapTtl` into
   config.
 
