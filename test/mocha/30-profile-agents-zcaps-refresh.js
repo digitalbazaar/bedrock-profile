@@ -47,8 +47,7 @@ describe('Refresh Profile Agent Zcaps', () => {
   });
 
   describe('profileAgents.getAll() API', () => {
-    // eslint-disable-next-line max-len
-    it.only('should refresh profile agent zcaps when "profileAgents.getAll()" is ' +
+    it('should refresh profile agent zcaps when "profileAgents.getAll()" is ' +
       'called if the time remaining until their expiration date is equal to ' +
       'or less than the refresh threshold value.', async () => {
       const accountId = uuid();
@@ -92,13 +91,17 @@ describe('Refresh Profile Agent Zcaps', () => {
       const now = Date.now();
       // 15 days in milliseconds
       const expiresIn15Days = new Date(now + 15 * 24 * 60 * 60 * 1000);
-      zcaps.userDocument.expires = expiresIn15Days;
-      zcaps['user-edv-kak'].expires = expiresIn15Days;
+
+      // TODO: Update the profile agent user document too.
+
+      const updateProfileAgent = JSON.parse(JSON.stringify(a.profileAgent));
+      const {zcaps: updateZcaps} = updateProfileAgent;
+      updateZcaps.userDocument.expires = expiresIn15Days;
+      updateZcaps['user-edv-kak'].expires = expiresIn15Days;
 
       // update the profileAgent
-      a.profileAgent.zcaps = zcaps;
-      a.profileAgent.sequence = 2;
-      await profileAgents.update({profileAgent: a.profileAgent});
+      updateProfileAgent.sequence = 2;
+      await profileAgents.update({profileAgent: updateProfileAgent});
 
       // get the updated profileAgent record
       const updatedRecord = await profileAgents.get({
