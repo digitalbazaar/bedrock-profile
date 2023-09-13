@@ -59,31 +59,20 @@ describe('Refresh Profile Agent Zcaps', () => {
   });
 
   describe('profileAgents.getAll() API', () => {
-    it('should refresh profile agent user doc zcaps and profile agent zcaps' +
+    it('should refresh profile agent user doc zcaps and profile agent zcaps ' +
       'when "profileAgents.getAll()" is called if the time remaining until ' +
       'their expiration is equal to or less than the refresh threshold ' +
       'value.', async () => {
       const accountId = uuid();
       const didMethod = 'v1';
-      let error;
-      let profile;
-      try {
-        profile = await profiles.create({
-          accountId, didMethod, edvOptions, keystoreOptions
-        });
-      } catch(e) {
-        error = e;
-      }
-      assertNoError(error);
+      const profile = await createProfile({
+        accountId, didMethod, edvOptions, keystoreOptions
+      });
       should.exist(profile);
       // should get all profile agents by accountId
-      let agents;
-      try {
-        agents = await profileAgents.getAll({accountId, includeSecrets: true});
-      } catch(e) {
-        error = e;
-      }
-      assertNoError(error);
+      const agents = await getAllProfileAgents({
+        accountId, includeSecrets: true
+      });
       agents.should.have.length(1);
       const [a] = agents;
       a.should.have.property('meta');
@@ -115,89 +104,63 @@ describe('Refresh Profile Agent Zcaps', () => {
         `${docUrl.protocol}//${docUrl.hostname}:${docUrl.port}` +
         `${docUrl.pathname.split('/').slice(0, 3).join('/')}`;
       const edvClient = new EdvClient({id: edvId, httpsAgent});
-      const edvConfig = await getEdvConfig({edvClient, profileSigner});
       const docId = zcaps.userDocument.invocationTarget.split('/').pop();
-      // get profile agent user doc
-      const profileAgentUserDoc = await getEdvDocument({
-        docId, edvConfig, edvClient, kmsClient, profileSigner
+      const edvConfig = await getEdvConfig({edvClient, profileSigner});
+
+      const profileAgentUserDoc = await getProfileAgentUserDoc({
+        edvClient, kmsClient, profileSigner, docId, edvConfig
       });
       const updateProfileAgentUserDoc = klona(profileAgentUserDoc);
-      const {zcaps: profileAgentUserDocZcaps} =
-        updateProfileAgentUserDoc.content;
-      for(const profileAgentUserDocZcapName in profileAgentUserDocZcaps) {
-        if(
-          profileAgentUserDocZcapName !== 'profileCapabilityInvocationKey'
-        ) {
-          const profileAgentUserDocZcap =
-            profileAgentUserDocZcaps[profileAgentUserDocZcapName];
-          // update the zcap's expires property
-          profileAgentUserDocZcap.expires = expiresIn15Days;
-        }
-      }
       const updateProfileAgent = klona(a.profileAgent);
-      const {zcaps: profileAgentZcaps} = updateProfileAgent;
-      for(const profileAgentZcapName in profileAgentZcaps) {
-        if(
-          profileAgentZcapName !== 'profileCapabilityInvocationKey'
-        ) {
-          const profileAgentZcap = profileAgentZcaps[profileAgentZcapName];
-          // update the zcap's expires property
-          profileAgentZcap.expires = expiresIn15Days;
-        }
-      }
-      // update profile agent user doc
-      await edvClient.update({
-        doc: updateProfileAgentUserDoc,
-        invocationSigner: profileSigner,
-        keyResolver,
+      // Update zcaps expiration for profile agent
+      await updateZcapsExpiration({
+        profileAgent: updateProfileAgent,
+        newExpires: expiresIn15Days,
       });
-      // update the profileAgent
-      updateProfileAgent.sequence = 2;
-      await profileAgents.update({
-        profileAgent: updateProfileAgent
+      // Update zcaps expiration for profile agent user doc
+      await updateZcapsExpiration({
+        profileAgentUserDoc: updateProfileAgentUserDoc,
+        newExpires: expiresIn15Days,
+        edvClient,
+        profileSigner
       });
 
       // get the updated profileAgent record, zcaps should be updated to expire
       // in 15 days
       const updatedRecord = await profileAgents.get({
-        id: a.profileAgent.id
+        id: updateProfileAgent.id
       });
       const {zcaps: updatedProfileAgentZcaps} = updatedRecord.profileAgent;
-      updatedProfileAgentZcaps.userDocument.expires.should.equal(
-        expiresIn15Days);
-      updatedProfileAgentZcaps['user-edv-kak'].expires.should.equal(
-        expiresIn15Days);
+      verifyZcapsExpiration({
+        zcaps: updatedProfileAgentZcaps,
+        expectedExpires: expiresIn15Days
+      });
 
-      // get the updated profile agent user document
+      // get the updated profile agent user document, zcaps should be updated
+      // to expire in 15 days
       const updatedProfileAgentUserDoc = await getEdvDocument({
         docId, edvConfig, edvClient, kmsClient, profileSigner
       });
       const {
         zcaps: updatedProfileAgentUserDocZcaps
       } = updatedProfileAgentUserDoc.content;
-      for(const zcapName in updatedProfileAgentUserDocZcaps) {
-        if(zcapName !== 'profileCapabilityInvocationKey') {
-          const zcap = updatedProfileAgentUserDocZcaps[zcapName];
-          zcap.expires.should.equal(expiresIn15Days);
-        }
-      }
-      // profileAgent user doc zcaps and profile agent zcaps must be refreshed
-      // when getAll() is called.
+      verifyZcapsExpiration({
+        zcaps: updatedProfileAgentUserDocZcaps,
+        expectedExpires: expiresIn15Days
+      });
 
+      // profileAgent user doc zcaps and profile agent zcaps should be refreshed
+      // when getAll() is called.
+      const refreshedAgents = await profileAgents.getAll({accountId});
       // Get the current year
       const currentYear = new Date().getFullYear();
-
-      const refreshedAgents = await profileAgents.getAll({accountId});
+      // zcaps expiration should have been set to a year from now
+      const expectedExpiresYear = currentYear + 1;
       const {zcaps: refreshedZcaps} = refreshedAgents[0].profileAgent;
-      for(const zcapName in refreshedZcaps) {
-        const zcap = refreshedZcaps[zcapName];
-        zcap.expires.should.not.equal(expiresIn15Days);
-        if(zcapName !== 'profileCapabilityInvocationKey') {
-          // zcaps expiration should have been set to a year from now
-          const zcapExpiresYear = new Date(zcap.expires).getFullYear();
-          zcapExpiresYear.should.equal(currentYear + 1);
-        }
-      }
+      verifyZcapsExpiration({
+        zcaps: refreshedZcaps,
+        expectedExpiresYear
+      });
       // get updated profile agent user doc zcaps
       const refreshedProfileAgentUserDoc = await getEdvDocument({
         docId, edvConfig, edvClient, kmsClient, profileSigner
@@ -205,15 +168,92 @@ describe('Refresh Profile Agent Zcaps', () => {
       const {
         zcaps: refreshedProfileAgentUserDocZcaps
       } = refreshedProfileAgentUserDoc.content;
-      for(const zcapName in refreshedProfileAgentUserDocZcaps) {
-        const zcap = refreshedProfileAgentUserDocZcaps[zcapName];
-        zcap.expires.should.not.equal(expiresIn15Days);
-        if(zcapName !== 'profileCapabilityInvocationKey') {
-          // zcaps expiration should have been set to a year from now
-          const zcapExpiresYear = new Date(zcap.expires).getFullYear();
-          zcapExpiresYear.should.equal(currentYear + 1);
-        }
-      }
+      verifyZcapsExpiration({
+        zcaps: refreshedProfileAgentUserDocZcaps,
+        expectedExpiresYear
+      });
     });
   });
 });
+
+async function createProfile({
+  accountId, didMethod, edvOptions, keystoreOptions
+} = {}) {
+  try {
+    return profiles.create({
+      accountId, didMethod, edvOptions, keystoreOptions
+    });
+  } catch(e) {
+    assertNoError(e);
+  }
+}
+
+async function getAllProfileAgents({accountId, includeSecrets} = {}) {
+  try {
+    return profileAgents.getAll({accountId, includeSecrets});
+  } catch(e) {
+    assertNoError(e);
+  }
+}
+
+async function getProfileAgentUserDoc({
+  edvClient, kmsClient, profileSigner, docId, edvConfig
+} = {}) {
+  try {
+    return getEdvDocument({
+      docId, edvConfig, edvClient, kmsClient, profileSigner
+    });
+  } catch(e) {
+    assertNoError(e);
+  }
+}
+
+async function updateZcapsExpiration({
+  profileAgent, profileAgentUserDoc, newExpires, edvClient, profileSigner
+} = {}) {
+  let zcaps;
+  if(profileAgent) {
+    ({zcaps} = profileAgent);
+  } else if(profileAgentUserDoc) {
+    ({zcaps} = profileAgentUserDoc.content);
+  }
+  for(const zcapName in zcaps) {
+    if(zcapName !== 'profileCapabilityInvocationKey') {
+      const zcap = zcaps[zcapName];
+      zcap.expires = newExpires;
+    }
+  }
+  if(profileAgent) {
+    // update the profileAgent
+    profileAgent.sequence += 1;
+    await profileAgents.update({
+      profileAgent
+    });
+  }
+  if(profileAgentUserDoc) {
+    // update profile agent user doc
+    await edvClient.update({
+      doc: profileAgentUserDoc,
+      invocationSigner: profileSigner,
+      keyResolver,
+    });
+  }
+}
+
+function verifyZcapsExpiration({
+  zcaps, expectedExpires, expectedExpiresYear
+} = {}) {
+  for(const zcapName in zcaps) {
+    if(zcapName !== 'profileCapabilityInvocationKey') {
+      const zcap = zcaps[zcapName];
+      if(expectedExpires) {
+        zcap.expires.should.equal(expectedExpires);
+      }
+      if(expectedExpiresYear) {
+        // zcaps expiration should have been set to a year from now
+        const zcapExpiresYear = new Date(zcap.expires).getFullYear();
+        zcapExpiresYear.should.equal(expectedExpiresYear);
+      }
+    }
+  }
+}
