@@ -9,7 +9,7 @@
 - `profileAgents.getAll()` will now update the profile agent and the
   profile agent user document zcaps if the time remaining until their expiration
   is equal to or less than `zcapRefreshThreshold` value.
-- Moved `defaultZcapTtl` and `profileCapabilityInvocationKeyZcapTtl` into
+- Moved `edvZcapTtl` and `profileCapabilityInvocationKeyZcapTtl` into
   config.
 
 ## 22.0.1 - 2022-12-06
