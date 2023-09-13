@@ -243,16 +243,17 @@ function verifyZcapsExpiration({
   zcaps, expectedExpires, expectedExpiresYear
 } = {}) {
   for(const zcapName in zcaps) {
-    if(zcapName !== 'profileCapabilityInvocationKey') {
-      const zcap = zcaps[zcapName];
-      if(expectedExpires) {
-        zcap.expires.should.equal(expectedExpires);
-      }
-      if(expectedExpiresYear) {
-        // zcaps expiration should have been set to a year from now
-        const zcapExpiresYear = new Date(zcap.expires).getFullYear();
-        zcapExpiresYear.should.equal(expectedExpiresYear);
-      }
+    if(zcapName === 'profileCapabilityInvocationKey') {
+      continue;
+    }
+    const zcap = zcaps[zcapName];
+    if(expectedExpires) {
+      zcap.expires.should.equal(expectedExpires);
+    }
+    if(expectedExpiresYear) {
+      // zcaps expiration should have been set to a year from now
+      const zcapExpiresYear = new Date(zcap.expires).getFullYear();
+      zcapExpiresYear.should.equal(expectedExpiresYear);
     }
   }
 }
