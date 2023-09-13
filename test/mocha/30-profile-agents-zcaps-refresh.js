@@ -18,6 +18,7 @@ const {
   getEdvConfig,
   getEdvDocument,
   getProfileSigner,
+  parseEdvId
 } = utils;
 
 describe('Refresh Profile Agent Zcaps', () => {
@@ -99,12 +100,10 @@ describe('Refresh Profile Agent Zcaps', () => {
       const profileSigner = await getProfileSigner({
         kmsClient, profileAgentRecord
       });
-      const docUrl = new URL(zcaps.userDocument.invocationTarget);
-      const edvId =
-        `${docUrl.protocol}//${docUrl.hostname}:${docUrl.port}` +
-        `${docUrl.pathname.split('/').slice(0, 3).join('/')}`;
+      const zcap = zcaps.userDocument;
+      const edvId = parseEdvId({capability: zcap});
       const edvClient = new EdvClient({id: edvId, httpsAgent});
-      const docId = zcaps.userDocument.invocationTarget.split('/').pop();
+      const docId = zcap.invocationTarget.split('/').pop();
       const edvConfig = await getEdvConfig({edvClient, profileSigner});
 
       const profileAgentUserDoc = await getProfileAgentUserDoc({
