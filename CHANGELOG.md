@@ -6,6 +6,7 @@
 - Added a new `zcapRefreshThreshold` config option for refreshing zcaps.
 
 ### Changed
+- Update `profileAgents.update()` to return updated document.
 - `profileAgents.getAll()` will now update the profile agent and the
   profile agent user document zcaps if the time remaining until their expiration
   is equal to or less than `zcapRefreshThreshold` value.
