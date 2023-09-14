@@ -83,6 +83,7 @@ describe('Refresh Profile Agent Zcaps', () => {
         'id', 'sequence', 'account', 'profile', 'controller', 'keystore',
         'capabilityInvocationKey', 'zcaps'
       ]);
+      a.profileAgent.sequence.should.equal(1);
       a.profileAgent.controller.should.be.a('string');
       const {zcaps} = a.profileAgent;
       zcaps.should.have.keys([
@@ -109,8 +110,10 @@ describe('Refresh Profile Agent Zcaps', () => {
       const profileAgentUserDoc = await getProfileAgentUserDoc({
         edvClient, kmsClient, profileSigner, docId, edvConfig
       });
+      profileAgentUserDoc.sequence.should.equal(0);
       const updateProfileAgentUserDoc = klona(profileAgentUserDoc);
       const updateProfileAgent = klona(a.profileAgent);
+
       // Update zcaps expiration for profile agent
       await updateZcapsExpiration({
         profileAgent: updateProfileAgent,
@@ -129,6 +132,7 @@ describe('Refresh Profile Agent Zcaps', () => {
       const updatedRecord = await profileAgents.get({
         id: updateProfileAgent.id
       });
+      updatedRecord.profileAgent.sequence.should.equal(2);
       const {zcaps: updatedProfileAgentZcaps} = updatedRecord.profileAgent;
       verifyZcapsExpiration({
         zcaps: updatedProfileAgentZcaps,
@@ -140,6 +144,7 @@ describe('Refresh Profile Agent Zcaps', () => {
       const updatedProfileAgentUserDoc = await getEdvDocument({
         docId, edvConfig, edvClient, kmsClient, profileSigner
       });
+      updatedProfileAgentUserDoc.sequence.should.equal(1);
       const {
         zcaps: updatedProfileAgentUserDocZcaps
       } = updatedProfileAgentUserDoc.content;
@@ -151,11 +156,13 @@ describe('Refresh Profile Agent Zcaps', () => {
       // profileAgent user doc zcaps and profile agent zcaps should be refreshed
       // when getAll() is called.
       const refreshedAgents = await profileAgents.getAll({accountId});
+      const refreshedAgent = refreshedAgents[0].profileAgent;
+      refreshedAgent.sequence.should.equal(3);
       // Get the current year
       const currentYear = new Date().getFullYear();
       // zcaps expiration should have been set to a year from now
       const expectedExpiresYear = currentYear + 1;
-      const {zcaps: refreshedZcaps} = refreshedAgents[0].profileAgent;
+      const {zcaps: refreshedZcaps} = refreshedAgent;
       verifyZcapsExpiration({
         zcaps: refreshedZcaps,
         expectedExpiresYear
@@ -164,6 +171,7 @@ describe('Refresh Profile Agent Zcaps', () => {
       const refreshedProfileAgentUserDoc = await getEdvDocument({
         docId, edvConfig, edvClient, kmsClient, profileSigner
       });
+      refreshedProfileAgentUserDoc.sequence.should.equal(2);
       const {
         zcaps: refreshedProfileAgentUserDocZcaps
       } = refreshedProfileAgentUserDoc.content;
