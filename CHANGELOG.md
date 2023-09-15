@@ -1,12 +1,13 @@
 # bedrock-profile ChangeLog
 
-## 22.1.0 - 2023-09-TBD
+## 23.0.0 - 2023-09-TBD
 
 ### Added
 - Added a new `zcapRefreshThreshold` config option for refreshing zcaps.
 
 ### Changed
-- Update `profileAgents.update()` to return updated document.
+- **BREAKING**: Update `profileAgents.update()` to return updated document,
+  previously it did not return any values.
 - `profileAgents.getAll()` will now update the profile agent and the
   profile agent user document zcaps if the time remaining until their expiration
   is equal to or less than `zcapRefreshThreshold` value.
@@ -14,7 +15,8 @@
   config.
 
 ### Removed
-- Remove `database.writeOptions` from database calls.
+- Remove `database.writeOptions` from database calls. These options should
+  already have been set globally.
 
 ## 22.0.1 - 2022-12-06
 
