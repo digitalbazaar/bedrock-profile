@@ -13,6 +13,9 @@
 - Moved `edvZcapTtl` and `profileCapabilityInvocationKeyZcapTtl` into
   config.
 
+### Removed
+- Remove `database.writeOptions` from database calls.
+
 ## 22.0.1 - 2022-12-06
 
 ### Fixed
