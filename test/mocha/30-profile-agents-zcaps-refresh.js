@@ -112,13 +112,12 @@ describe('Refresh Profile Agent Zcaps', () => {
       const updateProfileAgentUserDoc = klona(profileAgentUserDoc);
       const updateProfileAgent = klona(a.profileAgent);
 
-      // FIXME: re-enable once internals are updated
-      // Update zcaps expiration for profile agent
+      // update zcaps expiration for profile agent
       await updateZcapsExpiration({
         profileAgent: updateProfileAgent,
         newExpires: expiresIn15Days,
       });
-      // Update zcaps expiration for profile agent user doc
+      // update zcaps expiration for profile agent user doc
       await updateZcapsExpiration({
         profileAgentUserDoc: updateProfileAgentUserDoc,
         newExpires: expiresIn15Days,
@@ -162,7 +161,6 @@ describe('Refresh Profile Agent Zcaps', () => {
       // zcaps expiration should have been set to a year from now
       const expectedExpiresYear = currentYear + 1;
       const {zcaps: refreshedZcaps} = refreshedAgent;
-      console.log('refreshedZcaps', refreshedZcaps);
       verifyZcapsExpiration({
         zcaps: refreshedZcaps,
         expectedExpiresYear
@@ -179,6 +177,8 @@ describe('Refresh Profile Agent Zcaps', () => {
         zcaps: refreshedProfileAgentUserDocZcaps,
         expectedExpiresYear
       });
+
+      // FIXME: ensure zcaps still work!
     });
     it('should ensure that when "profileAgents.getAll()" is called multiple ' +
       'times concurrently, just one call should succeed at performing the ' +
@@ -318,7 +318,43 @@ describe('Refresh Profile Agent Zcaps', () => {
         zcaps: refreshedProfileAgentUserDocZcaps,
         expectedExpiresYear
       });
+
+      // FIXME: ensure zcaps still work!
     });
+
+    // FIXME:
+    /*
+    it('should create additional profile EDVs', async () => {
+      const accountId = uuid();
+      const didMethod = 'key';
+      const newEdvOptions = {
+        profile: {
+          ...edvOptions.profile,
+          additionalEdvs: [
+            {referenceId: 'credentials'},
+            {referenceId: 'inbox'}
+          ]
+        }
+      };
+      let error;
+      let profile;
+      try {
+        profile = await profiles.create({
+          accountId, didMethod, edvOptions: newEdvOptions, keystoreOptions
+        });
+      } catch(e) {
+        error = e;
+      }
+      assertNoError(error);
+      should.exist(profile);
+      profile.id.should.be.a('string');
+      profile.edvs.should.be.an('object');
+      profile.edvs.should.include.keys(['user', 'credentials', 'inbox']);
+
+      // FIXME: force zcap refresh and read from and write to
+      // ...credentials and inbox
+      // FIXME: then do it again (refresh and read + write again)
+    });*/
   });
 });
 
