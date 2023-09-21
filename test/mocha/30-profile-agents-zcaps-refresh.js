@@ -114,7 +114,7 @@ describe('Refresh Profile Agent Zcaps', () => {
 
       // FIXME: re-enable once internals are updated
       // Update zcaps expiration for profile agent
-      /*await updateZcapsExpiration({
+      await updateZcapsExpiration({
         profileAgent: updateProfileAgent,
         newExpires: expiresIn15Days,
       });
@@ -124,7 +124,7 @@ describe('Refresh Profile Agent Zcaps', () => {
         newExpires: expiresIn15Days,
         edvClient,
         profileSigner
-      });*/
+      });
 
       // get the updated profileAgent record, zcaps should be updated to expire
       // in 15 days
@@ -162,6 +162,7 @@ describe('Refresh Profile Agent Zcaps', () => {
       // zcaps expiration should have been set to a year from now
       const expectedExpiresYear = currentYear + 1;
       const {zcaps: refreshedZcaps} = refreshedAgent;
+      console.log('refreshedZcaps', refreshedZcaps);
       verifyZcapsExpiration({
         zcaps: refreshedZcaps,
         expectedExpiresYear
@@ -366,6 +367,8 @@ async function updateZcapsExpiration({
     if(zcapName !== 'profileCapabilityInvocationKey') {
       const zcap = zcaps[zcapName];
       zcap.expires = newExpires;
+      // also backdate `created` on proof to ensure an update will occur
+      zcap.proof.created = new Date(0).toISOString();
     }
   }
   if(profileAgent) {
