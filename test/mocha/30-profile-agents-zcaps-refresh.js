@@ -322,9 +322,7 @@ describe('Refresh Profile Agent Zcaps', () => {
       // FIXME: ensure zcaps still work!
     });
 
-    // FIXME:
-    /*
-    it('should create additional profile EDVs', async () => {
+    it('should refresh zcaps for additional profile EDVs', async () => {
       const accountId = uuid();
       const didMethod = 'key';
       const newEdvOptions = {
@@ -351,10 +349,12 @@ describe('Refresh Profile Agent Zcaps', () => {
       profile.edvs.should.be.an('object');
       profile.edvs.should.include.keys(['user', 'credentials', 'inbox']);
 
-      // FIXME: force zcap refresh and read from and write to
-      // ...credentials and inbox
-      // FIXME: then do it again (refresh and read + write again)
-    });*/
+      // FIXME: get existing zcaps
+
+      // FIXME: confirm zcaps have been refreshed
+
+      // FIXME: read and write with refreshed zcaps
+    });
   });
 });
 
