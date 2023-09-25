@@ -379,7 +379,7 @@ describe('Refresh Profile Agent Zcaps', () => {
       }
     });
 
-    it.only('should ensure additional EDV zcaps are concurrently refreshed ' +
+    it('should ensure additional EDV zcaps are concurrently refreshed ' +
       'only once', async () => {
       /* Note: When "profileAgents.getAll()" is called multiple times
       concurrently, just one call should succeed at performing the refresh
