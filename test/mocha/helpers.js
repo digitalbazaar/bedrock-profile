@@ -79,18 +79,70 @@ export async function getEdvDocument({
 }
 
 export async function getUserEdvDocument({
-  profileAgentRecord, kmsClient = new KmsClient({httpsAgent})
+  profileAgentRecord,
+  zcaps = profileAgentRecord.profileAgent.zcaps,
+  kmsClient = new KmsClient({httpsAgent})
 } = {}) {
   const invocationSigner = await profileAgents.getSigner({profileAgentRecord});
-  const {profileAgent: {zcaps}} = profileAgentRecord
-  const {userDocument: capability} = zcaps;
+  const {userDocument: userDocumentZcap} = zcaps;
+  let id;
+  let capability;
+  // if write capability for the whole EDV is present, use it
+  if(zcaps['user-edv-documents']) {
+    id = userDocumentZcap.invocationTarget.slice(
+      userDocumentZcap.invocationTarget.lastIndexOf('/') + 1);
+    capability = zcaps['user-edv-documents'];
+  } else {
+    capability = userDocumentZcap;
+  }
   const edvClient = new EdvClient({capability, httpsAgent, keyResolver});
   const keyAgreementKey = await KeyAgreementKey.fromCapability(
     {capability: zcaps['user-edv-kak'], invocationSigner, kmsClient});
+  // if indexing capability is present, use it
+  let hmac;
+  if(zcaps['user-edv-hmac']) {
+    hmac = await Hmac.fromCapability(
+      {capability: zcaps['user-edv-hmac'], invocationSigner, kmsClient});
+  }
   const doc = new EdvDocument({
+    id,
     capability,
     invocationSigner,
     keyAgreementKey,
+    hmac,
+    client: edvClient
+  });
+  return doc;
+}
+
+export async function getProfileAgentWritableEdvDocument({
+  profileAgentRecord,
+  id,
+  edvName,
+  kmsClient = new KmsClient({httpsAgent})
+} = {}) {
+  const invocationSigner = await profileAgents.getSigner({profileAgentRecord});
+  const userEdvDoc = await getUserEdvDocument({profileAgentRecord});
+  const userDoc = await userEdvDoc.read();
+
+  // get additional EDV zcaps from user doc
+  const {
+    [`${edvName}-edv-documents`]: capability,
+    [`${edvName}-edv-kak`]: kakZcap,
+    [`${edvName}-edv-hmac`]: hmacZcap
+  } = userDoc.content.zcaps;
+
+  const edvClient = new EdvClient({capability, httpsAgent, keyResolver});
+  const keyAgreementKey = await KeyAgreementKey.fromCapability(
+    {capability: kakZcap, invocationSigner, kmsClient});
+  const hmac = await Hmac.fromCapability(
+    {capability: hmacZcap, invocationSigner, kmsClient});
+  const doc = new EdvDocument({
+    id,
+    capability,
+    invocationSigner,
+    keyAgreementKey,
+    hmac,
     client: edvClient
   });
   return doc;
