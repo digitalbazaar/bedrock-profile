@@ -3,7 +3,6 @@
  */
 import * as bedrock from '@bedrock/core';
 import * as helpers from './helpers.js';
-import * as utils from '@bedrock/profile/lib/utils.js';
 import {profileAgents, profiles} from '@bedrock/profile';
 import {EdvClient} from '@digitalbazaar/edv-client';
 import {getAppIdentity} from '@bedrock/app-identity';
@@ -18,7 +17,7 @@ const {
   getEdvConfig,
   getEdvDocument,
   parseEdvId
-} = utils;
+} = helpers;
 
 describe('Refresh Profile Agent Zcaps', () => {
   let edvOptions;
