@@ -1,12 +1,14 @@
 /*!
- * Copyright (c) 2020-2022 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2020-2023 Digital Bazaar, Inc. All rights reserved.
  */
 import * as bedrock from '@bedrock/core';
 import * as brAccount from '@bedrock/account';
 import * as database from '@bedrock/mongodb';
 import {_deserializeUser, passport} from '@bedrock/passport';
+import {Hmac, KeyAgreementKey} from '@digitalbazaar/webkms-client';
 import {agent} from '@bedrock/https-agent';
 import {Ed25519Signature2020} from '@digitalbazaar/ed25519-signature-2020';
+import {EdvDocument} from '@digitalbazaar/edv-client';
 import {getAppIdentity} from '@bedrock/app-identity';
 import {ZcapClient} from '@digitalbazaar/ezcap';
 
@@ -39,6 +41,37 @@ export async function createMeter({type}) {
   // return usage capability
   const {id} = meter;
   return {id: `${meterService}/${id}`};
+}
+
+export async function getEdvConfig({edvClient, profileSigner} = {}) {
+  return edvClient.getConfig({
+    invocationSigner: profileSigner
+  });
+}
+
+export async function getEdvDocument({
+  docId, edvConfig, edvClient, kmsClient, profileSigner
+} = {}) {
+  const {hmac, keyAgreementKey} = edvConfig;
+
+  const doc = new EdvDocument({
+    invocationSigner: profileSigner,
+    id: docId,
+    keyAgreementKey: new KeyAgreementKey({
+      id: keyAgreementKey.id,
+      type: keyAgreementKey.type,
+      invocationSigner: profileSigner,
+      kmsClient
+    }),
+    hmac: new Hmac({
+      id: hmac.id,
+      type: hmac.type,
+      invocationSigner: profileSigner,
+      kmsClient
+    }),
+    client: edvClient
+  });
+  return doc.read();
 }
 
 export function stubPassport({email = 'alpha@example.com'} = {}) {
@@ -86,6 +119,15 @@ export function stubPassport({email = 'alpha@example.com'} = {}) {
   };
 }
 
+export function parseEdvId({capability}) {
+  const {invocationTarget} = capability;
+  const idx = invocationTarget.lastIndexOf('/documents');
+  if(idx === -1) {
+    throw new Error(`Invalid EDV invocation target (${invocationTarget}).`);
+  }
+  return invocationTarget.slice(0, idx);
+}
+
 export async function prepareDatabase(mockData) {
   await removeCollections();
   await insertTestData(mockData);
@@ -105,6 +147,11 @@ export async function removeCollections(
 
 export async function removeCollection(collectionName) {
   return removeCollections([collectionName]);
+}
+
+// timestamp is in milliseconds
+export function timestampToDateString(timestamp) {
+  return new Date(timestamp).toISOString().slice(0, -5) + 'Z';
 }
 
 async function insertTestData(mockData) {
