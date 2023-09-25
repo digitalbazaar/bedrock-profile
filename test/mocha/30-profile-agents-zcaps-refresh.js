@@ -9,13 +9,13 @@ import {getAppIdentity} from '@bedrock/app-identity';
 import {httpsAgent} from '@bedrock/https-agent';
 import {keyResolver} from '@bedrock/profile/lib/keyResolver.js';
 import {klona} from 'klona';
-import {KmsClient} from '@digitalbazaar/webkms-client';
 import {mockData} from './mock.data.js';
 import {v4 as uuid} from 'uuid';
 
 const {
   getEdvConfig,
   getEdvDocument,
+  getUserEdvDocument,
   parseEdvId
 } = helpers;
 
@@ -58,10 +58,11 @@ describe('Refresh Profile Agent Zcaps', () => {
   });
 
   describe('profileAgents.getAll() API', () => {
-    it.only('should refresh profile agent user doc zcaps and profile agent zcaps ' +
-      'when "profileAgents.getAll()" is called if the time remaining until ' +
-      'their expiration is equal to or less than the refresh threshold ' +
-      'value.', async () => {
+    // refresh profile agent zcaps in record and user EDV doc issued by profile
+    it.only('should refresh profile agent zcaps', async () => {
+      /* Note: When "profileAgents.getAll()" is called, if the time remaining
+      until zcap expiration is equal to or less than the refresh threshold,
+      zcaps should be refreshed (provided they were issued by the profile). */
       const accountId = uuid();
       const didMethod = 'v1';
       const profile = await createProfile({
@@ -103,20 +104,20 @@ describe('Refresh Profile Agent Zcaps', () => {
       const docId = zcap.invocationTarget.split('/').pop();
       const edvConfig = await getEdvConfig({edvClient, profileSigner});
 
-      const kmsClient = new KmsClient({httpsAgent});
       const profileAgentUserDoc = await getProfileAgentUserDoc({
-        edvClient, kmsClient, profileSigner, docId, edvConfig
+        edvClient, profileSigner, docId, edvConfig
       });
       profileAgentUserDoc.sequence.should.equal(0);
       const updateProfileAgentUserDoc = klona(profileAgentUserDoc);
       const updateProfileAgent = klona(a.profileAgent);
 
-      // update zcaps expiration for profile agent
+      // update zcaps expiration for profile agent (note: will invalidate zcaps)
       await updateZcapsExpiration({
         profileAgent: updateProfileAgent,
         newExpires: expiresIn15Days,
       });
       // update zcaps expiration for profile agent user doc
+      // (note: will invalidate zcaps)
       await updateZcapsExpiration({
         profileAgentUserDoc: updateProfileAgentUserDoc,
         newExpires: expiresIn15Days,
@@ -139,7 +140,7 @@ describe('Refresh Profile Agent Zcaps', () => {
       // get the updated profile agent user document, zcaps should be updated
       // to expire in 15 days
       const updatedProfileAgentUserDoc = await getEdvDocument({
-        docId, edvConfig, edvClient, kmsClient, profileSigner
+        docId, edvConfig, edvClient, profileSigner
       });
       updatedProfileAgentUserDoc.sequence.should.equal(1);
       const {
@@ -166,7 +167,7 @@ describe('Refresh Profile Agent Zcaps', () => {
       });
       // get updated profile agent user doc zcaps
       const refreshedProfileAgentUserDoc = await getEdvDocument({
-        docId, edvConfig, edvClient, kmsClient, profileSigner
+        docId, edvConfig, edvClient, profileSigner
       });
       refreshedProfileAgentUserDoc.sequence.should.equal(2);
       const {
@@ -177,13 +178,26 @@ describe('Refresh Profile Agent Zcaps', () => {
         expectedExpiresYear
       });
 
-      // FIXME: ensure zcaps still work!
+      // ensure zcaps still work
+      {
+        // get secrets
+        const [profileAgentRecord] = refreshedAgents;
+        const {secrets} = await profileAgents.get(
+          {id: profileAgentRecord.profileAgent.id, includeSecrets: true});
+        profileAgentRecord.secrets = secrets;
+        // read as profile agent and compare to doc retrieved as profile
+        const edvDoc = await getUserEdvDocument({profileAgentRecord});
+        const doc = await edvDoc.read();
+        doc.should.deep.equal(refreshedProfileAgentUserDoc);
+
+        // FIXME: ensure profile agent user EDV doc zcaps still work
+      }
     });
-    it('should ensure that when "profileAgents.getAll()" is called multiple ' +
-      'times concurrently, just one call should succeed at performing the ' +
-      'refresh while the others should return the properly refreshed ' +
-      'records and ensure that the document sequence is only incremented ' +
-      'once.', async () => {
+    it('should ensure zcaps are concurrently refreshed only once', async () => {
+      /* Note: When "profileAgents.getAll()" is called multiple times
+      concurrently, just one call should succeed at performing the refresh
+      while the others should return the properly refreshed records and ensure
+      that the document sequence is only incremented once. */
       const accountId = uuid();
       const didMethod = 'v1';
       const profile = await createProfile({
@@ -225,20 +239,20 @@ describe('Refresh Profile Agent Zcaps', () => {
       const docId = zcap.invocationTarget.split('/').pop();
       const edvConfig = await getEdvConfig({edvClient, profileSigner});
 
-      const kmsClient = new KmsClient({httpsAgent});
       const profileAgentUserDoc = await getProfileAgentUserDoc({
-        edvClient, kmsClient, profileSigner, docId, edvConfig
+        edvClient, profileSigner, docId, edvConfig
       });
       profileAgentUserDoc.sequence.should.equal(0);
       const updateProfileAgentUserDoc = klona(profileAgentUserDoc);
       const updateProfileAgent = klona(a.profileAgent);
 
-      // Update zcaps expiration for profile agent
+      // update zcaps expiration for profile agent (note: will invalidate zcaps)
       await updateZcapsExpiration({
         profileAgent: updateProfileAgent,
         newExpires: expiresIn15Days,
       });
-      // Update zcaps expiration for profile agent user doc
+      // update zcaps expiration for profile agent user doc
+      // (note: will invalidate zcaps)
       await updateZcapsExpiration({
         profileAgentUserDoc: updateProfileAgentUserDoc,
         newExpires: expiresIn15Days,
@@ -261,7 +275,7 @@ describe('Refresh Profile Agent Zcaps', () => {
       // get the updated profile agent user document, zcaps should be updated
       // to expire in 15 days
       const updatedProfileAgentUserDoc = await getEdvDocument({
-        docId, edvConfig, edvClient, kmsClient, profileSigner
+        docId, edvConfig, edvClient, profileSigner
       });
       updatedProfileAgentUserDoc.sequence.should.equal(1);
       const {
@@ -280,7 +294,7 @@ describe('Refresh Profile Agent Zcaps', () => {
         promises.push(refreshedAgentsPromise);
       }
       const refreshedAgentsRecords = await Promise.all(promises);
-      // All 10 calls should return a refreshed record, but only one should
+      // all 10 calls should return a refreshed record, but only one should
       // have updated the record, expected the sequence to have incremented
       // only once and expected all calls to return records with refreshed
       // zcaps
@@ -301,7 +315,7 @@ describe('Refresh Profile Agent Zcaps', () => {
 
       // get updated profile agent user doc zcaps
       const refreshedProfileAgentUserDoc = await getEdvDocument({
-        docId, edvConfig, edvClient, kmsClient, profileSigner
+        docId, edvConfig, edvClient, profileSigner
       });
       // expected the profile agent user document sequence to have incremented
       // only once
