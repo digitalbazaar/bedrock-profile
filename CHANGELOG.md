@@ -6,7 +6,7 @@
 - Added a new `zcap` config options for auto-refreshing and setting the TTLs
   for zcaps. These come with defaults that match existing behavior and add
   new auto-refresh behavior.
-- Update `profileAgents.update()` to return updated document, previously it
+- Update `profileAgents.update()` to return updated record, previously it
   did not return any values.
 
 ### Changed
