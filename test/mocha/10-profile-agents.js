@@ -105,6 +105,57 @@ describe('profileAgents API', () => {
       profileAgent.capabilityInvocationKey.should.eql(
         fetchedProfileAgent.capabilityInvocationKey);
     });
+    it('successfully handle profile agent update conflict', async () => {
+      const accountId = uuid();
+      const profileId = `did:example:${uuid()}`;
+      let error;
+      let profileAgent;
+      let fetchedProfileAgent;
+      try {
+        ({profileAgent} = await profileAgents.create({
+          keystoreOptions, profileId, store: true
+        }));
+        // first do update with wrong sequence number
+        let invalidStateError;
+        try {
+          await profileAgents.update({
+            profileAgent: {
+              ...profileAgent,
+              sequence: profileAgent.sequence,
+              account: accountId
+            }
+          });
+        } catch(e) {
+          invalidStateError = e;
+          e.name.should.equal('InvalidStateError');
+        }
+        should.exist(invalidStateError);
+        const updatedRecord = await profileAgents.update({
+          profileAgent: {
+            ...profileAgent,
+            sequence: profileAgent.sequence + 1,
+            account: accountId
+          },
+          includeSecrets: true
+        });
+        const fetchedRecord = await profileAgents.getByProfile(
+          {profileId, accountId, includeSecrets: true});
+        ({profileAgent: fetchedProfileAgent} = fetchedRecord);
+        updatedRecord.should.deep.equal(fetchedRecord);
+      } catch(e) {
+        error = e;
+      }
+      assertNoError(error);
+      should.exist(profileAgent);
+      should.exist(fetchedProfileAgent);
+      profileAgent.id.should.equal(fetchedProfileAgent.id);
+      profileAgent.sequence.should.equal(0);
+      fetchedProfileAgent.sequence.should.equal(1);
+      fetchedProfileAgent.profile.should.equal(profileId);
+      profileAgent.keystore.should.equal(fetchedProfileAgent.keystore);
+      profileAgent.capabilityInvocationKey.should.eql(
+        fetchedProfileAgent.capabilityInvocationKey);
+    });
   }); // end get a profile agent
   describe('Remove Profile Agent', () => {
     it('successfully remove a profile agent by "id"', async () => {
