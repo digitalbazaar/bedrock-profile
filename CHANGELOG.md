@@ -1,18 +1,24 @@
 # bedrock-profile ChangeLog
 
-## 23.0.0 - 2023-09-TBD
+## 22.1.0 - 2023-09-TBD
 
 ### Added
-- Added a new `zcapRefreshThreshold` config option for refreshing zcaps.
+- Added a new `zcap` config options for auto-refreshing and setting the TTLs
+  for zcaps. These come with defaults that match existing behavior and add
+  new auto-refresh behavior.
+- Update `profileAgents.update()` to return updated document, previously it
+  did not return any values.
 
 ### Changed
-- **BREAKING**: Update `profileAgents.update()` to return updated document,
-  previously it did not return any values.
-- `profileAgents.getAll()` will now update the profile agent and the
-  profile agent user document zcaps if the time remaining until their expiration
-  is equal to or less than `zcapRefreshThreshold` value.
-- Moved `edvZcapTtl` and `profileCapabilityInvocationKeyZcapTtl` into
-  config.
+- `profileAgents.getAll()` will now update the zcaps in the profile agent
+  mongodb record if the time remaining until their expiration is equal to
+  or less than `zcap.autoRefreshThreshold` value. The zcaps in the profile
+  agent's user EDV document will also be updated at that time if they were
+  delegated more than `zcap.syncTimeDelta` milliseconds ago. This approach
+  keeps the zcaps in the record and in the user EDV doc in sync when auto
+  refreshing without performing more EDV document updates than are
+  necessary when multiple concurrent processes are requesting profile
+  agent records.
 
 ### Removed
 - Remove `database.writeOptions` from database calls. These options should
