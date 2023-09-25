@@ -15,6 +15,7 @@ import {v4 as uuid} from 'uuid';
 const {
   getEdvConfig,
   getEdvDocument,
+  getProfileAgentWritableEdvDocument,
   getUserEdvDocument,
   parseEdvId
 } = helpers;
@@ -185,12 +186,27 @@ describe('Refresh Profile Agent Zcaps', () => {
         const {secrets} = await profileAgents.get(
           {id: profileAgentRecord.profileAgent.id, includeSecrets: true});
         profileAgentRecord.secrets = secrets;
+
         // read as profile agent and compare to doc retrieved as profile
         const edvDoc = await getUserEdvDocument({profileAgentRecord});
         const doc = await edvDoc.read();
         doc.should.deep.equal(refreshedProfileAgentUserDoc);
 
-        // FIXME: ensure profile agent user EDV doc zcaps still work
+        // get writable user EDV document
+        const id = await EdvClient.generateId();
+        const writableEdvDoc = await getProfileAgentWritableEdvDocument(
+          {profileAgentRecord, id, edvName: 'user'});
+        const newDoc = {
+          id,
+          content: {
+            id: 'urn:uuid:testuser',
+            name: 'foo'
+          }
+        };
+        await writableEdvDoc.write({doc: newDoc});
+        // read written doc
+        const readDoc = await writableEdvDoc.read();
+        readDoc.content.should.deep.equal(newDoc.content);
       }
     });
     it('should ensure zcaps are concurrently refreshed only once', async () => {
