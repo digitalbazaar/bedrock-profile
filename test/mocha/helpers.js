@@ -5,11 +5,15 @@ import * as bedrock from '@bedrock/core';
 import * as brAccount from '@bedrock/account';
 import * as database from '@bedrock/mongodb';
 import {_deserializeUser, passport} from '@bedrock/passport';
+import {EdvClient, EdvDocument} from '@digitalbazaar/edv-client';
 import {Hmac, KeyAgreementKey} from '@digitalbazaar/webkms-client';
 import {agent} from '@bedrock/https-agent';
 import {Ed25519Signature2020} from '@digitalbazaar/ed25519-signature-2020';
-import {EdvDocument} from '@digitalbazaar/edv-client';
 import {getAppIdentity} from '@bedrock/app-identity';
+import {httpsAgent} from '@bedrock/https-agent';
+import {keyResolver} from '@bedrock/profile/lib/keyResolver.js';
+import {KmsClient} from '@digitalbazaar/webkms-client';
+import {profileAgents} from '@bedrock/profile';
 import {ZcapClient} from '@digitalbazaar/ezcap';
 
 import {mockData} from './mock.data.js';
@@ -44,13 +48,13 @@ export async function createMeter({type}) {
 }
 
 export async function getEdvConfig({edvClient, profileSigner} = {}) {
-  return edvClient.getConfig({
-    invocationSigner: profileSigner
-  });
+  return edvClient.getConfig({invocationSigner: profileSigner});
 }
 
 export async function getEdvDocument({
-  docId, edvConfig, edvClient, kmsClient, profileSigner
+  docId, edvConfig, edvClient,
+  kmsClient = new KmsClient({httpsAgent}),
+  profileSigner
 } = {}) {
   const {hmac, keyAgreementKey} = edvConfig;
 
@@ -72,6 +76,24 @@ export async function getEdvDocument({
     client: edvClient
   });
   return doc.read();
+}
+
+export async function getUserEdvDocument({
+  profileAgentRecord, kmsClient = new KmsClient({httpsAgent})
+} = {}) {
+  const invocationSigner = await profileAgents.getSigner({profileAgentRecord});
+  const {profileAgent: {zcaps}} = profileAgentRecord
+  const {userDocument: capability} = zcaps;
+  const edvClient = new EdvClient({capability, httpsAgent, keyResolver});
+  const keyAgreementKey = await KeyAgreementKey.fromCapability(
+    {capability: zcaps['user-edv-kak'], invocationSigner, kmsClient});
+  const doc = new EdvDocument({
+    capability,
+    invocationSigner,
+    keyAgreementKey,
+    client: edvClient
+  });
+  return doc;
 }
 
 export function stubPassport({email = 'alpha@example.com'} = {}) {
