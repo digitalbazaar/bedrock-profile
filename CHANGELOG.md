@@ -1,6 +1,6 @@
 # bedrock-profile ChangeLog
 
-## 22.1.0 - 2023-09-TBD
+## 22.1.0 - 2023-09-25
 
 ### Added
 - Added a new `zcap` config options for auto-refreshing and setting the TTLs
