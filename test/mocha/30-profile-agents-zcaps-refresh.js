@@ -96,7 +96,7 @@ describe('Refresh Profile Agent Zcaps', () => {
       // 15 days in milliseconds
       const expiresIn15Days =
         new Date(now + 15 * 24 * 60 * 60 * 1000).toISOString();
-      const profileAgentRecord = klona(agents[0]);
+      const profileAgentRecord = agents[0];
       const profileSigner = await profileAgents.getProfileSigner(
         {profileAgentRecord});
       const zcap = zcaps.userDocument;
@@ -110,7 +110,10 @@ describe('Refresh Profile Agent Zcaps', () => {
       });
       profileAgentUserDoc.sequence.should.equal(0);
       const updateProfileAgentUserDoc = klona(profileAgentUserDoc);
-      const updateProfileAgent = klona(a.profileAgent);
+      const updateProfileAgent = klona({
+        ...a.profileAgent,
+        secrets: undefined
+      });
 
       // update zcaps expiration for profile agent (note: will invalidate zcaps)
       await updateZcapsExpiration({
@@ -246,7 +249,7 @@ describe('Refresh Profile Agent Zcaps', () => {
       // 15 days in milliseconds
       const expiresIn15Days = new Date(now + 15 * 24 * 60 * 60 * 1000)
         .toISOString();
-      const profileAgentRecord = klona(agents[0]);
+      const profileAgentRecord = agents[0];
       const profileSigner = await profileAgents.getProfileSigner(
         {profileAgentRecord});
       const zcap = zcaps.userDocument;
@@ -260,7 +263,10 @@ describe('Refresh Profile Agent Zcaps', () => {
       });
       profileAgentUserDoc.sequence.should.equal(0);
       const updateProfileAgentUserDoc = klona(profileAgentUserDoc);
-      const updateProfileAgent = klona(a.profileAgent);
+      const updateProfileAgent = klona({
+        ...a.profileAgent,
+        secrets: undefined
+      });
 
       // update zcaps expiration for profile agent (note: will invalidate zcaps)
       await updateZcapsExpiration({
@@ -471,7 +477,7 @@ describe('Refresh Profile Agent Zcaps', () => {
       // 15 days in milliseconds
       const expiresIn15Days = new Date(now + 15 * 24 * 60 * 60 * 1000)
         .toISOString();
-      const profileAgentRecord = klona(agents[0]);
+      const profileAgentRecord = agents[0];
       const profileSigner = await profileAgents.getProfileSigner(
         {profileAgentRecord});
       const zcap = zcaps.userDocument;
@@ -485,7 +491,10 @@ describe('Refresh Profile Agent Zcaps', () => {
       });
       profileAgentUserDoc.sequence.should.equal(0);
       const updateProfileAgentUserDoc = klona(profileAgentUserDoc);
-      const updateProfileAgent = klona(a.profileAgent);
+      const updateProfileAgent = klona({
+        ...a.profileAgent,
+        secrets: undefined
+      });
 
       // update zcaps expiration for profile agent (note: will invalidate zcaps)
       await updateZcapsExpiration({
@@ -743,7 +752,7 @@ describe('Refresh Profile Agent Zcaps', () => {
       // 15 days in milliseconds
       const expiresIn15Days = new Date(now + 15 * 24 * 60 * 60 * 1000)
         .toISOString();
-      const profileAgentRecord = klona(agents[0]);
+      const profileAgentRecord = agents[0];
       const profileSigner = await profileAgents.getProfileSigner(
         {profileAgentRecord});
       const zcap = zcaps.userDocument;
@@ -756,7 +765,10 @@ describe('Refresh Profile Agent Zcaps', () => {
         edvClient, profileSigner, docId, edvConfig
       });
       profileAgentUserDoc.sequence.should.equal(0);
-      const updateProfileAgent = klona(a.profileAgent);
+      const updateProfileAgent = klona({
+        ...a.profileAgent,
+        secrets: undefined
+      });
 
       // update zcaps expiration for profile agent (note: will invalidate zcaps)
       await updateZcapsExpiration({
