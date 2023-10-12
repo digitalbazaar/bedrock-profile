@@ -1,9 +1,14 @@
 # bedrock-profile ChangeLog
 
+## 23.0.1 - 2023-10-xx
+
+### Fixed
+- Update test deps.
+
 ## 23.0.0 - 2023-10-12
 
 ### Changed
-- **BREAKING**: Drop support for Node.js <= 18.
+- **BREAKING**: Drop support for Node.js < 18.
 - **BREAKING**: Update peer deps:
   - Use `@bedrock/jsonld-document-loader@4.0.0`.
   - Use `@bedrock/mongodb@10.1`.
