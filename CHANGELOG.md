@@ -1,13 +1,13 @@
 # bedrock-profile ChangeLog
 
-## 23.0.0 - 2023-10-TBD
+## 23.0.0 - 2023-10-12
 
 ### Changed
-- **BREAKING**: Drop support for Node.js <= 16.
-- **BREAKING**: Update peer deps.
+- **BREAKING**: Drop support for Node.js <= 18.
+- **BREAKING**: Update peer deps:
   - Use `@bedrock/jsonld-document-loader@4.0.0`.
   - Use `@bedrock/mongodb@10.1`.
-- Update deps.
+- Update deps:
   - Use `@digitalbazaar/ed25519-signature-2020@5.2`.
   - Use `@digitalbazaar/ed25519-verification-key-2020@4.1`.
   - Use `@digitalbazaar/edv-client@16.0` that drops support for Node.js < 18.
