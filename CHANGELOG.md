@@ -1,6 +1,6 @@
 # bedrock-profile ChangeLog
 
-## 23.0.1 - 2023-10-xx
+## 23.0.1 - 2023-10-12
 
 ### Fixed
 - Update test deps.
