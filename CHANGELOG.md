@@ -1,5 +1,17 @@
 # bedrock-profile ChangeLog
 
+## 24.0.0 - 2024-08-xx
+
+### Changed
+- **BREAKING**: Update peer deps:
+  - `@bedrock/core@6.1.3`
+  - `@bedrock/https-agent@4.1.0`
+  - `@bedrock/jsonld-document-loader@5.1.0`
+  - `@bedrock/mongodb@10.2.0`
+- **BREAKING**: Update deps:
+  - `@digitalbazaar/webkms-client@14.1.1`
+- Update minor, test, and dev dependencies.
+
 ## 23.0.1 - 2023-10-12
 
 ### Fixed
