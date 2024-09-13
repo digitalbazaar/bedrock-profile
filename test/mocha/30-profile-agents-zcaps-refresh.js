@@ -982,17 +982,6 @@ describe('Refresh Profile Agent Zcaps', () => {
         secrets: undefined
       });
 
-      const indexes = await getAccessManagementIndexes({
-        profileAgentUserDoc, edvClient, edvConfig, profileSigner
-      });
-      const equals = [{'content.id': a.profileAgent.id}];
-
-      let documents = [];
-      ({documents} = await queryForEdvDocument({
-        equals, limit: 1, indexes, edvClient, edvConfig, profileSigner
-      }));
-      documents.should.have.length(1);
-      console.log('INDEXED BEFORE REFRESH', documents[0].indexed);
       // update zcaps expiration for profile agent (note: will invalidate zcaps)
       await updateZcapsExpiration({
         profileAgent: updateProfileAgent,
@@ -1060,12 +1049,17 @@ describe('Refresh Profile Agent Zcaps', () => {
         expectedExpiresYear
       });
 
+      const indexes = await getAccessManagementIndexes({
+        profileAgentUserDoc, edvClient, edvConfig, profileSigner
+      });
+      const equals = [{'content.id': a.profileAgent.id}];
       // ensure query still works
-      ({documents} = await queryForEdvDocument({
+      const queryResult = await queryForEdvDocument({
         equals, limit: 1, indexes, edvClient, edvConfig, profileSigner
-      }));
-      documents.should.have.length(1);
-      console.log('INDEXED AFTER REFRESH', documents[0].indexed);
+      });
+      a.should.have.property('meta');
+      queryResult.should.have.property('documents');
+      queryResult.documents.should.have.length(1);
       // ensure zcaps still work
       {
         // get secrets
@@ -1141,7 +1135,7 @@ async function getAccessManagementIndexes({
     docId: profileUserDocId, edvClient, edvConfig, profileSigner
   });
 
-  return profileUserDoc.content.accessManagement.indexes;
+  return profileUserDoc?.content?.accessManagement?.indexes ?? [];
 }
 
 async function updateZcapsExpiration({
