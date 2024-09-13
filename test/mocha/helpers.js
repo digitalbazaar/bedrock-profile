@@ -78,6 +78,32 @@ export async function getEdvDocument({
   return doc.read();
 }
 
+export async function queryForEdvDocument({
+  equals, has, limit, edvClient, edvConfig, indexes,
+  kmsClient = new KmsClient({httpsAgent}),
+  profileSigner} = {}) {
+  const {hmac, keyAgreementKey} = edvConfig;
+  for(const index of indexes) {
+    edvClient.ensureIndex(index);
+  }
+  return edvClient.find({
+    equals, has, limit,
+    invocationSigner: profileSigner,
+    keyAgreementKey: new KeyAgreementKey({
+      id: keyAgreementKey.id,
+      type: keyAgreementKey.type,
+      invocationSigner: profileSigner,
+      kmsClient
+    }),
+    hmac: new Hmac({
+      id: hmac.id,
+      type: hmac.type,
+      invocationSigner: profileSigner,
+      kmsClient
+    })
+  });
+}
+
 export async function getUserEdvDocument({
   profileAgentRecord,
   zcaps = profileAgentRecord.profileAgent.zcaps,
