@@ -1,6 +1,6 @@
 # bedrock-profile ChangeLog
 
-## 24.0.1 - 2024-09-dd
+## 24.0.1 - 2024-09-13
 
 ### Fixed
 - Ensure core user EDV indexes when refreshing zcaps.
