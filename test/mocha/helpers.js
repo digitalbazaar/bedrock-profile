@@ -81,7 +81,8 @@ export async function getEdvDocument({
 export async function queryForEdvDocument({
   equals, has, limit, edvClient, edvConfig, indexes,
   kmsClient = new KmsClient({httpsAgent}),
-  profileSigner} = {}) {
+  profileSigner
+} = {}) {
   const {hmac, keyAgreementKey} = edvConfig;
   for(const index of indexes) {
     edvClient.ensureIndex(index);
