@@ -1,5 +1,5 @@
 /*!
- * Copyright (c) 2023 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2023-2024 Digital Bazaar, Inc. All rights reserved.
  */
 import * as bedrock from '@bedrock/core';
 import * as helpers from './helpers.js';
@@ -8,9 +8,8 @@ import {EdvClient} from '@digitalbazaar/edv-client';
 import {getAppIdentity} from '@bedrock/app-identity';
 import {httpsAgent} from '@bedrock/https-agent';
 import {keyResolver} from '@bedrock/profile/lib/keyResolver.js';
-import {klona} from 'klona';
 import {mockData} from './mock.data.js';
-import {v4 as uuid} from 'uuid';
+import {randomUUID} from 'node:crypto';
 
 const {
   getEdvConfig,
@@ -65,7 +64,7 @@ describe('Refresh Profile Agent Zcaps', () => {
       /* Note: When "profileAgents.getAll()" is called, if the time remaining
       until zcap expiration is equal to or less than the refresh threshold,
       zcaps should be refreshed (provided they were issued by the profile). */
-      const accountId = uuid();
+      const accountId = randomUUID();
       const didMethod = 'v1';
       const profile = await createProfile({
         accountId, didMethod, edvOptions, keystoreOptions
@@ -110,8 +109,8 @@ describe('Refresh Profile Agent Zcaps', () => {
         edvClient, profileSigner, docId, edvConfig
       });
       profileAgentUserDoc.sequence.should.equal(0);
-      const updateProfileAgentUserDoc = klona(profileAgentUserDoc);
-      const updateProfileAgent = klona({
+      const updateProfileAgentUserDoc = structuredClone(profileAgentUserDoc);
+      const updateProfileAgent = structuredClone({
         ...a.profileAgent,
         secrets: undefined
       });
@@ -218,7 +217,7 @@ describe('Refresh Profile Agent Zcaps', () => {
       concurrently, just one call should succeed at performing the refresh
       while the others should return the properly refreshed records and ensure
       that the user document sequence is only incremented once. */
-      const accountId = uuid();
+      const accountId = randomUUID();
       const didMethod = 'v1';
       const profile = await createProfile({
         accountId, didMethod, edvOptions, keystoreOptions
@@ -263,8 +262,8 @@ describe('Refresh Profile Agent Zcaps', () => {
         edvClient, profileSigner, docId, edvConfig
       });
       profileAgentUserDoc.sequence.should.equal(0);
-      const updateProfileAgentUserDoc = klona(profileAgentUserDoc);
-      const updateProfileAgent = klona({
+      const updateProfileAgentUserDoc = structuredClone(profileAgentUserDoc);
+      const updateProfileAgent = structuredClone({
         ...a.profileAgent,
         secrets: undefined
       });
@@ -392,7 +391,7 @@ describe('Refresh Profile Agent Zcaps', () => {
       while the others should return the properly refreshed records and ensure
       that the user document sequence is only incremented once. This update
       should include updating any additional EDV zcaps as well. */
-      const accountId = uuid();
+      const accountId = randomUUID();
       const didMethod = 'key';
       // add additional `credentials` and `inbox` EDVs
       const newEdvOptions = {
@@ -490,8 +489,8 @@ describe('Refresh Profile Agent Zcaps', () => {
         edvClient, profileSigner, docId, edvConfig
       });
       profileAgentUserDoc.sequence.should.equal(0);
-      const updateProfileAgentUserDoc = klona(profileAgentUserDoc);
-      const updateProfileAgent = klona({
+      const updateProfileAgentUserDoc = structuredClone(profileAgentUserDoc);
+      const updateProfileAgent = structuredClone({
         ...a.profileAgent,
         secrets: undefined
       });
@@ -667,7 +666,7 @@ describe('Refresh Profile Agent Zcaps', () => {
       zcaps therein are not already fresh, i.e., have been delegated within
       the configured `maxSyncDelta` of NOW. This test ensures that the user
       EDV doc zcaps are NOT updated again because they are already fresh. */
-      const accountId = uuid();
+      const accountId = randomUUID();
       const didMethod = 'key';
       // add additional `credentials` and `inbox` EDVs
       const newEdvOptions = {
@@ -765,7 +764,7 @@ describe('Refresh Profile Agent Zcaps', () => {
         edvClient, profileSigner, docId, edvConfig
       });
       profileAgentUserDoc.sequence.should.equal(0);
-      const updateProfileAgent = klona({
+      const updateProfileAgent = structuredClone({
         ...a.profileAgent,
         secrets: undefined
       });
@@ -930,7 +929,7 @@ describe('Refresh Profile Agent Zcaps', () => {
       /* Note: When "profileAgents.getAll()" is called, if the time remaining
       until zcap expiration is equal to or less than the refresh threshold,
       zcaps should be refreshed (provided they were issued by the profile). */
-      const accountId = uuid();
+      const accountId = randomUUID();
       const didMethod = 'v1';
       const profile = await createProfile({
         accountId, didMethod, edvOptions, keystoreOptions
@@ -976,8 +975,8 @@ describe('Refresh Profile Agent Zcaps', () => {
         edvClient, profileSigner, docId, edvConfig
       });
       profileAgentUserDoc.sequence.should.equal(0);
-      const updateProfileAgentUserDoc = klona(profileAgentUserDoc);
-      const updateProfileAgent = klona({
+      const updateProfileAgentUserDoc = structuredClone(profileAgentUserDoc);
+      const updateProfileAgent = structuredClone({
         ...a.profileAgent,
         secrets: undefined
       });

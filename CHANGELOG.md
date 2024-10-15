@@ -1,5 +1,13 @@
 # bedrock-profile ChangeLog
 
+## 25.0.0 - 2024-10-dd
+
+### Changed
+- **BREAKING**: Remove support for deprecated and non-standard
+  Ed25519Signature2018 use in zcap delegation. This is not
+  expected to be used in many applications.
+- Update dependencies.
+
 ## 24.0.1 - 2024-09-13
 
 ### Fixed
