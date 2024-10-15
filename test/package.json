@@ -33,7 +33,7 @@
     "@bedrock/profile": "file:..",
     "@bedrock/security-context": "^9.0.0",
     "@bedrock/server": "^5.1.0",
-    "@bedrock/ssm-mongodb": "^11.2.1",
+    "@bedrock/ssm-mongodb": "^12.0.0",
     "@bedrock/test": "^8.2.0",
     "@bedrock/validation": "^7.1.0",
     "@bedrock/veres-one-context": "^16.0.0",
@@ -44,9 +44,7 @@
     "@digitalbazaar/webkms-client": "^14.1.1",
     "@digitalbazaar/zcap": "^9.0.1",
     "c8": "^10.1.2",
-    "cross-env": "^7.0.3",
-    "klona": "^2.0.6",
-    "uuid": "^10.0.0"
+    "cross-env": "^7.0.3"
   },
   "c8": {
     "excludeNodeModules": false,
