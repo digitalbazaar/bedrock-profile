@@ -1,6 +1,6 @@
 # bedrock-profile ChangeLog
 
-## 25.0.0 - 2024-10-dd
+## 25.0.0 - 2024-10-15
 
 ### Changed
 - **BREAKING**: Remove support for deprecated and non-standard
