@@ -1,5 +1,11 @@
 # bedrock-profile ChangeLog
 
+## 25.0.1 - 2025-mm-dd
+
+### Fixed
+- Return passed `record` instead of resulting record from mongodb calls to
+  enable using newer mongodb driver.
+
 ## 25.0.0 - 2024-10-15
 
 ### Changed
