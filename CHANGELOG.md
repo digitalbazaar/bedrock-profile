@@ -5,6 +5,7 @@
 ### Fixed
 - Return passed `record` instead of resulting record from mongodb calls to
   enable using newer mongodb driver.
+- Use `result.deletedCount` to enable newer mongodb driver.
 
 ## 25.0.0 - 2024-10-15
 
