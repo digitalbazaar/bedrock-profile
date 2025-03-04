@@ -1,6 +1,6 @@
 # bedrock-profile ChangeLog
 
-## 25.0.1 - 2025-mm-dd
+## 25.0.1 - 2025-03-04
 
 ### Fixed
 - Return passed `record` instead of resulting record from mongodb calls to
