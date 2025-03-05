@@ -1,6 +1,6 @@
 # bedrock-profile ChangeLog
 
-## 25.0.2 - 2025-mm-dd
+## 25.0.2 - 2025-03-04
 
 ### Fixed
 - Pass `includeResultMetadata: true` to `findOneAndUpdate` to ensure meta data
