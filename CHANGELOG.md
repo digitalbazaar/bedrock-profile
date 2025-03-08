@@ -1,5 +1,17 @@
 # bedrock-profile ChangeLog
 
+## 26.0.0 - 2025-03-xx
+
+### Changed
+- Update peer dependencies.
+  - `@bedrock/core@6.3.0`.
+  - `@bedrock/jsonld-document-loader@5.2.0`.
+  - **BREAKING**: `@bedrock/mongodb@11`.
+    - Use MongoDB driver 6.x and update error names and details.
+    - See changelog for details.
+- Update dev dependencies.
+- Update test dependencies.
+
 ## 25.0.2 - 2025-03-04
 
 ### Fixed
