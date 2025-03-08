@@ -1,6 +1,6 @@
 # bedrock-profile ChangeLog
 
-## 26.0.0 - 2025-03-xx
+## 26.0.0 - 2025-03-08
 
 ### Changed
 - Update peer dependencies.
