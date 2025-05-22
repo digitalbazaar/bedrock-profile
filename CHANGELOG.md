@@ -1,6 +1,6 @@
 # bedrock-profile ChangeLog
 
-## 26.1.0 - 2025-05-dd
+## 26.1.0 - 2025-05-22
 
 ### Changed
 - Use `@digitalbazaar/lru-memoize@4`. Existing cache defaults and options
