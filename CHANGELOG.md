@@ -1,5 +1,15 @@
 # bedrock-profile ChangeLog
 
+## 26.2.0 - 2025-mm-dd
+
+### Added
+- Expose `refreshCapability()` API to enable refreshing of zcaps with
+  chain lengths of 1 that were previously delegated by a profile.
+
+### Fixed
+- Throw an error if a capability with a chain length other than one is
+  attempted to be refreshed (as it can't be refreshed).
+
 ## 26.1.0 - 2025-05-22
 
 ### Changed
