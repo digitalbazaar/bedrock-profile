@@ -1,6 +1,6 @@
 # bedrock-profile ChangeLog
 
-## 26.2.0 - 2025-mm-dd
+## 26.2.0 - 2025-10-05
 
 ### Added
 - Expose `refreshCapability()` API to enable refreshing of zcaps with
