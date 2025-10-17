@@ -1,5 +1,10 @@
 # bedrock-profile ChangeLog
 
+## 26.3.0 - 2025-10-dd
+
+### Added
+- Add `count()` API for `profileAgents`.
+
 ## 26.2.0 - 2025-10-05
 
 ### Added
