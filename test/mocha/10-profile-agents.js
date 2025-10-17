@@ -47,6 +47,25 @@ describe('profileAgents API', () => {
 
     });
   }); // end create a profile agent
+  describe('Count Profile Agents', () => {
+    it('successfully count profile agents by "accountId"', async () => {
+      const accountId = uuid();
+      const profileId = uuid();
+      let error;
+      let count;
+      try {
+        await profileAgents.create({
+          keystoreOptions, accountId, profileId, store: true
+        });
+        ({count} = await profileAgents.count({accountId}));
+      } catch(e) {
+        error = e;
+      }
+      assertNoError(error);
+      should.exist(count);
+      count.should.equal(1);
+    });
+  }); // end count profile agents
   describe('Get Profile Agent', () => {
     it('successfully get a profile agent by "id"', async () => {
       const accountId = uuid();
