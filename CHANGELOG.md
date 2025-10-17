@@ -3,7 +3,10 @@
 ## 26.3.0 - 2025-10-dd
 
 ### Added
-- Add `count()` API for `profileAgents`.
+- Add `count()` and `getRootAgents()` API for `profileAgents`.
+
+### Fixed
+- Make profile agent reconciliation more consistent.
 
 ## 26.2.0 - 2025-10-05
 

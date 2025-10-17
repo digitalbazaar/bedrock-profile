@@ -1,5 +1,5 @@
 /*!
- * Copyright (c) 2023-2024 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2023-2025 Digital Bazaar, Inc. All rights reserved.
  */
 import * as bedrock from '@bedrock/core';
 import * as helpers from './helpers.js';
@@ -56,6 +56,143 @@ describe('Refresh Profile Agent Zcaps', () => {
   });
   after(() => {
     passportStub.restore();
+  });
+
+  describe('profileAgents.get() API', () => {
+    // refresh profile agent zcaps in record and user EDV doc issued by profile
+    it('should refresh profile agent zcaps', async () => {
+      /* Note: When "profileAgents.getAll()" is called, if the time remaining
+      until zcap expiration is equal to or less than the refresh threshold,
+      zcaps should be refreshed (provided they were issued by the profile). */
+      const accountId = randomUUID();
+      const didMethod = 'v1';
+      const profile = await createProfile({
+        accountId, didMethod, edvOptions, keystoreOptions
+      });
+      should.exist(profile);
+      // should get all profile agents by accountId
+      const agents = await getAllProfileAgents({
+        accountId, includeSecrets: true
+      });
+      agents.should.have.length(1);
+      const [a] = agents;
+      a.should.have.property('meta');
+      a.meta.should.have.keys(['created', 'updated']);
+      a.should.have.property('profileAgent');
+      a.profileAgent.should.have.keys([
+        'id', 'sequence', 'account', 'profile', 'controller', 'keystore',
+        'capabilityInvocationKey', 'zcaps'
+      ]);
+      a.profileAgent.sequence.should.equal(1);
+      a.profileAgent.controller.should.be.a('string');
+      const {zcaps} = a.profileAgent;
+      zcaps.should.have.keys([
+        'profileCapabilityInvocationKey', 'userDocument', 'user-edv-kak'
+      ]);
+      // intentionally update the expiration date of profile agent user doc
+      // zcaps and profile agent zcaps to a date 15 days from now which is less
+      // than the refresh threshold value of 1 month
+      const now = Date.now();
+      // 15 days in milliseconds
+      const expiresIn15Days =
+        new Date(now + 15 * 24 * 60 * 60 * 1000).toISOString();
+      const profileAgentRecord = agents[0];
+      const profileSigner = await profileAgents.getProfileSigner(
+        {profileAgentRecord});
+      const zcap = zcaps.userDocument;
+      const edvId = parseEdvId({capability: zcap});
+      const edvClient = new EdvClient({id: edvId, httpsAgent});
+      const docId = zcap.invocationTarget.split('/').pop();
+      const edvConfig = await getEdvConfig({edvClient, profileSigner});
+
+      const profileAgentUserDoc = await getProfileAgentUserDoc({
+        edvClient, profileSigner, docId, edvConfig
+      });
+      profileAgentUserDoc.sequence.should.equal(0);
+      const updateProfileAgentUserDoc = structuredClone(profileAgentUserDoc);
+      const updateProfileAgent = structuredClone({
+        ...a.profileAgent,
+        secrets: undefined
+      });
+
+      // update zcaps expiration for profile agent (note: will invalidate zcaps)
+      await updateZcapsExpiration({
+        profileAgent: updateProfileAgent,
+        newExpires: expiresIn15Days,
+      });
+      // update zcaps expiration for profile agent user doc
+      // (note: will invalidate zcaps)
+      await updateZcapsExpiration({
+        profileAgentUserDoc: updateProfileAgentUserDoc,
+        newExpires: expiresIn15Days,
+        edvClient,
+        profileSigner
+      });
+
+      // get the current year
+      const currentYear = new Date().getFullYear();
+      // zcaps expiration should have been set to a year from now
+      const expectedExpiresYear = currentYear + 1;
+
+      // get the updated profileAgent record, zcaps should be refreshed
+      const refreshedRecord = await profileAgents.get({
+        id: updateProfileAgent.id
+      });
+      refreshedRecord.profileAgent.sequence.should.equal(3);
+      const refreshedAgent = refreshedRecord.profileAgent;
+      const {zcaps: refreshedZcaps} = refreshedAgent;
+      verifyZcapsExpiration({
+        zcaps: refreshedZcaps,
+        expectedExpiresYear
+      });
+
+      // get the updated profile agent user document, zcaps should be refreshed
+      const refreshedProfileAgentUserDoc = await getEdvDocument({
+        docId, edvConfig, edvClient, profileSigner
+      });
+      refreshedProfileAgentUserDoc.sequence.should.equal(2);
+      const {
+        zcaps: refreshedProfileAgentUserDocZcaps
+      } = refreshedProfileAgentUserDoc.content;
+      verifyZcapsExpiration({
+        zcaps: refreshedProfileAgentUserDocZcaps,
+        expectedExpiresYear
+      });
+
+      // ensure zcaps still work
+      {
+        // get secrets
+        const profileAgentRecord = refreshedRecord;
+        const {secrets} = await profileAgents.get({
+          id: profileAgentRecord.profileAgent.id,
+          includeSecrets: true,
+          // do not reconcile (which also means do not refresh)
+          _reconcile: false
+        });
+        profileAgentRecord.secrets = secrets;
+
+        // read as profile agent and compare to doc retrieved as profile
+        const edvDoc = await getUserEdvDocument({profileAgentRecord});
+        const doc = await edvDoc.read();
+        doc.should.deep.equal(refreshedProfileAgentUserDoc);
+
+        // get writable user EDV document
+        const id = await EdvClient.generateId();
+        const writableEdvDoc = await getProfileAgentWritableEdvDocument(
+          {profileAgentRecord, id, edvName: 'user'});
+        const newDoc = {
+          id,
+          content: {
+            id: 'urn:uuid:testuser',
+            name: 'foo'
+          }
+        };
+        await writableEdvDoc.write({doc: newDoc});
+        // read written doc
+        const readDoc = await writableEdvDoc.read();
+        readDoc.content.should.deep.equal(newDoc.content);
+      }
+    });
   });
 
   describe('profileAgents.getAll() API', () => {
@@ -132,7 +269,9 @@ describe('Refresh Profile Agent Zcaps', () => {
       // get the updated profileAgent record, zcaps should be updated to expire
       // in 15 days
       const updatedRecord = await profileAgents.get({
-        id: updateProfileAgent.id
+        id: updateProfileAgent.id,
+        // do not reconcile (which also means do not refresh)
+        _reconcile: false
       });
       updatedRecord.profileAgent.sequence.should.equal(2);
       const {zcaps: updatedProfileAgentZcaps} = updatedRecord.profileAgent;
@@ -155,8 +294,8 @@ describe('Refresh Profile Agent Zcaps', () => {
         expectedExpires: expiresIn15Days
       });
 
-      // profileAgent user doc zcaps and profile agent zcaps should be refreshed
-      // when getAll() is called.
+      // profileAgent user doc zcaps and profile agent zcaps should be
+      // refreshed when getAll() is called.
       const refreshedAgents = await profileAgents.getAll({accountId});
       const refreshedAgent = refreshedAgents[0].profileAgent;
       refreshedAgent.sequence.should.equal(3);
@@ -186,8 +325,12 @@ describe('Refresh Profile Agent Zcaps', () => {
       {
         // get secrets
         const [profileAgentRecord] = refreshedAgents;
-        const {secrets} = await profileAgents.get(
-          {id: profileAgentRecord.profileAgent.id, includeSecrets: true});
+        const {secrets} = await profileAgents.get({
+          id: profileAgentRecord.profileAgent.id,
+          includeSecrets: true,
+          // do not reconcile (which also means do not refresh)
+          _reconcile: false
+        });
         profileAgentRecord.secrets = secrets;
 
         // read as profile agent and compare to doc retrieved as profile
@@ -285,7 +428,9 @@ describe('Refresh Profile Agent Zcaps', () => {
       // get the updated profileAgent record, zcaps should be updated to expire
       // in 15 days
       const updatedRecord = await profileAgents.get({
-        id: updateProfileAgent.id
+        id: updateProfileAgent.id,
+        // do not reconcile (which also means do not refresh)
+        _reconcile: false
       });
       updatedRecord.profileAgent.sequence.should.equal(2);
       const {zcaps: updatedProfileAgentZcaps} = updatedRecord.profileAgent;
@@ -358,8 +503,12 @@ describe('Refresh Profile Agent Zcaps', () => {
       {
         // get secrets
         const [[profileAgentRecord]] = refreshedAgentsRecords;
-        const {secrets} = await profileAgents.get(
-          {id: profileAgentRecord.profileAgent.id, includeSecrets: true});
+        const {secrets} = await profileAgents.get({
+          id: profileAgentRecord.profileAgent.id,
+          includeSecrets: true,
+          // do not reconcile (which also means do not refresh)
+          _reconcile: false
+        });
         profileAgentRecord.secrets = secrets;
 
         // read as profile agent and compare to doc retrieved as profile
@@ -512,7 +661,9 @@ describe('Refresh Profile Agent Zcaps', () => {
       // get the updated profileAgent record, zcaps should be updated to expire
       // in 15 days
       const updatedRecord = await profileAgents.get({
-        id: updateProfileAgent.id
+        id: updateProfileAgent.id,
+        // do not reconcile (which also means do not refresh)
+        _reconcile: false
       });
       updatedRecord.profileAgent.sequence.should.equal(2);
       const {zcaps: updatedProfileAgentZcaps} = updatedRecord.profileAgent;
@@ -585,8 +736,12 @@ describe('Refresh Profile Agent Zcaps', () => {
       {
         // get secrets
         const [[profileAgentRecord]] = refreshedAgentsRecords;
-        const {secrets} = await profileAgents.get(
-          {id: profileAgentRecord.profileAgent.id, includeSecrets: true});
+        const {secrets} = await profileAgents.get({
+          id: profileAgentRecord.profileAgent.id,
+          includeSecrets: true,
+          // do not reconcile (which also means do not refresh)
+          _reconcile: false
+        });
         profileAgentRecord.secrets = secrets;
 
         // read as profile agent and compare to doc retrieved as profile
@@ -781,7 +936,9 @@ describe('Refresh Profile Agent Zcaps', () => {
       // get the updated profileAgent record, zcaps should be updated to expire
       // in 15 days
       const updatedRecord = await profileAgents.get({
-        id: updateProfileAgent.id
+        id: updateProfileAgent.id,
+        // do not reconcile (which also means do not refresh)
+        _reconcile: false
       });
       updatedRecord.profileAgent.sequence.should.equal(2);
       const {zcaps: updatedProfileAgentZcaps} = updatedRecord.profileAgent;
@@ -853,8 +1010,12 @@ describe('Refresh Profile Agent Zcaps', () => {
       {
         // get secrets
         const [[profileAgentRecord]] = refreshedAgentsRecords;
-        const {secrets} = await profileAgents.get(
-          {id: profileAgentRecord.profileAgent.id, includeSecrets: true});
+        const {secrets} = await profileAgents.get({
+          id: profileAgentRecord.profileAgent.id,
+          includeSecrets: true,
+          // do not reconcile (which also means do not refresh)
+          _reconcile: false
+        });
         profileAgentRecord.secrets = secrets;
 
         // read as profile agent and compare to doc retrieved as profile
@@ -998,7 +1159,9 @@ describe('Refresh Profile Agent Zcaps', () => {
       // get the updated profileAgent record, zcaps should be updated to expire
       // in 15 days
       const updatedRecord = await profileAgents.get({
-        id: updateProfileAgent.id
+        id: updateProfileAgent.id,
+        // do not reconcile (which also means do not refresh)
+        _reconcile: false
       });
       updatedRecord.profileAgent.sequence.should.equal(2);
       const {zcaps: updatedProfileAgentZcaps} = updatedRecord.profileAgent;
@@ -1063,8 +1226,12 @@ describe('Refresh Profile Agent Zcaps', () => {
       {
         // get secrets
         const [profileAgentRecord] = refreshedAgents;
-        const {secrets} = await profileAgents.get(
-          {id: profileAgentRecord.profileAgent.id, includeSecrets: true});
+        const {secrets} = await profileAgents.get({
+          id: profileAgentRecord.profileAgent.id,
+          includeSecrets: true,
+          // do not reconcile (which also means do not refresh)
+          _reconcile: false
+        });
         profileAgentRecord.secrets = secrets;
 
         // read as profile agent and compare to doc retrieved as profile
