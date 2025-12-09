@@ -1,5 +1,10 @@
 # bedrock-profile ChangeLog
 
+## 26.4.0 - 2025-12-dd
+
+### Added
+- Add profile agent record secrets encryption feature.
+
 ## 26.3.0 - 2025-10-17
 
 ### Added
