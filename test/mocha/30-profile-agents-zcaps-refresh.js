@@ -29,10 +29,10 @@ import {_loadKeks} from '@bedrock/profile/lib/secretsEncryption.js';
 */
 /* eslint-enable */
 const secretsEncryption = [
-  // {
-  //   title: 'w/no secrets encryption',
-  //   kek: null
-  // },
+  {
+    title: 'w/no secrets encryption',
+    kek: null
+  },
   {
     title: 'w/aes256 secrets encryption',
     kek: {
@@ -147,10 +147,7 @@ describe('Refresh Profile Agent Zcaps', () => {
           profileAgentUserDoc.sequence.should.equal(0);
           const updateProfileAgentUserDoc = structuredClone(
             profileAgentUserDoc);
-          const updateProfileAgent = structuredClone({
-            ...a.profileAgent,
-            secrets: undefined
-          });
+          const updateProfileAgent = structuredClone(a.profileAgent);
 
           // update zcaps expiration for profile agent
           // (note: will invalidate zcaps)
@@ -289,10 +286,7 @@ describe('Refresh Profile Agent Zcaps', () => {
           profileAgentUserDoc.sequence.should.equal(0);
           const updateProfileAgentUserDoc = structuredClone(
             profileAgentUserDoc);
-          const updateProfileAgent = structuredClone({
-            ...a.profileAgent,
-            secrets: undefined
-          });
+          const updateProfileAgent = structuredClone(a.profileAgent);
 
           // update zcaps expiration for profile agent
           // (note: will invalidate zcaps)
@@ -451,10 +445,7 @@ describe('Refresh Profile Agent Zcaps', () => {
             profileAgentUserDoc.sequence.should.equal(0);
             const updateProfileAgentUserDoc = structuredClone(
               profileAgentUserDoc);
-            const updateProfileAgent = structuredClone({
-              ...a.profileAgent,
-              secrets: undefined
-            });
+            const updateProfileAgent = structuredClone(a.profileAgent);
 
             // update zcaps expiration for profile agent
             // (note: will invalidate zcaps)
@@ -688,10 +679,7 @@ describe('Refresh Profile Agent Zcaps', () => {
           profileAgentUserDoc.sequence.should.equal(0);
           const updateProfileAgentUserDoc = structuredClone(
             profileAgentUserDoc);
-          const updateProfileAgent = structuredClone({
-            ...a.profileAgent,
-            secrets: undefined
-          });
+          const updateProfileAgent = structuredClone(a.profileAgent);
 
           // update zcaps expiration for profile agent
           // (note: will invalidate zcaps)
@@ -971,10 +959,7 @@ describe('Refresh Profile Agent Zcaps', () => {
             edvClient, profileSigner, docId, edvConfig
           });
           profileAgentUserDoc.sequence.should.equal(0);
-          const updateProfileAgent = structuredClone({
-            ...a.profileAgent,
-            secrets: undefined
-          });
+          const updateProfileAgent = structuredClone(a.profileAgent);
 
           // update zcaps expiration for profile agent
           // (note: will invalidate zcaps)
@@ -1193,10 +1178,7 @@ describe('Refresh Profile Agent Zcaps', () => {
           profileAgentUserDoc.sequence.should.equal(0);
           const updateProfileAgentUserDoc = structuredClone(
             profileAgentUserDoc);
-          const updateProfileAgent = structuredClone({
-            ...a.profileAgent,
-            secrets: undefined
-          });
+          const updateProfileAgent = structuredClone(a.profileAgent);
 
           // update zcaps expiration for profile agent
           // (note: will invalidate zcaps)
