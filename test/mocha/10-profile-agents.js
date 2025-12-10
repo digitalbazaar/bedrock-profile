@@ -2,6 +2,7 @@
  * Copyright (c) 2020-2025 Digital Bazaar, Inc. All rights reserved.
  */
 import * as bedrock from '@bedrock/core';
+import * as database from '@bedrock/mongodb';
 import * as helpers from './helpers.js';
 import {getAppIdentity} from '@bedrock/app-identity';
 import {mockData} from './mock.data.js';
@@ -128,6 +129,56 @@ describe('profileAgents API', () => {
           profileAgent.capabilityInvocationKey.should.eql(
             fetchedProfileAgent.capabilityInvocationKey);
         });
+        if(encryptConfig.kek) {
+          it('successfully encrypts existing profile agent secrets',
+            async () => {
+              const accountId = uuid();
+              const profileId = uuid();
+
+              const record = await profileAgents.create({
+                keystoreOptions, accountId, profileId, store: true
+              });
+
+              // now replace `secrets` manually in record
+              const collection = database.collections['profile-profileAgent'];
+              const query = {
+                'profileAgent.id': record.profileAgent.id
+              };
+              const result = await collection.findOneAndUpdate(query, {
+                $set: {secrets: record.secrets},
+                $unset: {encryptedSecrets: true}
+              }, {
+                projection: {_id: 0},
+                promoteBuffers: true,
+                returnDocument: 'after',
+                includeResultMetadata: true
+              });
+              result.lastErrorObject.updatedExisting.should.equal(true);
+
+              // ensure `secrets` exists, but not `encryptedSecrets`
+              should.exist(result.value.secrets);
+              should.not.exist(result.value.encryptedSecrets);
+
+              // now fetch profile agent and `encryptedSecrets` should be
+              // restored (even without `includeSecrets: true`)
+              await profileAgents.get({id: record.profileAgent.id});
+
+              // direct fetch record to check for `encryptedSecrets`
+              const updatedRecord = await collection.findOne(query);
+              should.exist(updatedRecord);
+              should.not.exist(updatedRecord.secrets);
+              should.exist(updatedRecord.encryptedSecrets);
+              // ensure no other changes
+              const {profileAgent} = updatedRecord;
+              profileAgent.id.should.equal(record.profileAgent.id);
+              profileAgent.sequence.should.equal(
+                record.profileAgent.sequence + 1);
+              profileAgent.keystore.should.equal(
+                record.profileAgent.keystore);
+              profileAgent.capabilityInvocationKey.should.eql(
+                record.profileAgent.capabilityInvocationKey);
+            });
+        }
         it('successfully get a profile agent by "profileId"', async () => {
           const accountId = uuid();
           const profileId = `did:example:${uuid()}`;
