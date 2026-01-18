@@ -1,5 +1,5 @@
 /*!
- * Copyright (c) 2020-2025 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2020-2026 Digital Bazaar, Inc. All rights reserved.
  */
 import * as bedrock from '@bedrock/core';
 import * as database from '@bedrock/mongodb';
@@ -34,14 +34,15 @@ const secretsEncryption = [
 describe('profileAgents API', () => {
   for(const encryptConfig of secretsEncryption) {
     describe(encryptConfig.title, () => {
-      before(() => {
+      before(async () => {
         bedrock.config.profile.profileAgent.secretsEncryption = {
           kek: encryptConfig.kek
         };
-        _loadKeks();
+        await _loadKeks();
       });
-      after(() => {
+      after(async () => {
         bedrock.config.profile.profileAgent.secretsEncryption = {kek: null};
+        await _loadKeks();
       });
 
       let keystoreOptions;

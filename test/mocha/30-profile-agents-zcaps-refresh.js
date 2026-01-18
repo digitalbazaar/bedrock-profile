@@ -1,5 +1,5 @@
 /*!
- * Copyright (c) 2023-2025 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2023-2026 Digital Bazaar, Inc. All rights reserved.
  */
 import * as bedrock from '@bedrock/core';
 import * as helpers from './helpers.js';
@@ -45,14 +45,15 @@ const secretsEncryption = [
 describe('Refresh Profile Agent Zcaps', () => {
   for(const encryptConfig of secretsEncryption) {
     describe(encryptConfig.title, () => {
-      before(() => {
+      before(async () => {
         bedrock.config.profile.profileAgent.secretsEncryption = {
           kek: encryptConfig.kek
         };
-        _loadKeks();
+        await _loadKeks();
       });
-      after(() => {
+      after(async () => {
         bedrock.config.profile.profileAgent.secretsEncryption = {kek: null};
+        await _loadKeks();
       });
 
       let edvOptions;
