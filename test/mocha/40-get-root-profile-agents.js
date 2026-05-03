@@ -1,5 +1,5 @@
 /*!
- * Copyright (c) 2025 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2025-2026 Digital Bazaar, Inc.
  */
 import * as bedrock from '@bedrock/core';
 import * as helpers from './helpers.js';
