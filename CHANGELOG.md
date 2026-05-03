@@ -1,5 +1,10 @@
 # bedrock-profile ChangeLog
 
+## 26.5.0 - 2026-mm-dd
+
+### Changed
+- Use `@bedrock/record-cipher` to provide record encryption internals.
+
 ## 26.4.0 - 2025-12-10
 
 ### Added
