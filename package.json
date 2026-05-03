@@ -43,7 +43,8 @@
     "@bedrock/core": "^6.3.0",
     "@bedrock/https-agent": "^4.1.0",
     "@bedrock/jsonld-document-loader": "^5.2.0",
-    "@bedrock/mongodb": "^11.0.0"
+    "@bedrock/mongodb": "^11.0.0",
+    "@bedrock/record-cipher": "^1.2.0"
   },
   "directories": {
     "lib": "./lib"
