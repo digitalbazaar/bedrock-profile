@@ -1,7 +1,7 @@
 /*!
- * Copyright (c) 2020-2022 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2020-2026 Digital Bazaar, Inc.
  */
-import {v4 as uuid} from 'uuid';
+import {randomUUID as uuid} from 'node:crypto';
 import {constants as zcapConstants} from '@digitalbazaar/zcap';
 
 const {ZCAP_CONTEXT_URL} = zcapConstants;

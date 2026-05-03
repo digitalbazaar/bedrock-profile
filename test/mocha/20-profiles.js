@@ -1,5 +1,5 @@
 /*!
- * Copyright (c) 2020-2025 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2020-2026 Digital Bazaar, Inc.
  */
 import * as bedrock from '@bedrock/core';
 import * as database from '@bedrock/mongodb';
@@ -7,7 +7,7 @@ import * as helpers from './helpers.js';
 import {profileAgents, profiles} from '@bedrock/profile';
 import {getAppIdentity} from '@bedrock/app-identity';
 import {mockData} from './mock.data.js';
-import {v4 as uuid} from 'uuid';
+import {randomUUID as uuid} from 'node:crypto';
 
 describe('profiles API', () => {
   let edvOptions;

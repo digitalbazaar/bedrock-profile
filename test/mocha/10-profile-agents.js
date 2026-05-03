@@ -1,5 +1,5 @@
 /*!
- * Copyright (c) 2020-2026 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2020-2026 Digital Bazaar, Inc.
  */
 import * as bedrock from '@bedrock/core';
 import * as database from '@bedrock/mongodb';
@@ -7,7 +7,7 @@ import * as helpers from './helpers.js';
 import {getAppIdentity} from '@bedrock/app-identity';
 import {mockData} from './mock.data.js';
 import {profileAgents} from '@bedrock/profile';
-import {v4 as uuid} from 'uuid';
+import {randomUUID as uuid} from 'node:crypto';
 
 // import is for testing purposes only; not a public export
 import {_loadKeks} from '@bedrock/profile/lib/secretsEncryption.js';
