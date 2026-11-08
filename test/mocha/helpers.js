@@ -238,6 +238,7 @@ export async function removeCollections(
   collectionNames = [
     'account',
     'account-email',
+    'account-telephone',
     'profile-profileAgent'
   ]) {
   await database.openCollections(collectionNames);
